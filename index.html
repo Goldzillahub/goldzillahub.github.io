@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="styles.css">
 
@@ -123,6 +123,52 @@
       margin-top:10px;
       text-align:right;
     }
+
+    /* PROFESSIONAL HERO TITLE */
+
+    .hero-title{
+      font-family:'Space Grotesk',sans-serif;
+      font-size:clamp(48px,5vw,76px);
+      font-weight:600;
+      line-height:1.02;
+      letter-spacing:-2.2px;
+      margin:16px 0 24px;
+      max-width:700px;
+    }
+
+    .hero-title .line{
+      display:block;
+    }
+
+    .hero-title .highlight{
+      display:block;
+      background:linear-gradient(
+        90deg,
+        #a77cff,
+        #7c5cff
+      );
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+
+    .hero-copy{
+      max-width:610px;
+      font-size:17px;
+      line-height:1.75;
+      color:#b7becb;
+    }
+
+    @media (max-width:768px){
+      .hero-title{
+        font-size:clamp(42px,11vw,60px);
+        letter-spacing:-1.5px;
+      }
+
+      .hero-copy{
+        font-size:15px;
+      }
+    }
   </style>
 </head>
 
@@ -171,18 +217,16 @@
       XAUUSD TRADING COMMUNITY
     </div>
 
-    <h1>
-      Master the process.
-      <br>
-      Respect the risk.
-      <br>
-      <span>Let results speak.</span>
+    <h1 class="hero-title">
+      <span class="line">Master the process</span>
+      <span class="line">Respect the risk</span>
+      <span class="highlight">Trust the execution</span>
     </h1>
 
-    <p>
-      Trading is built on patience, discipline and consistency.
-      Follow the plan, protect your capital, and let your
-      performance speak for itself.
+    <p class="hero-copy">
+      Trading rewards patience, discipline and consistency.
+      Follow the plan, protect your capital and focus on execution.
+      Strong results are built one disciplined decision at a time.
     </p>
 
     <div class="hero-actions">
@@ -295,62 +339,27 @@
     <div class="metrics">
 
       <div class="card metric">
-        <span class="muted">
-          Total Trades
-        </span>
-
-        <strong>
-          128
-        </strong>
-
-        <small class="muted">
-          All tracked setups
-        </small>
+        <span class="muted">Total Trades</span>
+        <strong>128</strong>
+        <small class="muted">All tracked setups</small>
       </div>
 
-
       <div class="card metric">
-        <span class="muted">
-          Win Rate
-        </span>
-
-        <strong class="green">
-          68.75%
-        </strong>
-
-        <small class="muted">
-          Public record
-        </small>
+        <span class="muted">Win Rate</span>
+        <strong class="green">68.75%</strong>
+        <small class="muted">Public record</small>
       </div>
 
-
       <div class="card metric">
-        <span class="muted">
-          Total R
-        </span>
-
-        <strong class="purple">
-          +87.42R
-        </strong>
-
-        <small class="muted">
-          Risk adjusted
-        </small>
+        <span class="muted">Total R</span>
+        <strong class="purple">+87.42R</strong>
+        <small class="muted">Risk adjusted</small>
       </div>
 
-
       <div class="card metric">
-        <span class="muted">
-          Best Streak
-        </span>
-
-        <strong>
-          12 Wins
-        </strong>
-
-        <small class="muted">
-          Highest run
-        </small>
+        <span class="muted">Best Streak</span>
+        <strong>12 Wins</strong>
+        <small class="muted">Highest run</small>
       </div>
 
     </div>
@@ -388,52 +397,29 @@
     <div class="card">
       <div class="icon">◈</div>
       <h3>Risk Calculator</h3>
-      <p>
-        Calculate exact dollar risk from your balance
-        and risk percentage.
-      </p>
-      <a href="platform.html#calculators">
-        Open tool →
-      </a>
+      <p>Calculate exact dollar risk from your balance and risk percentage.</p>
+      <a href="platform.html#calculators">Open tool →</a>
     </div>
-
 
     <div class="card">
       <div class="icon">⚖</div>
       <h3>Risk / Reward</h3>
-      <p>
-        Compare trade risk and reward before
-        entering the market.
-      </p>
-      <a href="platform.html#calculators">
-        Open tool →
-      </a>
+      <p>Compare trade risk and reward before entering the market.</p>
+      <a href="platform.html#calculators">Open tool →</a>
     </div>
-
 
     <div class="card">
       <div class="icon">⌁</div>
       <h3>Pips Calculator</h3>
-      <p>
-        Count Gold pips between entry
-        and exit in seconds.
-      </p>
-      <a href="platform.html#calculators">
-        Open tool →
-      </a>
+      <p>Count Gold pips between entry and exit in seconds.</p>
+      <a href="platform.html#calculators">Open tool →</a>
     </div>
-
 
     <div class="card">
       <div class="icon">◎</div>
       <h3>Position Size</h3>
-      <p>
-        Estimate XAUUSD lot size from
-        risk and stop loss.
-      </p>
-      <a href="platform.html#calculators">
-        Open tool →
-      </a>
+      <p>Estimate XAUUSD lot size from risk and stop loss.</p>
+      <a href="platform.html#calculators">Open tool →</a>
     </div>
 
   </div>
@@ -477,14 +463,10 @@
 
 
 <footer>
-
   <div class="wrap">
-
     © 2026 Goldzilla Trading Hub.
     Precision • Discipline • Execution
-
   </div>
-
 </footer>
 
 </body>
