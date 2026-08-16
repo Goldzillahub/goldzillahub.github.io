@@ -303,3 +303,329 @@ setInterval(
   loadGoldzillaZones,
   60000
 );
+// ======================================
+// GOLDZILLA GROUP RESULTS / PERFORMANCE
+// ======================================
+
+async function loadGoldzillaResults() {
+
+  try {
+
+    const url =
+      SUPABASE_API_URL +
+      "Daily_Zones" +
+      "?select=id,created_at,type,zone_from,zone_to,result_pips,result_status,result_note" +
+      "&order=created_at.desc";
+
+
+    const response = await fetch(url, {
+
+      method: "GET",
+
+      headers: {
+        "apikey": SUPABASE_PUBLISHABLE_KEY,
+        "Accept": "application/json"
+      }
+
+    });
+
+
+    if (!response.ok) {
+      throw new Error("Unable to load results");
+    }
+
+
+    const allRows = await response.json();
+
+
+    // Only levels whose result has been updated
+    const completedResults = allRows.filter(row => {
+
+      return (
+        row.result_pips !== null &&
+        row.result_pips !== ""
+      );
+
+    });
+
+
+    const totalTrades =
+      completedResults.length;
+
+
+    const wins =
+      completedResults.filter(row =>
+        Number(row.result_pips) > 0
+      ).length;
+
+
+    const losses =
+      completedResults.filter(row =>
+        Number(row.result_pips) < 0
+      ).length;
+
+
+    const winRate =
+      totalTrades > 0
+        ? ((wins / totalTrades) * 100).toFixed(2)
+        : "0.00";
+
+
+    // ===============================
+    // UPDATE TOP PERFORMANCE CARDS
+    // ===============================
+
+    const metricValues =
+      document.querySelectorAll(
+        "#results .metric strong"
+      );
+
+
+    if (metricValues.length >= 4) {
+
+      metricValues[0].textContent =
+        totalTrades;
+
+      metricValues[1].textContent =
+        wins;
+
+      metricValues[2].textContent =
+        losses;
+
+      metricValues[3].textContent =
+        winRate + "%";
+
+    }
+
+
+    // ===============================
+    // RESULTS HISTORY
+    // ===============================
+
+    const resultsSection =
+      document.querySelector("#results");
+
+
+    if (!resultsSection) return;
+
+
+    let historyBox =
+      document.querySelector(
+        "#goldzillaResultsHistory"
+      );
+
+
+    if (!historyBox) {
+
+      historyBox =
+        document.createElement("div");
+
+      historyBox.id =
+        "goldzillaResultsHistory";
+
+      historyBox.style.marginTop =
+        "35px";
+
+      resultsSection.appendChild(
+        historyBox
+      );
+
+    }
+
+
+    if (!completedResults.length) {
+
+      historyBox.innerHTML = `
+        <div class="table-wrap">
+          <div style="
+            padding:45px 20px;
+            text-align:center;
+            color:#9ca4b3;
+          ">
+            No completed results yet.
+          </div>
+        </div>
+      `;
+
+      return;
+
+    }
+
+
+    let rowsHTML = "";
+
+
+    completedResults.forEach(row => {
+
+      const pips =
+        Number(row.result_pips);
+
+
+      const status =
+        pips > 0
+          ? "WIN"
+          : pips < 0
+          ? "LOSS"
+          : "BE";
+
+
+      const statusClass =
+        pips > 0
+          ? "green"
+          : pips < 0
+          ? "red"
+          : "muted";
+
+
+      const type =
+        String(
+          row.type || ""
+        ).toUpperCase();
+
+
+      const typeClass =
+        type === "BUY"
+          ? "buy"
+          : "sell";
+
+
+      const date =
+        new Date(
+          row.created_at
+        );
+
+
+      const formattedDate =
+        date.toLocaleString([], {
+
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+
+          hour: "2-digit",
+          minute: "2-digit"
+
+        });
+
+
+      rowsHTML += `
+        <tr>
+
+          <td>
+            ${formattedDate}
+          </td>
+
+          <td>
+            <span class="badge ${typeClass}">
+              ${type}
+            </span>
+          </td>
+
+          <td>
+            ${row.zone_from}
+            -
+            ${row.zone_to}
+          </td>
+
+          <td class="${statusClass}">
+            <strong>
+              ${status}
+            </strong>
+          </td>
+
+          <td class="${statusClass}">
+            <strong>
+              ${pips > 0 ? "+" : ""}
+              ${pips} pips
+            </strong>
+          </td>
+
+          <td>
+            ${row.result_note || "—"}
+          </td>
+
+        </tr>
+      `;
+
+    });
+
+
+    historyBox.innerHTML = `
+
+      <div style="
+        margin-bottom:18px;
+      ">
+
+        <div class="eyebrow">
+          RESULT HISTORY
+        </div>
+
+        <h2 style="
+          margin:8px 0;
+          font-size:30px;
+        ">
+          Complete Level Results
+        </h2>
+
+        <p class="muted">
+          Permanent history of Goldzilla
+          BUY and SELL zones.
+        </p>
+
+      </div>
+
+
+      <div class="table-wrap">
+
+        <table>
+
+          <thead>
+
+            <tr>
+              <th>DATE & TIME</th>
+              <th>TYPE</th>
+              <th>ZONE</th>
+              <th>STATUS</th>
+              <th>RESULT</th>
+              <th>NOTE</th>
+            </tr>
+
+          </thead>
+
+
+          <tbody>
+
+            ${rowsHTML}
+
+          </tbody>
+
+        </table>
+
+      </div>
+    `;
+
+
+  } catch (error) {
+
+    console.error(
+      "Goldzilla Results Error:",
+      error
+    );
+
+  }
+
+}
+
+
+// Load results when website opens
+document.addEventListener(
+  "DOMContentLoaded",
+  loadGoldzillaResults
+);
+
+
+// Refresh results every 60 seconds
+setInterval(
+  loadGoldzillaResults,
+  60000
+);
