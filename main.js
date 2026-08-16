@@ -1,6 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+  // ======================================
+  // GOLDZILLA CALCULATORS
+  // ======================================
+
   const risk = () => {
+
     const balance =
       +document.querySelector("#riskBalance")?.value || 0;
 
@@ -18,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   const rr = () => {
+
     const riskAmount =
       +document.querySelector("#rrRisk")?.value || 1;
 
@@ -34,11 +40,11 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
 
-  // GOLD PIPS CALCULATOR
   // 1.00 Gold move = 10 pips
-  // Example: 2420 to 2425 = 50 pips
+  // Example: 2420 → 2425 = 50 pips
 
   const pips = () => {
+
     const entry =
       +document.querySelector("#entry")?.value || 0;
 
@@ -49,6 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.querySelector("#pipsOut");
 
     if (output) {
+
       const totalPips =
         Math.abs(exit - entry) * 10;
 
@@ -59,6 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   const positionSize = () => {
+
     const riskAmount =
       +document.querySelector("#posRisk")?.value || 0;
 
@@ -107,9 +115,11 @@ document.addEventListener("DOMContentLoaded", () => {
   positionSize();
 
 });
-// ===============================
-// GOLDZILLA LIVE DAILY ZONES
-// ===============================
+
+
+// ======================================
+// SUPABASE CONNECTION
+// ======================================
 
 const SUPABASE_API_URL =
   "https://byytggaamrkumrzckkjo.supabase.co/rest/v1/";
@@ -117,6 +127,11 @@ const SUPABASE_API_URL =
 const SUPABASE_PUBLISHABLE_KEY =
   "sb_publishable_W8n5btVgWBtlnNe24GXiGw_YPb1ERgd";
 
+
+// ======================================
+// GOLDZILLA LIVE DAILY LEVELS
+// LAST 24 HOURS ONLY
+// ======================================
 
 async function loadGoldzillaZones() {
 
@@ -126,50 +141,63 @@ async function loadGoldzillaZones() {
   if (!levelsSection) return;
 
 
-  // Last 24 hours only
   const last24Hours =
-    new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+    new Date(
+      Date.now() - 24 * 60 * 60 * 1000
+    ).toISOString();
 
 
   const url =
     SUPABASE_API_URL +
     "Daily_Zones" +
     "?select=id,created_at,type,zone_from,zone_to" +
-    "&created_at=gte." + encodeURIComponent(last24Hours) +
+    "&created_at=gte." +
+    encodeURIComponent(last24Hours) +
     "&order=created_at.desc";
 
 
   try {
 
     const response = await fetch(url, {
+
       method: "GET",
 
       headers: {
         "apikey": SUPABASE_PUBLISHABLE_KEY,
         "Accept": "application/json"
       }
+
     });
 
 
     if (!response.ok) {
+
+      const errorText =
+        await response.text();
+
       throw new Error(
-        "Supabase error: " + response.status
+        "Supabase Daily Levels Error: "
+        + response.status
+        + " "
+        + errorText
       );
     }
 
 
-    const zones = await response.json();
+    const zones =
+      await response.json();
 
 
-    // No active zones
     if (!zones.length) {
 
       levelsSection.innerHTML = `
+
         <div style="
           text-align:center;
           padding:50px 20px;
           color:#9ca4b3;
         ">
+
           <h3 style="
             color:white;
             margin-bottom:8px;
@@ -181,6 +209,7 @@ async function loadGoldzillaZones() {
             Today's Goldzilla BUY / SELL zones
             will appear here.
           </p>
+
         </div>
       `;
 
@@ -188,14 +217,15 @@ async function loadGoldzillaZones() {
     }
 
 
-    // Create table
     let rows = "";
 
 
     zones.forEach(zone => {
 
       const type =
-        String(zone.type || "").toUpperCase();
+        String(
+          zone.type || ""
+        ).toUpperCase();
 
 
       const typeClass =
@@ -205,19 +235,25 @@ async function loadGoldzillaZones() {
 
 
       const date =
-        new Date(zone.created_at);
+        new Date(
+          zone.created_at
+        );
 
 
       const updated =
         date.toLocaleString([], {
+
           month: "short",
           day: "numeric",
+
           hour: "2-digit",
           minute: "2-digit"
+
         });
 
 
       rows += `
+
         <tr>
 
           <td>
@@ -226,17 +262,20 @@ async function loadGoldzillaZones() {
             </span>
           </td>
 
+
           <td>
             <strong>
               ${zone.zone_from}
             </strong>
           </td>
 
+
           <td>
             <strong>
               ${zone.zone_to}
             </strong>
           </td>
+
 
           <td class="muted">
             ${updated}
@@ -249,19 +288,30 @@ async function loadGoldzillaZones() {
 
 
     levelsSection.innerHTML = `
+
       <table>
 
         <thead>
+
           <tr>
+
             <th>TYPE</th>
+
             <th>ZONE FROM</th>
+
             <th>ZONE TO</th>
+
             <th>UPDATED</th>
+
           </tr>
+
         </thead>
 
+
         <tbody>
+
           ${rows}
+
         </tbody>
 
       </table>
@@ -277,12 +327,15 @@ async function loadGoldzillaZones() {
 
 
     levelsSection.innerHTML = `
+
       <div style="
         padding:40px;
         text-align:center;
         color:#ff6575;
       ">
+
         Unable to load Daily Levels.
+
       </div>
     `;
 
@@ -291,20 +344,9 @@ async function loadGoldzillaZones() {
 }
 
 
-// Load zones when website opens
-document.addEventListener(
-  "DOMContentLoaded",
-  loadGoldzillaZones
-);
-
-
-// Refresh every 60 seconds
-setInterval(
-  loadGoldzillaZones,
-  60000
-);
 // ======================================
-// GOLDZILLA GROUP RESULTS / PERFORMANCE
+// GOLDZILLA RESULTS / PERFORMANCE
+// PERMANENT HISTORY
 // ======================================
 
 async function loadGoldzillaResults() {
@@ -314,7 +356,7 @@ async function loadGoldzillaResults() {
     const url =
       SUPABASE_API_URL +
       "Daily_Zones" +
-      "?select=id,created_at,type,zone_from,zone_to,result_pips,result_status,result_note" +
+      "?select=id,created_at,type,zone_from,zone_to,result_pips,Results_Status,result_note" +
       "&order=created_at.desc";
 
 
@@ -331,23 +373,38 @@ async function loadGoldzillaResults() {
 
 
     if (!response.ok) {
-      throw new Error("Unable to load results");
+
+      const errorText =
+        await response.text();
+
+      throw new Error(
+        "Supabase Results Error: "
+        + response.status
+        + " "
+        + errorText
+      );
     }
 
 
-    const allRows = await response.json();
+    const allRows =
+      await response.json();
 
 
-    // Only levels whose result has been updated
-    const completedResults = allRows.filter(row => {
+    // Only rows where result has been entered
+    const completedResults =
+      allRows.filter(row => {
 
-      return (
-        row.result_pips !== null &&
-        row.result_pips !== ""
-      );
+        return (
+          row.result_pips !== null &&
+          row.result_pips !== ""
+        );
 
-    });
+      });
 
+
+    // ======================================
+    // PERFORMANCE CALCULATION
+    // ======================================
 
     const totalTrades =
       completedResults.length;
@@ -355,25 +412,31 @@ async function loadGoldzillaResults() {
 
     const wins =
       completedResults.filter(row =>
+
         Number(row.result_pips) > 0
+
       ).length;
 
 
     const losses =
       completedResults.filter(row =>
+
         Number(row.result_pips) < 0
+
       ).length;
 
 
     const winRate =
       totalTrades > 0
-        ? ((wins / totalTrades) * 100).toFixed(2)
+        ? (
+            (wins / totalTrades) * 100
+          ).toFixed(2)
         : "0.00";
 
 
-    // ===============================
-    // UPDATE TOP PERFORMANCE CARDS
-    // ===============================
+    // ======================================
+    // UPDATE TOP CARDS
+    // ======================================
 
     const metricValues =
       document.querySelectorAll(
@@ -398,9 +461,9 @@ async function loadGoldzillaResults() {
     }
 
 
-    // ===============================
+    // ======================================
     // RESULTS HISTORY
-    // ===============================
+    // ======================================
 
     const resultsSection =
       document.querySelector("#results");
@@ -436,19 +499,23 @@ async function loadGoldzillaResults() {
     if (!completedResults.length) {
 
       historyBox.innerHTML = `
+
         <div class="table-wrap">
+
           <div style="
             padding:45px 20px;
             text-align:center;
             color:#9ca4b3;
           ">
+
             No completed results yet.
+
           </div>
+
         </div>
       `;
 
       return;
-
     }
 
 
@@ -458,21 +525,33 @@ async function loadGoldzillaResults() {
     completedResults.forEach(row => {
 
       const pips =
-        Number(row.result_pips);
+        Number(
+          row.result_pips
+        );
+
+
+      // Use saved status if available
+      const savedStatus =
+        String(
+          row.Results_Status || ""
+        ).toUpperCase();
 
 
       const status =
-        pips > 0
-          ? "WIN"
-          : pips < 0
-          ? "LOSS"
-          : "BE";
+        savedStatus ||
+        (
+          pips > 0
+            ? "WIN"
+            : pips < 0
+            ? "LOSS"
+            : "BE"
+        );
 
 
       const statusClass =
-        pips > 0
+        status === "WIN"
           ? "green"
-          : pips < 0
+          : status === "LOSS"
           ? "red"
           : "muted";
 
@@ -499,49 +578,79 @@ async function loadGoldzillaResults() {
         date.toLocaleString([], {
 
           day: "2-digit",
+
           month: "short",
+
           year: "numeric",
 
           hour: "2-digit",
+
           minute: "2-digit"
 
         });
 
 
+      const pipsText =
+        pips > 0
+          ? "+" + pips + " pips"
+          : pips + " pips";
+
+
       rowsHTML += `
+
         <tr>
 
           <td>
             ${formattedDate}
           </td>
 
-          <td>
-            <span class="badge ${typeClass}">
-              ${type}
-            </span>
-          </td>
 
           <td>
+
+            <span class="badge ${typeClass}">
+
+              ${type}
+
+            </span>
+
+          </td>
+
+
+          <td>
+
             ${row.zone_from}
             -
             ${row.zone_to}
+
           </td>
 
+
           <td class="${statusClass}">
+
             <strong>
+
               ${status}
+
             </strong>
+
           </td>
 
+
           <td class="${statusClass}">
+
             <strong>
-              ${pips > 0 ? "+" : ""}
-              ${pips} pips
+
+              ${pipsText}
+
             </strong>
+
           </td>
+
 
           <td>
+
             ${row.result_note || "—"}
+
           </td>
 
         </tr>
@@ -557,19 +666,27 @@ async function loadGoldzillaResults() {
       ">
 
         <div class="eyebrow">
+
           RESULT HISTORY
+
         </div>
+
 
         <h2 style="
           margin:8px 0;
           font-size:30px;
         ">
+
           Complete Level Results
+
         </h2>
 
+
         <p class="muted">
+
           Permanent history of Goldzilla
           BUY and SELL zones.
+
         </p>
 
       </div>
@@ -582,12 +699,19 @@ async function loadGoldzillaResults() {
           <thead>
 
             <tr>
+
               <th>DATE & TIME</th>
+
               <th>TYPE</th>
+
               <th>ZONE</th>
+
               <th>STATUS</th>
+
               <th>RESULT</th>
+
               <th>NOTE</th>
+
             </tr>
 
           </thead>
@@ -617,15 +741,33 @@ async function loadGoldzillaResults() {
 }
 
 
-// Load results when website opens
+// ======================================
+// LOAD EVERYTHING
+// ======================================
+
 document.addEventListener(
   "DOMContentLoaded",
-  loadGoldzillaResults
+  () => {
+
+    loadGoldzillaZones();
+
+    loadGoldzillaResults();
+
+  }
 );
 
 
-// Refresh results every 60 seconds
+// ======================================
+// AUTO REFRESH EVERY 60 SECONDS
+// ======================================
+
 setInterval(
-  loadGoldzillaResults,
+  () => {
+
+    loadGoldzillaZones();
+
+    loadGoldzillaResults();
+
+  },
   60000
 );
