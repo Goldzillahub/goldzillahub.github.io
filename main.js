@@ -1,0 +1,1 @@
+lucide.createIcons();const b=document.getElementById('menu'),m=document.getElementById('mobile');b&&b.addEventListener('click',()=>m.classList.toggle('open'));document.querySelectorAll('#mobile a').forEach(a=>a.addEventListener('click',()=>m.classList.remove('open')));
