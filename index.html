@@ -3,30 +3,47 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+
   <title>Goldzilla Trading Hub</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  >
 
   <link rel="stylesheet" href="styles.css">
 
   <style>
+
     .gold-live-card{
       position:relative;
       overflow:hidden;
       min-height:430px;
+
       background:
-        radial-gradient(circle at 85% 20%,rgba(242,184,75,.12),transparent 32%),
-        linear-gradient(180deg,#111521,#0b0e16);
+        radial-gradient(
+          circle at 85% 20%,
+          rgba(242,184,75,.12),
+          transparent 32%
+        ),
+        linear-gradient(
+          180deg,
+          #111521,
+          #0b0e16
+        );
+
       border:1px solid #34304c;
       border-radius:22px;
       padding:22px;
+
       box-shadow:
         0 40px 90px rgba(0,0,0,.45),
         0 0 50px rgba(139,92,246,.08);
     }
+
 
     .gold-live-top{
       display:flex;
@@ -35,6 +52,7 @@
       margin-bottom:16px;
     }
 
+
     .gold-symbol small{
       color:#8f97a5;
       font-size:10px;
@@ -42,38 +60,49 @@
       margin-bottom:4px;
     }
 
+
     .gold-symbol strong{
       display:block;
       font-size:22px;
       letter-spacing:.4px;
     }
 
+
     .gold-live-badge{
       color:#42e59b;
       background:rgba(66,229,155,.08);
       border:1px solid rgba(66,229,155,.3);
+
       padding:6px 9px;
       border-radius:999px;
+
       font-size:9px;
       font-weight:800;
     }
+
 
     .gold-visual{
       position:absolute;
       right:18px;
       top:65px;
+
       width:145px;
       height:95px;
+
       opacity:.9;
       pointer-events:none;
     }
 
+
     .gold-bar{
       position:absolute;
+
       width:78px;
       height:35px;
+
       border-radius:6px;
       transform:skewX(-12deg);
+
       background:linear-gradient(
         135deg,
         #fff0a6 0%,
@@ -81,41 +110,51 @@
         #c98a16 58%,
         #ffdb69 100%
       );
+
       box-shadow:
         0 7px 20px rgba(236,174,43,.25),
         inset 0 1px 2px rgba(255,255,255,.7);
     }
+
 
     .gold-bar.one{
       top:48px;
       right:5px;
     }
 
+
     .gold-bar.two{
       top:24px;
       right:42px;
     }
+
 
     .gold-bar.three{
       top:0;
       right:12px;
     }
 
+
     .gold-widget-wrap{
       position:relative;
       z-index:2;
+
       margin-top:10px;
+
       border-radius:15px;
       overflow:hidden;
+
       min-height:300px;
       background:#090c13;
     }
+
 
     tv-mini-chart{
       width:100%;
       min-height:300px;
       display:block;
     }
+
 
     .gold-widget-note{
       color:#68707d;
@@ -124,112 +163,243 @@
       text-align:right;
     }
 
-    /* PROFESSIONAL HERO TITLE */
+
+    /* ===============================
+       PROFESSIONAL HERO TITLE
+       =============================== */
 
     .hero-title{
       font-family:'Space Grotesk',sans-serif;
-      font-size:clamp(48px,5vw,76px);
+
+      font-size:clamp(
+        48px,
+        5vw,
+        76px
+      );
+
       font-weight:600;
       line-height:1.02;
+
       letter-spacing:-2.2px;
+
       margin:16px 0 24px;
+
       max-width:700px;
     }
+
 
     .hero-title .line{
       display:block;
     }
 
+
     .hero-title .highlight{
       display:block;
+
       background:linear-gradient(
         90deg,
         #a77cff,
         #7c5cff
       );
+
       -webkit-background-clip:text;
       background-clip:text;
+
       color:transparent;
     }
 
+
     .hero-copy{
       max-width:610px;
+
       font-size:17px;
       line-height:1.75;
+
       color:#b7becb;
     }
 
-    @media (max-width:768px){
+
+    /* ===============================
+       LIVE PERFORMANCE CARDS
+       =============================== */
+
+    .home-performance-number{
+      transition:.25s ease;
+    }
+
+
+    .home-win{
+      color:#27e895;
+    }
+
+
+    .home-loss{
+      color:#ff5470;
+    }
+
+
+    .home-rate{
+      color:#9d7cff;
+    }
+
+
+    @media(max-width:768px){
+
       .hero-title{
-        font-size:clamp(42px,11vw,60px);
+        font-size:clamp(
+          42px,
+          11vw,
+          60px
+        );
+
         letter-spacing:-1.5px;
       }
+
 
       .hero-copy{
         font-size:15px;
       }
+
     }
+
   </style>
+
 </head>
+
 
 <body>
 
+
 <header class="site-header">
+
   <div class="wrap nav">
 
-    <a class="logo" href="index.html">
-      <div class="logo-mark">G</div>
+
+    <a
+      class="logo"
+      href="index.html"
+    >
+
+      <div class="logo-mark">
+        G
+      </div>
+
 
       <div>
-        <strong>GOLDZILLA</strong>
-        <span>TRADING HUB</span>
+
+        <strong>
+          GOLDZILLA
+        </strong>
+
+        <span>
+          TRADING HUB
+        </span>
+
       </div>
+
     </a>
 
+
     <nav class="navlinks">
-      <a href="platform.html#results">Results</a>
-      <a href="platform.html#levels">Daily Levels</a>
-      <a href="platform.html#calculators">Calculators</a>
-      <a href="platform.html#journal">Journal</a>
+
+      <a href="platform.html#results">
+        Results
+      </a>
+
+      <a href="platform.html#levels">
+        Daily Levels
+      </a>
+
+      <a href="platform.html#calculators">
+        Calculators
+      </a>
+
+      <a href="platform.html#journal">
+        Journal
+      </a>
+
     </nav>
 
+
     <div class="actions">
-      <a class="btn btn-ghost" href="platform.html">
+
+      <a
+        class="btn btn-ghost"
+        href="platform.html"
+      >
         Dashboard
       </a>
 
-      <a class="btn btn-primary" href="#community">
+
+      <a
+        class="btn btn-primary"
+        href="#community"
+      >
         Join Community
       </a>
+
     </div>
 
+
   </div>
+
 </header>
+
 
 
 <main>
 
+
+<!-- =====================================
+     HERO
+     ===================================== -->
+
 <section class="hero wrap">
 
+
   <div>
+
 
     <div class="eyebrow">
       XAUUSD TRADING COMMUNITY
     </div>
 
+
     <h1 class="hero-title">
-      <span class="line">Master the process</span>
-      <span class="line">Respect the risk</span>
-      <span class="highlight">Trust the execution</span>
+
+      <span class="line">
+        Master the process
+      </span>
+
+      <span class="line">
+        Respect the risk
+      </span>
+
+      <span class="highlight">
+        Trust the execution
+      </span>
+
     </h1>
 
+
     <p class="hero-copy">
-      Trading rewards patience, discipline and consistency.
-      Follow the plan, protect your capital and focus on execution.
-      Strong results are built one disciplined decision at a time.
+
+      Trading rewards patience,
+      discipline and consistency.
+
+      Follow the plan,
+      protect your capital
+      and focus on execution.
+
+      Strong results are built
+      one disciplined decision
+      at a time.
+
     </p>
 
+
     <div class="hero-actions">
+
 
       <a
         class="btn btn-primary"
@@ -238,6 +408,7 @@
         View Daily Levels
       </a>
 
+
       <a
         class="btn btn-soft"
         href="platform.html#results"
@@ -245,29 +416,45 @@
         See Results
       </a>
 
+
     </div>
 
+
   </div>
+
 
 
   <!-- LIVE GOLD CARD -->
 
   <div>
 
+
     <div class="gold-live-card">
+
 
       <div class="gold-live-top">
 
+
         <div class="gold-symbol">
-          <small>LIVE MARKET</small>
-          <strong>XAUUSD</strong>
+
+          <small>
+            LIVE MARKET
+          </small>
+
+          <strong>
+            XAUUSD
+          </strong>
+
         </div>
+
 
         <div class="gold-live-badge">
           ● LIVE
         </div>
 
+
       </div>
+
 
 
       <div class="gold-visual">
@@ -279,12 +466,15 @@
       </div>
 
 
+
       <div class="gold-widget-wrap">
+
 
         <script
           type="module"
           src="https://widgets.tradingview-widget.com/w/en/tv-mini-chart.js">
         </script>
+
 
         <tv-mini-chart
           symbol="OANDA:XAUUSD"
@@ -296,6 +486,7 @@
         >
         </tv-mini-chart>
 
+
       </div>
 
 
@@ -303,171 +494,525 @@
         Market data powered by TradingView
       </div>
 
+
     </div>
 
+
   </div>
+
 
 </section>
 
 
+
+<!-- =====================================
+     LIVE PERFORMANCE
+     ===================================== -->
+
 <section class="section alt">
+
 
   <div class="wrap">
 
+
     <div class="section-head">
 
+
       <div>
+
 
         <div class="eyebrow">
           PERFORMANCE
         </div>
 
+
         <h2>
-          Built for serious Gold traders.
+          Transparent Goldzilla Results
         </h2>
 
+
         <p>
-          Everything uses the same professional theme now —
-          no old dashboard design opens anywhere.
+          Live performance based on completed
+          Goldzilla BUY and SELL levels.
         </p>
+
 
       </div>
 
+
     </div>
+
 
 
     <div class="metrics">
 
-      <div class="card metric">
-        <span class="muted">Total Trades</span>
-        <strong>128</strong>
-        <small class="muted">All tracked setups</small>
-      </div>
+
+      <!-- TOTAL TRADES -->
 
       <div class="card metric">
-        <span class="muted">Win Rate</span>
-        <strong class="green">68.75%</strong>
-        <small class="muted">Public record</small>
+
+        <span class="muted">
+          Total Trades
+        </span>
+
+        <strong
+          id="homeTotalTrades"
+          class="home-performance-number"
+        >
+          0
+        </strong>
+
+        <small class="muted">
+          Completed levels
+        </small>
+
       </div>
 
-      <div class="card metric">
-        <span class="muted">Total R</span>
-        <strong class="purple">+87.42R</strong>
-        <small class="muted">Risk adjusted</small>
-      </div>
+
+
+      <!-- WINS -->
 
       <div class="card metric">
-        <span class="muted">Best Streak</span>
-        <strong>12 Wins</strong>
-        <small class="muted">Highest run</small>
+
+        <span class="muted">
+          Wins
+        </span>
+
+        <strong
+          id="homeWins"
+          class="home-performance-number home-win"
+        >
+          0
+        </strong>
+
+        <small class="muted">
+          Winning levels
+        </small>
+
       </div>
+
+
+
+      <!-- LOSSES -->
+
+      <div class="card metric">
+
+        <span class="muted">
+          Losses
+        </span>
+
+        <strong
+          id="homeLosses"
+          class="home-performance-number home-loss"
+        >
+          0
+        </strong>
+
+        <small class="muted">
+          Losing levels
+        </small>
+
+      </div>
+
+
+
+      <!-- WIN RATE -->
+
+      <div class="card metric">
+
+        <span class="muted">
+          Win Rate
+        </span>
+
+        <strong
+          id="homeWinRate"
+          class="home-performance-number home-rate"
+        >
+          0.00%
+        </strong>
+
+        <small class="muted">
+          Overall performance
+        </small>
+
+      </div>
+
 
     </div>
 
+
   </div>
+
 
 </section>
 
 
+
+<!-- =====================================
+     TRADING TOOLS
+     ===================================== -->
+
 <section class="section wrap">
+
 
   <div class="section-head">
 
+
     <div>
+
 
       <div class="eyebrow">
         TRADING TOOLS
       </div>
 
+
       <h2>
         Everything you need before you enter.
       </h2>
 
+
       <p>
-        All tools now open inside the same Goldzilla theme.
+        Professional Gold trading tools
+        inside one Goldzilla platform.
       </p>
+
 
     </div>
 
+
   </div>
+
 
 
   <div class="cards4">
 
-    <div class="card">
-      <div class="icon">◈</div>
-      <h3>Risk Calculator</h3>
-      <p>Calculate exact dollar risk from your balance and risk percentage.</p>
-      <a href="platform.html#calculators">Open tool →</a>
-    </div>
 
     <div class="card">
-      <div class="icon">⚖</div>
-      <h3>Risk / Reward</h3>
-      <p>Compare trade risk and reward before entering the market.</p>
-      <a href="platform.html#calculators">Open tool →</a>
+
+      <div class="icon">
+        ◈
+      </div>
+
+      <h3>
+        Risk Calculator
+      </h3>
+
+      <p>
+        Calculate exact dollar risk
+        from your balance and
+        risk percentage.
+      </p>
+
+      <a href="platform.html#calculators">
+        Open tool →
+      </a>
+
     </div>
 
-    <div class="card">
-      <div class="icon">⌁</div>
-      <h3>Pips Calculator</h3>
-      <p>Count Gold pips between entry and exit in seconds.</p>
-      <a href="platform.html#calculators">Open tool →</a>
-    </div>
+
 
     <div class="card">
-      <div class="icon">◎</div>
-      <h3>Position Size</h3>
-      <p>Estimate XAUUSD lot size from risk and stop loss.</p>
-      <a href="platform.html#calculators">Open tool →</a>
+
+      <div class="icon">
+        ⚖
+      </div>
+
+      <h3>
+        Risk / Reward
+      </h3>
+
+      <p>
+        Compare trade risk and reward
+        before entering the market.
+      </p>
+
+      <a href="platform.html#calculators">
+        Open tool →
+      </a>
+
     </div>
+
+
+
+    <div class="card">
+
+      <div class="icon">
+        ⌁
+      </div>
+
+      <h3>
+        Pips Calculator
+      </h3>
+
+      <p>
+        Count Gold pips between
+        entry and exit in seconds.
+      </p>
+
+      <a href="platform.html#calculators">
+        Open tool →
+      </a>
+
+    </div>
+
+
+
+    <div class="card">
+
+      <div class="icon">
+        ◎
+      </div>
+
+      <h3>
+        Position Size
+      </h3>
+
+      <p>
+        Estimate XAUUSD lot size
+        from risk and stop loss.
+      </p>
+
+      <a href="platform.html#calculators">
+        Open tool →
+      </a>
+
+    </div>
+
 
   </div>
 
+
 </section>
 
+
+
+<!-- =====================================
+     COMMUNITY
+     ===================================== -->
 
 <section
   class="section alt"
   id="community"
 >
 
+
   <div class="wrap">
+
 
     <div class="section-head">
 
+
       <div>
+
 
         <div class="eyebrow">
           COMMUNITY
         </div>
 
+
         <h2>
           Join the Goldzilla community.
         </h2>
 
+
         <p>
-          Your WhatsApp Group 1 and Group 2
-          links can be added here next.
+          Follow the levels.
+          Review the results.
+          Improve your execution.
         </p>
+
 
       </div>
 
+
     </div>
+
 
   </div>
 
+
 </section>
+
+
 
 </main>
 
 
+
 <footer>
+
   <div class="wrap">
+
     © 2026 Goldzilla Trading Hub.
     Precision • Discipline • Execution
+
   </div>
+
 </footer>
+
+
+
+<!-- =====================================
+     HOME LIVE SUPABASE PERFORMANCE
+     ===================================== -->
+
+<script>
+
+const HOME_SUPABASE_URL =
+  "https://byytggaamrkumrzckkjo.supabase.co/rest/v1/";
+
+const HOME_SUPABASE_KEY =
+  "sb_publishable_W8n5btVgWBtlnNe24GXiGw_YPb1ERgd";
+
+
+async function loadHomePerformance(){
+
+  try{
+
+
+    const url =
+      HOME_SUPABASE_URL +
+      "Daily_Zones" +
+      "?select=result_pips";
+
+
+    const response =
+      await fetch(
+        url,
+        {
+
+          headers:{
+
+            "apikey":
+              HOME_SUPABASE_KEY,
+
+            "Accept":
+              "application/json"
+
+          }
+
+        }
+      );
+
+
+    if(!response.ok){
+
+      throw new Error(
+        "Unable to load performance"
+      );
+
+    }
+
+
+    const rows =
+      await response.json();
+
+
+    const completed =
+      rows.filter(row =>
+
+        row.result_pips !== null &&
+        row.result_pips !== ""
+
+      );
+
+
+    const totalTrades =
+      completed.length;
+
+
+    const wins =
+      completed.filter(row =>
+
+        Number(
+          row.result_pips
+        ) > 0
+
+      ).length;
+
+
+    const losses =
+      completed.filter(row =>
+
+        Number(
+          row.result_pips
+        ) < 0
+
+      ).length;
+
+
+    const winRate =
+      totalTrades > 0
+
+        ? (
+            wins /
+            totalTrades *
+            100
+          ).toFixed(2)
+
+        : "0.00";
+
+
+    document
+      .querySelector(
+        "#homeTotalTrades"
+      )
+      .textContent =
+        totalTrades;
+
+
+    document
+      .querySelector(
+        "#homeWins"
+      )
+      .textContent =
+        wins;
+
+
+    document
+      .querySelector(
+        "#homeLosses"
+      )
+      .textContent =
+        losses;
+
+
+    document
+      .querySelector(
+        "#homeWinRate"
+      )
+      .textContent =
+        winRate + "%";
+
+
+  }
+
+  catch(error){
+
+    console.error(
+      "Goldzilla Home Performance Error:",
+      error
+    );
+
+  }
+
+}
+
+
+// LOAD WHEN WEBSITE OPENS
+
+loadHomePerformance();
+
+
+// REFRESH EVERY 60 SECONDS
+
+setInterval(
+  loadHomePerformance,
+  60000
+);
+
+</script>
+
 
 </body>
 </html>
