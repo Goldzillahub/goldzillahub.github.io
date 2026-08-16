@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Goldzilla Trading Hub</title>
+  <meta name="description" content="Goldzilla Trading Hub — daily levels, group results, trading journal and calculators." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark">G</div>
+        <div>
+          <h1>GOLDZILLA</h1>
+          <p>TRADING HUB</p>
+          <small>PRECISION • DISCIPLINE • EXECUTION</small>
+        </div>
+      </div>
+
+      <div class="nav-title">MAIN MENU</div>
+      <nav class="nav">
+        <button class="nav-item active" data-page="dashboard"><i data-lucide="layout-dashboard"></i><span>Dashboard</span></button>
+        <button class="nav-item" data-page="group-results"><i data-lucide="users"></i><span>Group Results</span></button>
+        <button class="nav-item" data-page="levels"><i data-lucide="list-checks"></i><span>Daily Levels</span><b class="pill new">NEW</b></button>
+        <button class="nav-item" data-page="journal"><i data-lucide="notebook-tabs"></i><span>Trading Journal</span></button>
+        <button class="nav-item" data-page="calculators"><i data-lucide="calculator"></i><span>Calculators</span></button>
+        <button class="nav-item" data-page="statistics"><i data-lucide="chart-no-axes-combined"></i><span>Statistics</span></button>
+        <button class="nav-item" data-page="announcements"><i data-lucide="megaphone"></i><span>Announcements</span></button>
+        <button class="nav-item" data-page="admin"><i data-lucide="shield-user"></i><span>Admin Panel</span></button>
+      </nav>
+
+      <div class="sidebar-quote">
+        <p>“The goal is not to make money. The goal is to make high quality trades.”</p>
+        <span>— Goldzilla Trader</span>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="top-left">
+          <button class="icon-btn" id="menuBtn"><i data-lucide="menu"></i></button>
+          <div>
+            <div class="eyebrow">GOLDZILLA</div>
+            <div class="page-title" id="pageTitle">Dashboard</div>
+          </div>
+        </div>
+
+        <div class="market-chip">
+          <span class="coin">Au</span>
+          <div><small>XAUUSD</small><strong id="fakePrice">2394.85</strong></div>
+          <span class="gain">+0.77%</span>
+        </div>
+
+        <div class="top-actions">
+          <div class="clock"><small>LOCAL TIME</small><strong id="clock">--:--:--</strong></div>
+          <button class="icon-btn" id="themeBtn"><i data-lucide="moon"></i></button>
+          <div class="profile">
+            <div class="avatar">G</div>
+            <div class="profile-copy"><strong>Goldzilla Trader 👑</strong><small>Admin</small></div>
+          </div>
+        </div>
+      </header>
+
+      <section class="page active" id="page-dashboard">
+        <div class="hero">
+          <div>
+            <p class="eyebrow">WELCOME BACK</p>
+            <h2>Trade with <span>discipline</span>. Track with precision.</h2>
+            <p>Daily Gold levels, public group results, journal and professional trading tools — all in one place.</p>
+          </div>
+          <div class="hero-badge">
+            <span>GOLDZILLA</span>
+            <strong>TRADING HUB</strong>
+          </div>
+        </div>
+
+        <div class="stats-grid" id="statsCards"></div>
+
+        <div class="dashboard-grid">
+          <section class="card performance-card">
+            <div class="card-head"><div><p class="eyebrow">PERFORMANCE</p><h3>Overview</h3></div><select id="perfRange"><option>7 Days</option><option>30 Days</option><option>All Time</option></select></div>
+            <div class="metric-row">
+              <div><small>Win Rate</small><strong class="green" id="metricWinRate">0%</strong></div>
+              <div><small>Total R</small><strong class="purple" id="metricR">0.00R</strong></div>
+              <div><small>Profit Factor</small><strong class="blue" id="metricPF">0.00</strong></div>
+              <div><small>Expectancy</small><strong class="gold" id="metricExp">0.00R</strong></div>
+            </div>
+            <div class="chart-wrap">
+              <svg viewBox="0 0 800 260" class="chart-svg" preserveAspectRatio="none">
+                <defs><linearGradient id="areaGrad" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#f5b800" stop-opacity=".30"/><stop offset="100%" stop-color="#f5b800" stop-opacity="0"/></linearGradient></defs>
+                <g class="grid-lines">
+                  <line x1="0" y1="40" x2="800" y2="40"/><line x1="0" y1="95" x2="800" y2="95"/><line x1="0" y1="150" x2="800" y2="150"/><line x1="0" y1="205" x2="800" y2="205"/>
+                  <line x1="100" y1="0" x2="100" y2="260"/><line x1="250" y1="0" x2="250" y2="260"/><line x1="400" y1="0" x2="400" y2="260"/><line x1="550" y1="0" x2="550" y2="260"/><line x1="700" y1="0" x2="700" y2="260"/>
+                </g>
+                <path d="M0,190 L120,205 L230,170 L350,125 L470,155 L585,100 L690,120 L800,55 L800,260 L0,260 Z" fill="url(#areaGrad)"/>
+                <polyline points="0,190 120,205 230,170 350,125 470,155 585,100 690,120 800,55" fill="none" stroke="#f5b800" stroke-width="4"/>
+              </svg>
+            </div>
+          </section>
+
+          <section class="card recent-card">
+            <div class="card-head"><div><p class="eyebrow">LATEST</p><h3>Recent Results</h3></div><button class="ghost-btn" data-page-link="group-results">View All</button></div>
+            <div id="recentTrades" class="trade-list"></div>
+          </section>
+
+          <section class="card groups-card">
+            <div class="card-head"><div><p class="eyebrow">COMMUNITY</p><h3>WhatsApp Groups</h3></div></div>
+            <div class="group-box group-one">
+              <div class="group-logo">G</div>
+              <div><strong>GOLDZILLA GROUP 1</strong><small>Official Trading Group</small></div>
+              <a class="join-btn" id="group1Link" href="#" target="_blank"><i data-lucide="message-circle"></i> Join</a>
+            </div>
+            <div class="group-box group-two">
+              <div class="group-logo">G</div>
+              <div><strong>GOLDZILLA GROUP 2</strong><small>Official Trading Group</small></div>
+              <a class="join-btn red" id="group2Link" href="#" target="_blank"><i data-lucide="message-circle"></i> Join</a>
+            </div>
+          </section>
+        </div>
+
+        <div class="lower-grid">
+          <section class="card">
+            <div class="card-head"><div><p class="eyebrow">TODAY</p><h3>Daily Levels</h3></div><button class="ghost-btn" data-page-link="levels">View All</button></div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Type</th><th>Level</th><th>SL</th><th>TP1</th><th>TP2</th><th>Result</th><th>Pips</th></tr></thead>
+                <tbody id="dashboardLevels"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="card-head"><div><p class="eyebrow">JOURNAL</p><h3>Monthly Summary</h3></div></div>
+            <div class="summary-grid">
+              <div><small>Total Trades</small><strong id="sumTrades">0</strong></div>
+              <div><small>Win Rate</small><strong class="green" id="sumWR">0%</strong></div>
+              <div><small>Total R</small><strong class="gold" id="sumR">0.00R</strong></div>
+              <div><small>Best Trade</small><strong class="green" id="sumBest">0.00R</strong></div>
+              <div><small>Worst Trade</small><strong class="red-text" id="sumWorst">0.00R</strong></div>
+              <div><small>Avg R</small><strong class="purple" id="sumAvg">0.00R</strong></div>
+            </div>
+          </section>
+
+          <section class="card quick-card">
+            <div class="card-head"><div><p class="eyebrow">TOOLS</p><h3>Quick Calculators</h3></div></div>
+            <div class="quick-grid">
+              <button data-calc="risk"><i data-lucide="shield-check"></i><span>Risk</span></button>
+              <button data-calc="rr"><i data-lucide="scale"></i><span>Risk / Reward</span></button>
+              <button data-calc="pips"><i data-lucide="ruler"></i><span>Pips</span></button>
+              <button data-calc="position"><i data-lucide="coins"></i><span>Position Size</span></button>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="page" id="page-group-results">
+        <div class="section-head">
+          <div><p class="eyebrow">PUBLIC RECORD</p><h2>Group Results</h2><p>Transparent result history for both Goldzilla WhatsApp groups.</p></div>
+          <button class="primary-btn admin-only" id="addResultBtn"><i data-lucide="plus"></i>Add Result</button>
+        </div>
+        <div class="filter-row">
+          <button class="filter-btn active" data-group="all">All</button>
+          <button class="filter-btn" data-group="1">Group 1</button>
+          <button class="filter-btn" data-group="2">Group 2</button>
+        </div>
+        <div id="resultsGrid" class="results-grid"></div>
+      </section>
+
+      <section class="page" id="page-levels">
+        <div class="section-head">
+          <div><p class="eyebrow">XAUUSD</p><h2>Daily Levels</h2><p>Save every shared level with date, session and final outcome.</p></div>
+          <button class="primary-btn admin-only" id="addLevelBtn"><i data-lucide="plus"></i>Add Level</button>
+        </div>
+        <div class="card">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Date</th><th>Session</th><th>Type</th><th>Level</th><th>SL</th><th>TP1</th><th>TP2</th><th>Status</th><th>Pips</th><th class="admin-only">Action</th></tr></thead>
+              <tbody id="levelsTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="page-journal">
+        <div class="section-head">
+          <div><p class="eyebrow">PRIVATE WORKSPACE</p><h2>Trading Journal</h2><p>Log trades, grade execution and review your performance.</p></div>
+          <button class="primary-btn" id="addTradeBtn"><i data-lucide="plus"></i>Add Trade</button>
+        </div>
+        <div class="stats-grid mini" id="journalStats"></div>
+        <div id="journalGrid" class="results-grid"></div>
+      </section>
+
+      <section class="page" id="page-calculators">
+        <div class="section-head"><div><p class="eyebrow">TRADING TOOLS</p><h2>Calculators</h2><p>Fast XAUUSD calculations for risk, RR, pips and position size.</p></div></div>
+        <div class="calc-grid">
+          <div class="card calc-card">
+            <div class="calc-icon"><i data-lucide="shield-check"></i></div><h3>Risk Calculator</h3>
+            <label>Account Balance ($)<input id="riskBalance" type="number" value="10000"></label>
+            <label>Risk (%)<input id="riskPercent" type="number" value="1" step=".1"></label>
+            <div class="calc-output"><span>Risk Amount</span><strong id="riskAmount">$100.00</strong></div>
+          </div>
+          <div class="card calc-card">
+            <div class="calc-icon"><i data-lucide="scale"></i></div><h3>Risk / Reward</h3>
+            <label>Risk ($)<input id="rrRisk" type="number" value="100"></label>
+            <label>Reward ($)<input id="rrReward" type="number" value="200"></label>
+            <div class="calc-output"><span>R:R</span><strong id="rrOutput">1 : 2.00</strong></div>
+          </div>
+          <div class="card calc-card">
+            <div class="calc-icon"><i data-lucide="ruler"></i></div><h3>Pips Calculator</h3>
+            <label>Entry<input id="pipsEntry" type="number" value="2400.00" step=".01"></label>
+            <label>Exit<input id="pipsExit" type="number" value="2410.00" step=".01"></label>
+            <div class="calc-output"><span>Gold Pips*</span><strong id="pipsOutput">1000 pips</strong></div>
+            <small class="muted">*Using 0.01 price move = 1 pip.</small>
+          </div>
+          <div class="card calc-card">
+            <div class="calc-icon"><i data-lucide="coins"></i></div><h3>Position Size</h3>
+            <label>Risk Amount ($)<input id="posRisk" type="number" value="100"></label>
+            <label>Stop Loss (pips)<input id="posSL" type="number" value="140"></label>
+            <div class="calc-output"><span>Lot Size</span><strong id="posOutput">0.07</strong></div>
+            <small class="muted">Goldzilla model: lot = risk ÷ SL ÷ 10.</small>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="page-statistics">
+        <div class="section-head"><div><p class="eyebrow">ANALYTICS</p><h2>Statistics</h2><p>Performance summary generated from your journal records.</p></div></div>
+        <div class="stats-grid" id="statsPageCards"></div>
+        <div class="card stat-panel">
+          <h3>Performance Breakdown</h3>
+          <div class="bar-list" id="barList"></div>
+        </div>
+      </section>
+
+      <section class="page" id="page-announcements">
+        <div class="section-head">
+          <div><p class="eyebrow">UPDATES</p><h2>Announcements</h2><p>Important notices for Goldzilla traders.</p></div>
+          <button class="primary-btn admin-only" id="addAnnouncementBtn"><i data-lucide="plus"></i>Add</button>
+        </div>
+        <div id="announcementGrid" class="results-grid"></div>
+      </section>
+
+      <section class="page" id="page-admin">
+        <div class="section-head"><div><p class="eyebrow">CONTROL CENTER</p><h2>Admin Panel</h2><p>Demo admin access for editing public website content.</p></div></div>
+        <div class="admin-grid">
+          <div class="card">
+            <h3>Admin Access</h3>
+            <p class="muted">This static demo uses a local browser password. For a real public site, connect Supabase Auth before launch.</p>
+            <label>Password<input type="password" id="adminPassword" placeholder="Enter password"></label>
+            <button class="primary-btn full" id="adminLoginBtn">Unlock Admin</button>
+            <div class="notice" id="adminStatus">Admin mode is locked.</div>
+          </div>
+          <div class="card">
+            <h3>Website Settings</h3>
+            <label>WhatsApp Group 1<input id="group1Input" placeholder="https://chat.whatsapp.com/..."></label>
+            <label>WhatsApp Group 2<input id="group2Input" placeholder="https://chat.whatsapp.com/..."></label>
+            <button class="primary-btn full admin-only" id="saveSettingsBtn">Save Settings</button>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <div><strong>GOLDZILLA</strong> TRADING HUB</div>
+        <div class="footer-values"><span>DISCIPLINE</span><span>PATIENCE</span><span>STRATEGY</span><span>CONSISTENCY</span></div>
+        <small>© 2026 Goldzilla Trading Hub. All rights reserved.</small>
+      </footer>
+    </main>
+  </div>
+
+  <dialog id="modal">
+    <form method="dialog" class="modal-card" id="modalForm">
+      <div class="modal-head"><div><p class="eyebrow">GOLDZILLA</p><h3 id="modalTitle">Add</h3></div><button type="button" class="icon-btn" id="closeModal"><i data-lucide="x"></i></button></div>
+      <div id="modalBody"></div>
+      <div class="modal-actions"><button type="button" class="ghost-btn" id="cancelModal">Cancel</button><button type="submit" class="primary-btn">Save</button></div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
