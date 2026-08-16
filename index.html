@@ -23,16 +23,8 @@
       overflow:hidden;
       min-height:430px;
       background:
-        radial-gradient(
-          circle at 85% 20%,
-          rgba(242,184,75,.12),
-          transparent 32%
-        ),
-        linear-gradient(
-          180deg,
-          #111521,
-          #0b0e16
-        );
+        radial-gradient(circle at 85% 20%,rgba(242,184,75,.12),transparent 32%),
+        linear-gradient(180deg,#111521,#0b0e16);
       border:1px solid #34304c;
       border-radius:22px;
       padding:22px;
@@ -137,9 +129,6 @@
       text-align:right;
     }
 
-
-    /* HERO TITLE */
-
     .hero-title{
       font-family:'Space Grotesk',sans-serif;
       font-size:clamp(48px,5vw,76px);
@@ -156,11 +145,7 @@
 
     .hero-title .highlight{
       display:block;
-      background:linear-gradient(
-        90deg,
-        #a77cff,
-        #7c5cff
-      );
+      background:linear-gradient(90deg,#a77cff,#7c5cff);
       -webkit-background-clip:text;
       background-clip:text;
       color:transparent;
@@ -172,9 +157,6 @@
       line-height:1.75;
       color:#b7becb;
     }
-
-
-    /* LIVE PERFORMANCE */
 
     .home-performance-number{
       transition:.25s ease;
@@ -192,6 +174,26 @@
       color:#9d7cff;
     }
 
+    /* COMMUNITY */
+
+    .community-actions{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-top:28px;
+    }
+
+    .whatsapp-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:9px;
+      text-decoration:none;
+    }
+
+    .whatsapp-icon{
+      font-size:16px;
+    }
 
     @media(max-width:768px){
 
@@ -204,12 +206,18 @@
         font-size:15px;
       }
 
+      .community-actions{
+        flex-direction:column;
+      }
+
+      .community-actions .btn{
+        width:100%;
+      }
     }
 
   </style>
 
 </head>
-
 
 <body>
 
@@ -255,17 +263,11 @@
 
     <div class="actions">
 
-      <a
-        class="btn btn-ghost"
-        href="platform.html"
-      >
+      <a class="btn btn-ghost" href="platform.html">
         Dashboard
       </a>
 
-      <a
-        class="btn btn-primary"
-        href="#community"
-      >
+      <a class="btn btn-primary" href="#community">
         Join Community
       </a>
 
@@ -274,7 +276,6 @@
   </div>
 
 </header>
-
 
 
 <main>
@@ -289,7 +290,6 @@
     <div class="eyebrow">
       XAUUSD TRADING COMMUNITY
     </div>
-
 
     <h1 class="hero-title">
 
@@ -309,41 +309,25 @@
 
 
     <p class="hero-copy">
-
-      Trading rewards patience,
-      discipline and consistency.
-
-      Follow the plan,
-      protect your capital
-      and focus on execution.
-
-      Strong results are built
-      one disciplined decision
-      at a time.
-
+      Trading rewards patience, discipline and consistency.
+      Follow the plan, protect your capital and focus on execution.
+      Strong results are built one disciplined decision at a time.
     </p>
 
 
     <div class="hero-actions">
 
-      <a
-        class="btn btn-primary"
-        href="platform.html#levels"
-      >
+      <a class="btn btn-primary" href="platform.html#levels">
         View Daily Levels
       </a>
 
-      <a
-        class="btn btn-soft"
-        href="platform.html#results"
-      >
+      <a class="btn btn-soft" href="platform.html#results">
         See Results
       </a>
 
     </div>
 
   </div>
-
 
 
   <!-- LIVE GOLD CARD -->
@@ -444,17 +428,13 @@
 
     <div class="metrics">
 
-
       <div class="card metric">
 
         <span class="muted">
           Total Trades
         </span>
 
-        <strong
-          id="homeTotalTrades"
-          class="home-performance-number"
-        >
+        <strong id="homeTotalTrades" class="home-performance-number">
           0
         </strong>
 
@@ -471,10 +451,7 @@
           Wins
         </span>
 
-        <strong
-          id="homeWins"
-          class="home-performance-number home-win"
-        >
+        <strong id="homeWins" class="home-performance-number home-win">
           0
         </strong>
 
@@ -491,10 +468,7 @@
           Losses
         </span>
 
-        <strong
-          id="homeLosses"
-          class="home-performance-number home-loss"
-        >
+        <strong id="homeLosses" class="home-performance-number home-loss">
           0
         </strong>
 
@@ -511,10 +485,7 @@
           Win Rate
         </span>
 
-        <strong
-          id="homeWinRate"
-          class="home-performance-number home-rate"
-        >
+        <strong id="homeWinRate" class="home-performance-number home-rate">
           0.00%
         </strong>
 
@@ -544,11 +515,9 @@
         TRADING TOOLS
       </div>
 
-
       <h2>
         Professional tools for smarter execution
       </h2>
-
 
       <p>
         Plan your risk, calculate your position and prepare
@@ -562,8 +531,6 @@
 
   <div class="cards4">
 
-
-    <!-- RISK CALCULATOR -->
 
     <div class="card">
 
@@ -587,9 +554,6 @@
     </div>
 
 
-
-    <!-- RISK / REWARD -->
-
     <div class="card">
 
       <div class="icon">
@@ -612,9 +576,6 @@
     </div>
 
 
-
-    <!-- PIPS CALCULATOR -->
-
     <div class="card">
 
       <div class="icon">
@@ -636,9 +597,6 @@
 
     </div>
 
-
-
-    <!-- POSITION SIZE -->
 
     <div class="card">
 
@@ -668,12 +626,9 @@
 
 
 
-<!-- COMMUNITY -->
+<!-- GOLDZILLA COMMUNITY -->
 
-<section
-  class="section alt"
-  id="community"
->
+<section class="section alt" id="community">
 
   <div class="wrap">
 
@@ -682,7 +637,7 @@
       <div>
 
         <div class="eyebrow">
-          COMMUNITY
+          GOLDZILLA COMMUNITY
         </div>
 
         <h2>
@@ -690,10 +645,35 @@
         </h2>
 
         <p>
-          Follow the levels.
-          Review the results.
-          Improve your execution.
+          Connect with Goldzilla traders, follow our Gold levels
+          and stay connected with the community.
         </p>
+
+
+        <div class="community-actions">
+
+          <a
+            class="btn btn-primary whatsapp-btn"
+            href="https://chat.whatsapp.com/C3vsTxysfEyEbief8kkWWQ?s=cl&p=a&ilr=1"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span class="whatsapp-icon">◉</span>
+            Join Goldzilla Group 1
+          </a>
+
+
+          <a
+            class="btn btn-primary whatsapp-btn"
+            href="https://chat.whatsapp.com/FNzaOAzwTqu2QssnwTgiCX?s=cl&p=a&ilr=1"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span class="whatsapp-icon">◉</span>
+            Join Goldzilla Group 2
+          </a>
+
+        </div>
 
       </div>
 
@@ -711,10 +691,8 @@
 <footer>
 
   <div class="wrap">
-
     © 2026 Goldzilla Trading Hub.
     Precision • Discipline • Execution
-
   </div>
 
 </footer>
@@ -755,11 +733,7 @@ async function loadHomePerformance(){
 
 
     if(!response.ok){
-
-      throw new Error(
-        "Unable to load performance"
-      );
-
+      throw new Error("Unable to load performance");
     }
 
 
@@ -769,10 +743,8 @@ async function loadHomePerformance(){
 
     const completed =
       rows.filter(row =>
-
         row.result_pips !== null &&
         row.result_pips !== ""
-
       );
 
 
@@ -782,54 +754,40 @@ async function loadHomePerformance(){
 
     const wins =
       completed.filter(row =>
-
         Number(row.result_pips) > 0
-
       ).length;
 
 
     const losses =
       completed.filter(row =>
-
         Number(row.result_pips) < 0
-
       ).length;
 
 
     const winRate =
       totalTrades > 0
-
-        ? (
-            wins /
-            totalTrades *
-            100
-          ).toFixed(2)
-
+        ? (wins / totalTrades * 100).toFixed(2)
         : "0.00";
 
 
     document
       .querySelector("#homeTotalTrades")
-      .textContent =
-        totalTrades;
+      .textContent = totalTrades;
 
 
     document
       .querySelector("#homeWins")
-      .textContent =
-        wins;
+      .textContent = wins;
 
 
     document
       .querySelector("#homeLosses")
-      .textContent =
-        losses;
+      .textContent = losses;
 
 
     document
       .querySelector("#homeWinRate")
-      .textContent =
-        winRate + "%";
+      .textContent = winRate + "%";
 
   }
 
