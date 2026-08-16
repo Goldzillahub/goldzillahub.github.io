@@ -215,11 +215,116 @@
       }
     }
 
+    /* AUTH GATE */
+    body.auth-loading main,
+    body.auth-loading footer,
+    body.auth-loading .site-header{visibility:hidden;}
+
+    .auth-gate{
+      position:fixed; inset:0; z-index:99999;
+      display:flex; align-items:center; justify-content:center;
+      padding:24px;
+      background:
+        radial-gradient(circle at 50% 10%,rgba(139,92,246,.18),transparent 34%),
+        #070910;
+    }
+    .auth-gate.hidden{display:none;}
+    .auth-card{
+      width:min(440px,100%);
+      background:linear-gradient(180deg,#111521,#0b0e16);
+      border:1px solid #2b3140;
+      border-radius:22px;
+      padding:30px;
+      box-shadow:0 35px 90px rgba(0,0,0,.55);
+    }
+    .auth-brand{display:flex;align-items:center;gap:12px;margin-bottom:24px;}
+    .auth-brand-mark{
+      width:46px;height:46px;display:grid;place-items:center;
+      border-radius:14px;background:linear-gradient(135deg,#a77cff,#6d45ff);
+      color:#fff;font-weight:800;font-family:'Space Grotesk',sans-serif;
+    }
+    .auth-brand strong{display:block;font-family:'Space Grotesk',sans-serif;font-size:18px;}
+    .auth-brand span{display:block;color:#7f8796;font-size:10px;letter-spacing:1.8px;}
+    .auth-card h1{margin:0 0 8px;font-family:'Space Grotesk',sans-serif;font-size:32px;letter-spacing:-1px;}
+    .auth-card > p{margin:0 0 22px;color:#9ea6b5;line-height:1.6;font-size:14px;}
+    .auth-field{display:block;margin-bottom:13px;}
+    .auth-field span{display:block;margin-bottom:7px;color:#b8c0cf;font-size:12px;font-weight:600;}
+    .auth-field input{
+      width:100%;box-sizing:border-box;padding:13px 14px;border-radius:10px;
+      border:1px solid #293040;background:#090c13;color:white;outline:none;font:inherit;
+    }
+    .auth-field input:focus{border-color:#8b5cf6;box-shadow:0 0 0 3px rgba(139,92,246,.12);}
+    .auth-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px;}
+    .auth-action{border:0;border-radius:10px;padding:13px 14px;cursor:pointer;font:inherit;font-weight:700;}
+    .auth-primary{background:linear-gradient(135deg,#9d6cff,#7247ff);color:white;}
+    .auth-secondary{background:#111622;color:white;border:1px solid #293040;}
+    .auth-divider{display:flex;align-items:center;gap:12px;margin:20px 0;color:#626b7b;font-size:11px;}
+    .auth-divider::before,.auth-divider::after{content:"";height:1px;flex:1;background:#242a37;}
+    .google-btn{
+      width:100%;display:flex;align-items:center;justify-content:center;gap:10px;
+      padding:13px 14px;border-radius:10px;border:1px solid #2b3140;
+      background:#fff;color:#151515;cursor:pointer;font:inherit;font-weight:700;
+    }
+    .google-g{font-weight:800;font-size:16px;}
+    .auth-message{min-height:20px;margin-top:15px;font-size:12px;line-height:1.5;color:#9ea6b5;}
+    .auth-message.error{color:#ff7189;}
+    .auth-message.success{color:#35df96;}
+    .user-auth-box{display:none;align-items:center;gap:10px;}
+    .user-auth-box.show{display:flex;}
+    .user-email{
+      max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+      color:#9ea6b5;font-size:11px;
+    }
+    .logout-btn{
+      border:1px solid #293040;background:#0e121b;color:white;border-radius:9px;
+      padding:9px 11px;cursor:pointer;font:inherit;font-size:11px;font-weight:700;
+    }
+    @media(max-width:700px){
+      .auth-row{grid-template-columns:1fr;}
+      .user-email{display:none;}
+    }
+
   </style>
 
 </head>
 
-<body>
+<body class="auth-loading">
+
+<div id="authGate" class="auth-gate">
+  <div class="auth-card">
+    <div class="auth-brand">
+      <div class="auth-brand-mark">G</div>
+      <div><strong>GOLDZILLA</strong><span>TRADING HUB</span></div>
+    </div>
+    <h1>Welcome back</h1>
+    <p>Sign in to access the Goldzilla Trading Hub. Your personal journal will stay connected to your own account.</p>
+
+    <label class="auth-field">
+      <span>Email</span>
+      <input id="authEmail" type="email" autocomplete="email" placeholder="you@example.com">
+    </label>
+
+    <label class="auth-field">
+      <span>Password</span>
+      <input id="authPassword" type="password" autocomplete="current-password" placeholder="••••••••">
+    </label>
+
+    <div class="auth-row">
+      <button id="emailLoginBtn" class="auth-action auth-primary" type="button">Sign In</button>
+      <button id="emailSignupBtn" class="auth-action auth-secondary" type="button">Create Account</button>
+    </div>
+
+    <div class="auth-divider">OR</div>
+
+    <button id="googleLoginBtn" class="google-btn" type="button">
+      <span class="google-g">G</span>
+      Continue with Google
+    </button>
+
+    <div id="authMessage" class="auth-message"></div>
+  </div>
+</div>
+
 
 
 <header class="site-header">
@@ -270,6 +375,11 @@
       <a class="btn btn-primary" href="#community">
         Join Community
       </a>
+
+      <div id="userAuthBox" class="user-auth-box">
+        <span id="userEmail" class="user-email"></span>
+        <button id="logoutBtn" class="logout-btn" type="button">Logout</button>
+      </div>
 
     </div>
 
@@ -697,6 +807,158 @@
 
 </footer>
 
+
+
+
+<!-- SUPABASE AUTH -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const AUTH_SUPABASE_URL = "https://byytggaamrkumrzckkjo.supabase.co";
+const AUTH_SUPABASE_KEY = "sb_publishable_W8n5btVgWBtlnNe24GXiGw_YPb1ERgd";
+
+const authClient = window.supabase.createClient(
+  AUTH_SUPABASE_URL,
+  AUTH_SUPABASE_KEY
+);
+
+const authGate = document.querySelector("#authGate");
+const authMessage = document.querySelector("#authMessage");
+const authEmail = document.querySelector("#authEmail");
+const authPassword = document.querySelector("#authPassword");
+const userAuthBox = document.querySelector("#userAuthBox");
+const userEmail = document.querySelector("#userEmail");
+
+function setAuthMessage(message,type=""){
+  authMessage.textContent = message;
+  authMessage.className = "auth-message" + (type ? " " + type : "");
+}
+
+function showLoggedInState(user){
+  authGate.classList.add("hidden");
+  document.body.classList.remove("auth-loading");
+  userAuthBox?.classList.add("show");
+  if(userEmail) userEmail.textContent = user?.email || "Signed in";
+}
+
+function showLoggedOutState(){
+  authGate.classList.remove("hidden");
+  document.body.classList.remove("auth-loading");
+  userAuthBox?.classList.remove("show");
+  if(userEmail) userEmail.textContent = "";
+}
+
+async function checkAuth(){
+  const { data, error } = await authClient.auth.getSession();
+
+  if(error){
+    console.error("Auth session error:", error);
+    showLoggedOutState();
+    return;
+  }
+
+  if(data.session?.user){
+    showLoggedInState(data.session.user);
+  }else{
+    showLoggedOutState();
+  }
+}
+
+document.querySelector("#emailLoginBtn")?.addEventListener("click", async () => {
+  const email = authEmail.value.trim();
+  const password = authPassword.value;
+
+  if(!email || !password){
+    setAuthMessage("Please enter your email and password.","error");
+    return;
+  }
+
+  setAuthMessage("Signing in...");
+
+  const { data, error } = await authClient.auth.signInWithPassword({
+    email,
+    password
+  });
+
+  if(error){
+    setAuthMessage(error.message,"error");
+    return;
+  }
+
+  setAuthMessage("Signed in successfully.","success");
+  showLoggedInState(data.user);
+});
+
+document.querySelector("#emailSignupBtn")?.addEventListener("click", async () => {
+  const email = authEmail.value.trim();
+  const password = authPassword.value;
+
+  if(!email || !password){
+    setAuthMessage("Please enter an email and password.","error");
+    return;
+  }
+
+  if(password.length < 6){
+    setAuthMessage("Password must be at least 6 characters.","error");
+    return;
+  }
+
+  setAuthMessage("Creating your account...");
+
+  const { data, error } = await authClient.auth.signUp({
+    email,
+    password,
+    options:{
+      emailRedirectTo:"https://goldzillahub.github.io/index.html"
+    }
+  });
+
+  if(error){
+    setAuthMessage(error.message,"error");
+    return;
+  }
+
+  if(data.session){
+    showLoggedInState(data.user);
+  }else{
+    setAuthMessage(
+      "Account created. Please check your email and confirm your account, then sign in.",
+      "success"
+    );
+  }
+});
+
+document.querySelector("#googleLoginBtn")?.addEventListener("click", async () => {
+  setAuthMessage("Opening Google sign in...");
+
+  const { error } = await authClient.auth.signInWithOAuth({
+    provider:"google",
+    options:{
+      redirectTo:"https://goldzillahub.github.io/index.html"
+    }
+  });
+
+  if(error){
+    setAuthMessage(error.message,"error");
+  }
+});
+
+document.querySelector("#logoutBtn")?.addEventListener("click", async () => {
+  await authClient.auth.signOut();
+  showLoggedOutState();
+  setAuthMessage("You have been signed out.","success");
+});
+
+authClient.auth.onAuthStateChange((event,session) => {
+  if(session?.user){
+    showLoggedInState(session.user);
+  }else if(event === "SIGNED_OUT"){
+    showLoggedOutState();
+  }
+});
+
+checkAuth();
+</script>
 
 
 <!-- HOME LIVE SUPABASE PERFORMANCE -->
