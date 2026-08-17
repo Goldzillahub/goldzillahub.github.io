@@ -1053,6 +1053,131 @@
       .assistant-row2{grid-template-columns:1fr;}
     }
 
+
+    /* TRADER ASSISTANT HISTORY */
+    .assistant-record-bar{
+      display:grid;
+      grid-template-columns:180px 180px 1fr;
+      gap:10px;
+      margin:14px 0;
+      padding:14px;
+    }
+    .assistant-history-card{
+      margin-top:16px;
+      padding:0;
+      overflow:hidden;
+    }
+    .assistant-history-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      padding:16px 18px;
+      border-bottom:1px solid #202633;
+    }
+    .assistant-history-head h3{
+      margin:0;
+      font-family:'Space Grotesk',sans-serif;
+      font-size:18px;
+    }
+    .assistant-history-filters{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+    .assistant-history-filters select,
+    .assistant-history-filters input{
+      border:1px solid #293040;
+      background:#090c13;
+      color:#fff;
+      border-radius:8px;
+      padding:9px 10px;
+      font:inherit;
+      font-size:11px;
+      outline:none;
+    }
+    .assistant-history-wrap{overflow-x:auto;}
+    .assistant-history-table{
+      width:100%;
+      min-width:950px;
+      border-collapse:collapse;
+    }
+    .assistant-history-table th,
+    .assistant-history-table td{
+      padding:12px 14px;
+      border-bottom:1px solid #202633;
+      text-align:left;
+      vertical-align:middle;
+      font-size:11px;
+    }
+    .assistant-history-table th{
+      color:#778293;
+      font-size:9px;
+      text-transform:uppercase;
+      letter-spacing:.7px;
+      background:#0c1018;
+    }
+    .assistant-history-actions{
+      display:flex;
+      gap:6px;
+    }
+    .assistant-history-btn{
+      border:1px solid #293040;
+      border-radius:7px;
+      padding:7px 9px;
+      background:#0d1119;
+      color:#fff;
+      font:inherit;
+      font-size:9px;
+      font-weight:800;
+      cursor:pointer;
+    }
+    .assistant-history-btn.delete{color:#ff7189;}
+    .assistant-history-empty{
+      padding:26px !important;
+      text-align:center !important;
+      color:#818a99 !important;
+    }
+    .assistant-history-pages{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+      padding:14px;
+    }
+    .assistant-history-pages button{
+      min-width:38px;
+      height:38px;
+      padding:0 12px;
+      border:1px solid #293040;
+      border-radius:9px;
+      background:#0d1119;
+      color:#fff;
+      font:inherit;
+      font-size:11px;
+      font-weight:800;
+      cursor:pointer;
+    }
+    .assistant-history-pages button.active{
+      border-color:#8b5cf6;
+      background:linear-gradient(135deg,#9d6cff,#7247ff);
+    }
+    .assistant-history-pages button:disabled{
+      opacity:.38;
+      cursor:not-allowed;
+    }
+    .assistant-history-page-info{
+      width:100%;
+      text-align:center;
+      color:#8f98a8;
+      font-size:10px;
+    }
+    @media(max-width:760px){
+      .assistant-record-bar{grid-template-columns:1fr;}
+    }
+
   </style>
 </head>
 
@@ -1660,6 +1785,29 @@
     <button id="assistantManualStopBtn" class="assistant-btn danger" type="button">Enable No-Trade Mode</button>
   </div>
 
+
+  <div class="card assistant-record-bar">
+    <label class="assistant-field" style="margin:0;">
+      <span>Record Date</span>
+      <input id="assistantRecordDate" type="date">
+    </label>
+
+    <label class="assistant-field" style="margin:0;">
+      <span>Session</span>
+      <select id="assistantRecordSession">
+        <option value="Pre-London">Pre-London</option>
+        <option value="Asia">Asia</option>
+        <option value="London">London</option>
+        <option value="New York">New York</option>
+      </select>
+    </label>
+
+    <label class="assistant-field" style="margin:0;">
+      <span>Trade / Setup Name</span>
+      <input id="assistantRecordTitle" type="text" placeholder="Example: London Buy #1">
+    </label>
+  </div>
+
   <div class="assistant-grid" style="margin-top:14px;">
 
     <div class="card assistant-card">
@@ -1881,6 +2029,65 @@
   </div>
 
   <div id="assistantStatus" class="assistant-status"></div>
+
+  <div class="card assistant-history-card">
+    <div class="assistant-history-head">
+      <div>
+        <h3>Trader Assistant History</h3>
+        <div class="muted" style="font-size:11px;margin-top:4px;">
+          Every Save creates a separate private history record.
+        </div>
+      </div>
+
+      <div class="assistant-history-filters">
+        <select id="assistantHistorySession">
+          <option value="">All Sessions</option>
+          <option value="Pre-London">Pre-London</option>
+          <option value="Asia">Asia</option>
+          <option value="London">London</option>
+          <option value="New York">New York</option>
+        </select>
+
+        <select id="assistantHistoryMistake">
+          <option value="">All Mistakes</option>
+          <option value="FOMO">FOMO</option>
+          <option value="Early Entry">Early Entry</option>
+          <option value="Overtrading">Overtrading</option>
+          <option value="Revenge Trade">Revenge Trade</option>
+          <option value="Moved SL">Moved SL</option>
+          <option value="Missed Setup">Missed Setup</option>
+          <option value="Ignored News">Ignored News</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <input id="assistantHistoryDate" type="date">
+      </div>
+    </div>
+
+    <div class="assistant-history-wrap">
+      <table class="assistant-history-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Date</th>
+            <th>Session</th>
+            <th>Setup</th>
+            <th>Bias</th>
+            <th>Checklist</th>
+            <th>Discipline</th>
+            <th>Mistake</th>
+            <th>Today P/L</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="assistantHistoryBody">
+          <tr><td colspan="10" class="assistant-history-empty">Loading history...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="assistantHistoryPages" class="assistant-history-pages"></div>
+  </div>
 </section>
 
 </main>
@@ -3042,6 +3249,9 @@ async function loadCommonDailyLevels(){
    ========================================================= */
 let assistantState = {};
 let assistantManualStop = false;
+let assistantHistoryRows = [];
+let assistantHistoryPage = 1;
+const ASSISTANT_HISTORY_PAGE_SIZE = 5;
 
 const assistantStatus = document.querySelector("#assistantStatus");
 const assistantSaveBtn = document.querySelector("#assistantSaveBtn");
@@ -3079,6 +3289,16 @@ const assistantPreShot = document.querySelector("#assistantPreShot");
 const assistantPostShot = document.querySelector("#assistantPostShot");
 const assistantWeeklyNotes = document.querySelector("#assistantWeeklyNotes");
 
+const assistantRecordDate = document.querySelector("#assistantRecordDate");
+const assistantRecordSession = document.querySelector("#assistantRecordSession");
+const assistantRecordTitle = document.querySelector("#assistantRecordTitle");
+
+const assistantHistoryBody = document.querySelector("#assistantHistoryBody");
+const assistantHistoryPages = document.querySelector("#assistantHistoryPages");
+const assistantHistorySession = document.querySelector("#assistantHistorySession");
+const assistantHistoryMistake = document.querySelector("#assistantHistoryMistake");
+const assistantHistoryDate = document.querySelector("#assistantHistoryDate");
+
 function assistantMessage(message,type=""){
   if(!assistantStatus) return;
   assistantStatus.textContent = message;
@@ -3092,6 +3312,9 @@ function getAssistantPayload(){
   });
 
   return {
+    recordDate: assistantRecordDate?.value || localJournalDate(),
+    recordSession: assistantRecordSession?.value || "London",
+    recordTitle: assistantRecordTitle?.value?.trim() || "",
     checklist,
     maxDailyLoss: assistantMaxDailyLoss?.value || "",
     maxTrades: assistantMaxTrades?.value || "",
@@ -3120,6 +3343,10 @@ function getAssistantPayload(){
 
 function applyAssistantPayload(data={}){
   assistantState = data || {};
+
+  if(assistantRecordDate) assistantRecordDate.value = data.recordDate || localJournalDate();
+  if(assistantRecordSession) assistantRecordSession.value = data.recordSession || "London";
+  if(assistantRecordTitle) assistantRecordTitle.value = data.recordTitle || "";
 
   document.querySelectorAll(".assistant-check-input").forEach(input => {
     input.checked = Boolean(data?.checklist?.[input.dataset.key]);
@@ -3171,6 +3398,36 @@ async function loadTraderAssistant(){
   assistantMessage("Private Trader Assistant loaded.","success");
 }
 
+
+function resetTraderAssistantTradeFields(){
+  document.querySelectorAll(".assistant-check-input").forEach(i => i.checked = false);
+
+  if(assistantRecordDate) assistantRecordDate.value = localJournalDate();
+  if(assistantRecordSession) assistantRecordSession.value = "London";
+  if(assistantRecordTitle) assistantRecordTitle.value = "";
+
+  if(assistantTodayPL) assistantTodayPL.value = "";
+  if(assistantTradesToday) assistantTradesToday.value = "";
+
+  if(assistantBias) assistantBias.value = "";
+  if(assistantBuyZone) assistantBuyZone.value = "";
+  if(assistantSellZone) assistantSellZone.value = "";
+  if(assistantInvalidation) assistantInvalidation.value = "";
+  if(assistantTarget) assistantTarget.value = "";
+  if(assistantPlanNotes) assistantPlanNotes.value = "";
+
+  if(assistantMistake) assistantMistake.value = "";
+  if(assistantMistakeNote) assistantMistakeNote.value = "";
+  if(assistantDiscipline) assistantDiscipline.value = "5";
+
+  if(assistantPreShot) assistantPreShot.value = "";
+  if(assistantPostShot) assistantPostShot.value = "";
+
+  assistantManualStop = false;
+
+  updateAssistantUI();
+}
+
 async function saveTraderAssistant(){
   if(!currentJournalUser) return;
 
@@ -3179,7 +3436,7 @@ async function saveTraderAssistant(){
   assistantSaveBtn.disabled = true;
   assistantMessage("Saving...");
 
-  const { error } = await journalClient
+  const latestResponse = await journalClient
     .from("trader_assistant")
     .upsert(
       {
@@ -3190,16 +3447,228 @@ async function saveTraderAssistant(){
       { onConflict:"user_id" }
     );
 
+  if(latestResponse.error){
+    assistantSaveBtn.disabled = false;
+    console.error("Trader Assistant save error:", latestResponse.error);
+    assistantMessage(latestResponse.error.message,"error");
+    return;
+  }
+
+  const historyResponse = await journalClient
+    .from("trader_assistant_history")
+    .insert({
+      user_id: currentJournalUser.id,
+      record_date: payload.recordDate || localJournalDate(),
+      session: payload.recordSession || "London",
+      title: payload.recordTitle || null,
+      data: payload
+    });
+
   assistantSaveBtn.disabled = false;
 
-  if(error){
-    console.error("Trader Assistant save error:", error);
-    assistantMessage(error.message,"error");
+  if(historyResponse.error){
+    console.error("Trader Assistant history save error:", historyResponse.error);
+    assistantMessage(
+      "Current setup saved, but history could not be saved: " + historyResponse.error.message,
+      "error"
+    );
     return;
   }
 
   assistantState = payload;
-  assistantMessage("Trader Assistant saved privately.","success");
+  assistantMessage("Saved privately + added to history. Ready for next trade.","success");
+
+  assistantHistoryPage = 1;
+  await loadTraderAssistantHistory();
+
+  resetTraderAssistantTradeFields();
+}
+
+async function loadTraderAssistantHistory(){
+  if(!currentJournalUser || !assistantHistoryBody) return;
+
+  assistantHistoryBody.innerHTML =
+    '<tr><td colspan="10" class="assistant-history-empty">Loading history...</td></tr>';
+
+  const { data, error } = await journalClient
+    .from("trader_assistant_history")
+    .select("id,created_at,record_date,session,title,data")
+    .order("record_date",{ascending:false})
+    .order("created_at",{ascending:false});
+
+  if(error){
+    console.error("Trader Assistant history load error:", error);
+    assistantHistoryBody.innerHTML =
+      '<tr><td colspan="10" class="assistant-history-empty">Unable to load history.</td></tr>';
+    return;
+  }
+
+  assistantHistoryRows = data || [];
+  renderTraderAssistantHistory();
+}
+
+function getFilteredAssistantHistory(){
+  const session = assistantHistorySession?.value || "";
+  const mistake = assistantHistoryMistake?.value || "";
+  const date = assistantHistoryDate?.value || "";
+
+  return assistantHistoryRows.filter(row => {
+    const d = row.data || {};
+
+    if(session && row.session !== session) return false;
+    if(mistake && (d.mistake || "") !== mistake) return false;
+    if(date && row.record_date !== date) return false;
+
+    return true;
+  });
+}
+
+function assistantChecklistText(data){
+  const checklist = data?.checklist || {};
+  const total = 5;
+  const checked = Object.values(checklist).filter(Boolean).length;
+  return `${checked}/${total}`;
+}
+
+function renderTraderAssistantHistory(){
+  if(!assistantHistoryBody || !assistantHistoryPages) return;
+
+  const rows = getFilteredAssistantHistory();
+  const totalPages = Math.max(1,Math.ceil(rows.length / ASSISTANT_HISTORY_PAGE_SIZE));
+
+  if(assistantHistoryPage > totalPages) assistantHistoryPage = totalPages;
+  if(assistantHistoryPage < 1) assistantHistoryPage = 1;
+
+  const startIndex = (assistantHistoryPage - 1) * ASSISTANT_HISTORY_PAGE_SIZE;
+  const pageRows = rows.slice(startIndex,startIndex + ASSISTANT_HISTORY_PAGE_SIZE);
+
+  if(pageRows.length === 0){
+    assistantHistoryBody.innerHTML =
+      '<tr><td colspan="10" class="assistant-history-empty">No history records found.</td></tr>';
+  }else{
+    assistantHistoryBody.innerHTML = pageRows.map((row,index) => {
+      const d = row.data || {};
+      return `
+        <tr>
+          <td>${startIndex + index + 1}</td>
+          <td>${escapeHtml(formatJournalDate(row.record_date))}</td>
+          <td>${escapeHtml(row.session || "—")}</td>
+          <td>${escapeHtml(row.title || "Trade")}</td>
+          <td>${escapeHtml(d.bias || "—")}</td>
+          <td>${escapeHtml(assistantChecklistText(d))}</td>
+          <td>${escapeHtml((d.discipline ?? "—") + (d.discipline !== undefined ? "/10" : ""))}</td>
+          <td>${escapeHtml(d.mistake || "—")}</td>
+          <td>${escapeHtml(d.todayPL === "" || d.todayPL == null ? "—" : "$" + d.todayPL)}</td>
+          <td>
+            <div class="assistant-history-actions">
+              <button class="assistant-history-btn assistant-history-load" type="button" data-id="${row.id}">
+                Load
+              </button>
+              <button class="assistant-history-btn delete assistant-history-delete" type="button" data-id="${row.id}">
+                Delete
+              </button>
+            </div>
+          </td>
+        </tr>
+      `;
+    }).join("");
+
+    assistantHistoryBody.querySelectorAll(".assistant-history-load").forEach(button => {
+      button.addEventListener("click",() => {
+        const id = Number(button.dataset.id);
+        const row = assistantHistoryRows.find(item => Number(item.id) === id);
+        if(row){
+          applyAssistantPayload(row.data || {});
+          document.querySelector("#traderAssistant")?.scrollIntoView({
+            behavior:"smooth",
+            block:"start"
+          });
+          assistantMessage("History record loaded into Trader Assistant.","success");
+        }
+      });
+    });
+
+    assistantHistoryBody.querySelectorAll(".assistant-history-delete").forEach(button => {
+      button.addEventListener("click",() => deleteTraderAssistantHistory(Number(button.dataset.id)));
+    });
+  }
+
+  renderAssistantHistoryPages(totalPages,rows.length,startIndex,pageRows.length);
+}
+
+function renderAssistantHistoryPages(totalPages,totalRows,startIndex,visibleCount){
+  if(!assistantHistoryPages) return;
+
+  if(totalRows === 0){
+    assistantHistoryPages.innerHTML = "";
+    return;
+  }
+
+  let pages = "";
+  for(let page=1; page<=totalPages; page++){
+    pages += `
+      <button type="button" class="${page === assistantHistoryPage ? "active" : ""}" data-assistant-page="${page}">
+        ${page}
+      </button>
+    `;
+  }
+
+  assistantHistoryPages.innerHTML = `
+    <button id="assistantHistoryPrev" type="button" ${assistantHistoryPage === 1 ? "disabled" : ""}>
+      ← Previous
+    </button>
+
+    ${pages}
+
+    <button id="assistantHistoryNext" type="button" ${assistantHistoryPage === totalPages ? "disabled" : ""}>
+      Next →
+    </button>
+
+    <div class="assistant-history-page-info">
+      Showing ${startIndex + 1}-${startIndex + visibleCount} of ${totalRows} records
+      • Page ${assistantHistoryPage} of ${totalPages}
+    </div>
+  `;
+
+  assistantHistoryPages.querySelectorAll("[data-assistant-page]").forEach(button => {
+    button.addEventListener("click",() => {
+      assistantHistoryPage = Number(button.dataset.assistantPage);
+      renderTraderAssistantHistory();
+    });
+  });
+
+  document.querySelector("#assistantHistoryPrev")?.addEventListener("click",() => {
+    if(assistantHistoryPage > 1){
+      assistantHistoryPage--;
+      renderTraderAssistantHistory();
+    }
+  });
+
+  document.querySelector("#assistantHistoryNext")?.addEventListener("click",() => {
+    if(assistantHistoryPage < totalPages){
+      assistantHistoryPage++;
+      renderTraderAssistantHistory();
+    }
+  });
+}
+
+async function deleteTraderAssistantHistory(id){
+  const ok = window.confirm("Delete this Trader Assistant history record?");
+  if(!ok) return;
+
+  const { error } = await journalClient
+    .from("trader_assistant_history")
+    .delete()
+    .eq("id",id);
+
+  if(error){
+    console.error("Trader Assistant history delete error:", error);
+    assistantMessage(error.message,"error");
+    return;
+  }
+
+  assistantMessage("History record deleted.","success");
+  await loadTraderAssistantHistory();
 }
 
 function updateChecklist(){
@@ -3394,6 +3863,21 @@ assistantManualStopBtn?.addEventListener("click",() => {
 
 assistantSaveBtn?.addEventListener("click",saveTraderAssistant);
 
+assistantHistorySession?.addEventListener("change",() => {
+  assistantHistoryPage = 1;
+  renderTraderAssistantHistory();
+});
+
+assistantHistoryMistake?.addEventListener("change",() => {
+  assistantHistoryPage = 1;
+  renderTraderAssistantHistory();
+});
+
+assistantHistoryDate?.addEventListener("change",() => {
+  assistantHistoryPage = 1;
+  renderTraderAssistantHistory();
+});
+
 assistantResetTodayBtn?.addEventListener("click",() => {
   document.querySelectorAll(".assistant-check-input").forEach(i => i.checked = false);
   if(assistantTodayPL) assistantTodayPL.value = "";
@@ -3401,6 +3885,8 @@ assistantResetTodayBtn?.addEventListener("click",() => {
   if(assistantMistake) assistantMistake.value = "";
   if(assistantMistakeNote) assistantMistakeNote.value = "";
   if(assistantDiscipline) assistantDiscipline.value = "5";
+  if(assistantRecordDate) assistantRecordDate.value = localJournalDate();
+  if(assistantRecordTitle) assistantRecordTitle.value = "";
   assistantManualStop = false;
   updateAssistantUI();
   assistantMessage("Today fields reset. Click Save to keep the reset.","success");
@@ -3874,7 +4360,8 @@ function activateAdminPanel(){
   await Promise.all([
     loadPrivateJournal(),
     loadCommonDailyLevels(),
-    loadTraderAssistant()
+    loadTraderAssistant(),
+    loadTraderAssistantHistory()
   ]);
 
   updateWeeklyReview();
