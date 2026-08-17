@@ -386,6 +386,49 @@
       margin-top:10px;
     }
 
+
+    /* JOURNAL PAGINATION */
+    .journal-pagination{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-top:16px;
+    }
+
+    .journal-page-btn{
+      min-width:38px;
+      height:38px;
+      padding:0 12px;
+      border:1px solid #293040;
+      border-radius:9px;
+      background:#0d1119;
+      color:#fff;
+      font:inherit;
+      font-size:12px;
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    .journal-page-btn.active{
+      border-color:#8b5cf6;
+      background:linear-gradient(135deg,#9d6cff,#7247ff);
+    }
+
+    .journal-page-btn:disabled{
+      opacity:.38;
+      cursor:not-allowed;
+    }
+
+    .journal-page-info{
+      width:100%;
+      text-align:center;
+      margin-top:2px;
+      color:#8f98a8;
+      font-size:11px;
+    }
+
   </style>
 </head>
 
@@ -764,6 +807,8 @@
       <div id="journalList" class="journal-list">
         <div class="card journal-empty">Loading your journal...</div>
       </div>
+
+      <div id="journalPagination" class="journal-pagination"></div>
     </div>
   </div>
 </section>
@@ -786,6 +831,8 @@ const journalClient = window.supabase.createClient(
 
 let currentJournalUser = null;
 let editingJournalId = null;
+let currentJournalPage = 1;
+const JOURNAL_PAGE_SIZE = 10;
 
 const platformAuthOverlay = document.querySelector("#platformAuthOverlay");
 const platformUserEmail = document.querySelector("#platformUserEmail");
@@ -801,6 +848,7 @@ const journalScreenshot = document.querySelector("#journalScreenshot");
 const journalSaveBtn = document.querySelector("#journalSaveBtn");
 const journalCancelBtn = document.querySelector("#journalCancelBtn");
 const journalFormTitle = document.querySelector("#journalFormTitle");
+const journalPagination = document.querySelector("#journalPagination");
 
 function journalMessage(message,type=""){
   journalStatus.textContent = message;
@@ -866,7 +914,12 @@ async function requirePlatformLogin(){
 async function loadPrivateJournal(){
   if(!currentJournalUser) return;
 
-  journalList.innerHTML = '<div class="card journal-empty">Loading your journal...</div>';
+  journalList.innerHTML =
+    '<div class="card journal-empty">Loading your journal...</div>';
+
+  if(journalPagination){
+    journalPagination.innerHTML = "";
+  }
 
   const { data, error } = await journalClient
     .from("user_journal")
@@ -876,65 +929,253 @@ async function loadPrivateJournal(){
 
   if(error){
     console.error("Journal load error:", error);
-    journalList.innerHTML = '<div class="card journal-empty">Unable to load your journal.</div>';
+    journalList.innerHTML =
+      '<div class="card journal-empty">Unable to load your journal.</div>';
     journalMessage(error.message,"error");
     return;
   }
 
-  if(!data || data.length === 0){
-    journalList.innerHTML = '<div class="card journal-empty">No trades yet. Add your first journal entry.</div>';
+  const rows = data || [];
+
+  if(rows.length === 0){
+    journalList.innerHTML =
+      '<div class="card journal-empty">No trades yet. Add your first journal entry.</div>';
     return;
   }
 
-  journalList.innerHTML = data.map(row => {
+  const totalPages =
+    Math.max(
+      1,
+      Math.ceil(rows.length / JOURNAL_PAGE_SIZE)
+    );
+
+  if(currentJournalPage > totalPages){
+    currentJournalPage = totalPages;
+  }
+
+  if(currentJournalPage < 1){
+    currentJournalPage = 1;
+  }
+
+  const startIndex =
+    (currentJournalPage - 1) * JOURNAL_PAGE_SIZE;
+
+  const pageRows =
+    rows.slice(
+      startIndex,
+      startIndex + JOURNAL_PAGE_SIZE
+    );
+
+  journalList.innerHTML = pageRows.map(row => {
     const status = row.result || "PENDING";
-    const statusClass = status === "WIN" ? "win" : status === "LOSS" ? "loss" : "pending";
-    const pips = row.pips === null || row.pips === "" ? "—" : Number(row.pips) > 0 ? "+" + row.pips : row.pips;
-    const rr = row.rr === null || row.rr === "" ? "—" : row.rr;
-    const screenshotLink = row.screenshot_url
-      ? `<a class="journal-link" href="${escapeHtml(row.screenshot_url)}" target="_blank" rel="noopener noreferrer">Open screenshot →</a>`
-      : "";
-    const notes = row.notes
-      ? `<div class="journal-notes">${escapeHtml(row.notes)}</div>`
-      : "";
+
+    const statusClass =
+      status === "WIN"
+        ? "win"
+        : status === "LOSS"
+          ? "loss"
+          : "pending";
+
+    const pips =
+      row.pips === null || row.pips === ""
+        ? "—"
+        : Number(row.pips) > 0
+          ? "+" + row.pips
+          : row.pips;
+
+    const rr =
+      row.rr === null || row.rr === ""
+        ? "—"
+        : row.rr;
+
+    const screenshotLink =
+      row.screenshot_url
+        ? `<a class="journal-link" href="${escapeHtml(row.screenshot_url)}" target="_blank" rel="noopener noreferrer">Open screenshot →</a>`
+        : "";
+
+    const notes =
+      row.notes
+        ? `<div class="journal-notes">${escapeHtml(row.notes)}</div>`
+        : "";
 
     return `
       <div class="card journal-entry">
         <div class="journal-entry-top">
           <div>
-            <div class="journal-entry-title">${escapeHtml(row.session || "Trade")}</div>
-            <div class="journal-entry-meta">${escapeHtml(formatJournalDate(row.trade_date))}</div>
+            <div class="journal-entry-title">
+              ${escapeHtml(row.session || "Trade")}
+            </div>
+
+            <div class="journal-entry-meta">
+              ${escapeHtml(formatJournalDate(row.trade_date))}
+            </div>
           </div>
-          <span class="journal-result ${statusClass}">${escapeHtml(status)}</span>
+
+          <span class="journal-result ${statusClass}">
+            ${escapeHtml(status)}
+          </span>
         </div>
 
         <div class="journal-entry-stats">
-          <div class="journal-stat">Pips<strong>${escapeHtml(pips)}</strong></div>
-          <div class="journal-stat">R:R<strong>${escapeHtml(rr)}</strong></div>
+          <div class="journal-stat">
+            Pips
+            <strong>${escapeHtml(pips)}</strong>
+          </div>
+
+          <div class="journal-stat">
+            R:R
+            <strong>${escapeHtml(rr)}</strong>
+          </div>
         </div>
 
         ${notes}
         ${screenshotLink}
 
         <div class="journal-entry-actions">
-          <button class="journal-edit" type="button" data-id="${row.id}">Edit</button>
-          <button class="journal-delete" type="button" data-id="${row.id}">Delete</button>
+          <button
+            class="journal-edit"
+            type="button"
+            data-id="${row.id}"
+          >
+            Edit
+          </button>
+
+          <button
+            class="journal-delete"
+            type="button"
+            data-id="${row.id}"
+          >
+            Delete
+          </button>
         </div>
       </div>
     `;
   }).join("");
 
-  journalList.querySelectorAll(".journal-edit").forEach(button => {
-    button.addEventListener("click",() => {
-      const id = Number(button.dataset.id);
-      const row = data.find(item => Number(item.id) === id);
-      if(row) startJournalEdit(row);
+  journalList
+    .querySelectorAll(".journal-edit")
+    .forEach(button => {
+      button.addEventListener("click",() => {
+        const id = Number(button.dataset.id);
+        const row = rows.find(item => Number(item.id) === id);
+        if(row) startJournalEdit(row);
+      });
     });
-  });
 
-  journalList.querySelectorAll(".journal-delete").forEach(button => {
-    button.addEventListener("click",() => deleteJournalEntry(Number(button.dataset.id)));
-  });
+  journalList
+    .querySelectorAll(".journal-delete")
+    .forEach(button => {
+      button.addEventListener(
+        "click",
+        () => deleteJournalEntry(
+          Number(button.dataset.id)
+        )
+      );
+    });
+
+  renderJournalPagination(
+    totalPages,
+    rows.length,
+    startIndex,
+    pageRows.length
+  );
+}
+
+
+function renderJournalPagination(
+  totalPages,
+  totalRows,
+  startIndex,
+  visibleCount
+){
+  if(!journalPagination){
+    return;
+  }
+
+  if(totalPages <= 1){
+    journalPagination.innerHTML = `
+      <div class="journal-page-info">
+        Showing ${totalRows} ${totalRows === 1 ? "trade" : "trades"}
+      </div>
+    `;
+    return;
+  }
+
+  let pageButtons = "";
+
+  for(let page = 1; page <= totalPages; page++){
+    pageButtons += `
+      <button
+        class="journal-page-btn ${page === currentJournalPage ? "active" : ""}"
+        type="button"
+        data-page="${page}"
+      >
+        ${page}
+      </button>
+    `;
+  }
+
+  journalPagination.innerHTML = `
+    <button
+      id="journalPrevPage"
+      class="journal-page-btn"
+      type="button"
+      ${currentJournalPage === 1 ? "disabled" : ""}
+    >
+      ← Previous
+    </button>
+
+    ${pageButtons}
+
+    <button
+      id="journalNextPage"
+      class="journal-page-btn"
+      type="button"
+      ${currentJournalPage === totalPages ? "disabled" : ""}
+    >
+      Next →
+    </button>
+
+    <div class="journal-page-info">
+      Showing ${startIndex + 1}-${startIndex + visibleCount}
+      of ${totalRows} trades • Page ${currentJournalPage} of ${totalPages}
+    </div>
+  `;
+
+  journalPagination
+    .querySelectorAll("[data-page]")
+    .forEach(button => {
+      button.addEventListener("click",() => {
+        currentJournalPage =
+          Number(button.dataset.page);
+
+        loadPrivateJournal();
+      });
+    });
+
+  document
+    .querySelector("#journalPrevPage")
+    ?.addEventListener(
+      "click",
+      () => {
+        if(currentJournalPage > 1){
+          currentJournalPage--;
+          loadPrivateJournal();
+        }
+      }
+    );
+
+  document
+    .querySelector("#journalNextPage")
+    ?.addEventListener(
+      "click",
+      () => {
+        if(currentJournalPage < totalPages){
+          currentJournalPage++;
+          loadPrivateJournal();
+        }
+      }
+    );
 }
 
 function startJournalEdit(row){
@@ -1009,6 +1250,7 @@ async function saveJournalEntry(){
   );
 
   resetJournalForm();
+  currentJournalPage = 1;
   await loadPrivateJournal();
 }
 
