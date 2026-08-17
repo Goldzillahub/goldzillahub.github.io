@@ -604,6 +604,36 @@
       }
     }
 
+
+    /* FORCE PROFILE ICON ON DESKTOP + MOBILE */
+    .platform-user,
+    .platform-user-email,
+    .platform-logout{
+      display:none !important;
+    }
+
+    .profile-wrap{
+      display:flex !important;
+      align-items:center;
+      position:relative;
+    }
+
+    .profile-btn{
+      display:flex !important;
+    }
+
+    @media(min-width:901px){
+      .site-header .actions{
+        display:flex;
+        align-items:center;
+        gap:10px;
+      }
+
+      .profile-wrap{
+        display:flex !important;
+      }
+    }
+
   </style>
 </head>
 
