@@ -3,17 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-
   <title>Goldzilla Platform</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
-    rel="stylesheet"
-  >
-
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 
   <style>
@@ -26,23 +20,14 @@
       margin:14px 0 20px;
       max-width:820px;
     }
-
-    .dashboard-title .line{
-      display:block;
-    }
-
+    .dashboard-title .line{display:block;}
     .dashboard-title .highlight{
       display:block;
-      background:linear-gradient(
-        90deg,
-        #a77cff,
-        #7c5cff
-      );
+      background:linear-gradient(90deg,#a77cff,#7c5cff);
       -webkit-background-clip:text;
       background-clip:text;
       color:transparent;
     }
-
     .dashboard-copy{
       max-width:720px;
       font-size:17px;
@@ -51,728 +36,622 @@
       margin-bottom:26px;
     }
 
-    @media(max-width:768px){
-      .dashboard-title{
-        font-size:clamp(42px,11vw,60px);
-        letter-spacing:-1.4px;
-      }
+    body.platform-auth-loading main,
+    body.platform-auth-loading footer,
+    body.platform-auth-loading .site-header{visibility:hidden;}
 
-      .dashboard-copy{
-        font-size:15px;
-      }
+    .platform-auth-overlay{
+      position:fixed;inset:0;z-index:99999;
+      display:flex;align-items:center;justify-content:center;
+      background:#070910;color:#fff;font-family:'Manrope',sans-serif;
+    }
+    .platform-auth-overlay.hidden{display:none;}
+    .platform-auth-box{
+      width:min(420px,calc(100% - 40px));
+      padding:30px;border-radius:20px;border:1px solid #2b3140;
+      background:linear-gradient(180deg,#111521,#0b0e16);
+      text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.45);
+    }
+    .platform-auth-box h2{font-family:'Space Grotesk',sans-serif;margin:0 0 8px;}
+    .platform-auth-box p{color:#9da6b5;line-height:1.6;margin:0 0 20px;}
+
+    .platform-user{display:flex;align-items:center;gap:10px;}
+    .platform-user-email{
+      max-width:190px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+      font-size:11px;color:#929bab;
+    }
+    .platform-logout{
+      border:1px solid #293040;background:#0e121b;color:#fff;border-radius:9px;
+      padding:9px 12px;cursor:pointer;font:inherit;font-size:11px;font-weight:700;
+    }
+
+    .journal-panel{
+      display:grid;
+      grid-template-columns:minmax(280px,380px) 1fr;
+      gap:18px;align-items:start;
+    }
+    .journal-form{padding:20px;}
+    .journal-form h3{margin:0 0 16px;font-family:'Space Grotesk',sans-serif;}
+    .journal-field{display:block;margin-bottom:13px;}
+    .journal-field span{
+      display:block;margin-bottom:6px;font-size:12px;font-weight:700;color:#aeb6c4;
+    }
+    .journal-field input,
+    .journal-field select,
+    .journal-field textarea{
+      width:100%;box-sizing:border-box;padding:12px 13px;border-radius:10px;
+      border:1px solid #293040;background:#090c13;color:#fff;font:inherit;outline:none;
+    }
+    .journal-field textarea{min-height:90px;resize:vertical;}
+    .journal-field input:focus,
+    .journal-field select:focus,
+    .journal-field textarea:focus{
+      border-color:#8b5cf6;box-shadow:0 0 0 3px rgba(139,92,246,.10);
+    }
+    .journal-form-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;}
+    .journal-save{
+      border:0;border-radius:10px;padding:12px 16px;color:#fff;
+      background:linear-gradient(135deg,#9d6cff,#7247ff);
+      font:inherit;font-weight:800;cursor:pointer;
+    }
+    .journal-cancel{
+      display:none;border:1px solid #293040;border-radius:10px;padding:12px 16px;
+      color:#fff;background:#111622;font:inherit;font-weight:700;cursor:pointer;
+    }
+    .journal-cancel.show{display:inline-block;}
+    .journal-status{min-height:20px;margin-top:12px;font-size:12px;color:#9da6b5;}
+    .journal-status.error{color:#ff7189;}
+    .journal-status.success{color:#35df96;}
+    .journal-list{display:grid;gap:12px;}
+    .journal-empty{padding:28px;text-align:center;color:#818a99;}
+    .journal-entry{padding:18px;}
+    .journal-entry-top{
+      display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:12px;
+    }
+    .journal-entry-title{
+      font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;
+    }
+    .journal-entry-meta{color:#8f98a8;font-size:12px;margin-top:4px;}
+    .journal-result{
+      display:inline-flex;align-items:center;justify-content:center;min-width:56px;
+      padding:6px 9px;border-radius:999px;font-size:10px;font-weight:800;
+    }
+    .journal-result.win{
+      color:#35df96;background:rgba(53,223,150,.08);border:1px solid rgba(53,223,150,.28);
+    }
+    .journal-result.loss{
+      color:#ff667f;background:rgba(255,102,127,.08);border:1px solid rgba(255,102,127,.28);
+    }
+    .journal-result.pending{
+      color:#aeb6c4;background:rgba(174,182,196,.06);border:1px solid rgba(174,182,196,.18);
+    }
+    .journal-entry-stats{display:flex;gap:18px;flex-wrap:wrap;margin:12px 0;}
+    .journal-stat{font-size:12px;color:#8f98a8;}
+    .journal-stat strong{display:block;color:#fff;font-size:15px;margin-top:2px;}
+    .journal-notes{
+      color:#b0b8c6;font-size:13px;line-height:1.6;white-space:pre-wrap;margin-top:10px;
+    }
+    .journal-link{
+      display:inline-block;margin-top:10px;font-size:12px;color:#a77cff;text-decoration:none;
+    }
+    .journal-entry-actions{display:flex;gap:8px;margin-top:14px;}
+    .journal-edit,.journal-delete{
+      border:1px solid #293040;border-radius:8px;padding:8px 10px;background:#0d1119;
+      color:#fff;font:inherit;font-size:11px;font-weight:700;cursor:pointer;
+    }
+    .journal-delete{color:#ff7189;}
+
+    @media(max-width:900px){.journal-panel{grid-template-columns:1fr;}}
+    @media(max-width:768px){
+      .dashboard-title{font-size:clamp(42px,11vw,60px);letter-spacing:-1.4px;}
+      .dashboard-copy{font-size:15px;}
+      .platform-user-email{display:none;}
     }
   </style>
 </head>
 
+<body class="platform-auth-loading">
 
-<body>
-
+<div id="platformAuthOverlay" class="platform-auth-overlay">
+  <div class="platform-auth-box">
+    <h2>Checking your account</h2>
+    <p>Please wait while Goldzilla verifies your login.</p>
+  </div>
+</div>
 
 <header class="site-header">
-
   <div class="wrap nav">
-
     <a class="logo" href="index.html">
-
-      <div class="logo-mark">
-        G
-      </div>
-
-      <div>
-        <strong>GOLDZILLA</strong>
-        <span>TRADING HUB</span>
-      </div>
-
+      <div class="logo-mark">G</div>
+      <div><strong>GOLDZILLA</strong><span>TRADING HUB</span></div>
     </a>
 
-
     <nav class="navlinks">
-
-      <a href="#results">
-        Results
-      </a>
-
-      <a href="#levels">
-        Levels
-      </a>
-
-      <a href="#calculators">
-        Calculators
-      </a>
-
-      <a href="#journal">
-        Journal
-      </a>
-
+      <a href="#results">Results</a>
+      <a href="#levels">Levels</a>
+      <a href="#calculators">Calculators</a>
+      <a href="#journal">Journal</a>
     </nav>
 
-
     <div class="actions">
-
-      <a
-        class="btn btn-ghost"
-        href="index.html"
-      >
-        Home
-      </a>
-
-      <a
-        class="btn btn-primary"
-        href="#calculators"
-      >
-        Trading Tools
-      </a>
-
+      <a class="btn btn-ghost" href="index.html">Home</a>
+      <a class="btn btn-primary" href="#calculators">Trading Tools</a>
+      <div class="platform-user">
+        <span id="platformUserEmail" class="platform-user-email"></span>
+        <button id="platformLogoutBtn" class="platform-logout" type="button">Logout</button>
+      </div>
     </div>
-
   </div>
-
 </header>
-
-
 
 <main class="wrap">
 
-
-<!-- DASHBOARD HERO -->
-
 <section class="page-hero">
-
-  <div class="eyebrow">
-    GOLDZILLA TRADING HUB
-  </div>
-
-
+  <div class="eyebrow">GOLDZILLA TRADING HUB</div>
   <h1 class="dashboard-title">
-
-    <span class="line">
-      Plan the trade
-    </span>
-
-    <span class="highlight">
-      Execute with discipline
-    </span>
-
+    <span class="line">Plan the trade</span>
+    <span class="highlight">Execute with discipline</span>
   </h1>
-
-
   <p class="dashboard-copy">
     Your complete Gold trading workspace for daily levels,
     performance tracking, risk management and disciplined execution.
   </p>
-
-
   <div class="tabs">
-
-    <a href="#results">
-      Group Results
-    </a>
-
-    <a href="#levels">
-      Daily Levels
-    </a>
-
-    <a href="#calculators">
-      Calculators
-    </a>
-
-    <a href="#journal">
-      Journal
-    </a>
-
+    <a href="#results">Group Results</a>
+    <a href="#levels">Daily Levels</a>
+    <a href="#calculators">Calculators</a>
+    <a href="#journal">Journal</a>
   </div>
-
 </section>
 
-
-
-<!-- RESULTS -->
-
-<section
-  class="section"
-  id="results"
->
-
+<section class="section" id="results">
   <div class="section-head">
-
-    <div class="eyebrow">
-      RESULTS
-    </div>
-
-    <h2>
-      Group performance.
-    </h2>
-
+    <div class="eyebrow">RESULTS</div>
+    <h2>Group performance.</h2>
   </div>
-
-
   <div class="metrics">
-
-    <div class="card metric">
-
-      <span class="muted">
-        Total Trades
-      </span>
-
-      <strong>
-        128
-      </strong>
-
-    </div>
-
-
-    <div class="card metric">
-
-      <span class="muted">
-        Wins
-      </span>
-
-      <strong class="green">
-        88
-      </strong>
-
-    </div>
-
-
-    <div class="card metric">
-
-      <span class="muted">
-        Losses
-      </span>
-
-      <strong class="red">
-        40
-      </strong>
-
-    </div>
-
-
-    <div class="card metric">
-
-      <span class="muted">
-        Win Rate
-      </span>
-
-      <strong class="purple">
-        68.75%
-      </strong>
-
-    </div>
-
+    <div class="card metric"><span class="muted">Total Trades</span><strong>128</strong></div>
+    <div class="card metric"><span class="muted">Wins</span><strong class="green">88</strong></div>
+    <div class="card metric"><span class="muted">Losses</span><strong class="red">40</strong></div>
+    <div class="card metric"><span class="muted">Win Rate</span><strong class="purple">68.75%</strong></div>
   </div>
-
 </section>
 
-
-
-<!-- DAILY LEVELS -->
-
-<section
-  class="section"
-  id="levels"
->
-
+<section class="section" id="levels">
   <div class="section-head">
-
-    <div class="eyebrow">
-      DAILY LEVELS
-    </div>
-
-    <h2>
-      Today's Gold Levels.
-    </h2>
-
+    <div class="eyebrow">DAILY LEVELS</div>
+    <h2>Today's Gold Levels.</h2>
   </div>
-
-
   <div class="table-wrap">
-
     <table>
-
       <thead>
-
         <tr>
-          <th>Date</th>
-          <th>Session</th>
-          <th>Type</th>
-          <th>Level</th>
-          <th>SL</th>
-          <th>TP1</th>
-          <th>TP2</th>
-          <th>Result</th>
+          <th>Date</th><th>Session</th><th>Type</th><th>Level</th>
+          <th>SL</th><th>TP1</th><th>TP2</th><th>Result</th>
         </tr>
-
       </thead>
-
-
       <tbody>
-
         <tr>
-
-          <td>
-            Aug 16
-          </td>
-
-          <td>
-            London
-          </td>
-
-          <td>
-            <span class="badge buy">
-              BUY
-            </span>
-          </td>
-
-          <td>
-            2375.00
-          </td>
-
-          <td>
-            2370.00
-          </td>
-
-          <td>
-            2385.00
-          </td>
-
-          <td>
-            2395.00
-          </td>
-
-          <td class="green">
-            +200 pips
-          </td>
-
+          <td>Aug 16</td><td>London</td><td><span class="badge buy">BUY</span></td>
+          <td>2375.00</td><td>2370.00</td><td>2385.00</td><td>2395.00</td>
+          <td class="green">+200 pips</td>
         </tr>
-
-
         <tr>
-
-          <td>
-            Aug 16
-          </td>
-
-          <td>
-            London
-          </td>
-
-          <td>
-            <span class="badge buy">
-              BUY
-            </span>
-          </td>
-
-          <td>
-            2365.00
-          </td>
-
-          <td>
-            2360.00
-          </td>
-
-          <td>
-            2375.00
-          </td>
-
-          <td>
-            2385.00
-          </td>
-
-          <td class="muted">
-            Pending
-          </td>
-
+          <td>Aug 16</td><td>London</td><td><span class="badge buy">BUY</span></td>
+          <td>2365.00</td><td>2360.00</td><td>2375.00</td><td>2385.00</td>
+          <td class="muted">Pending</td>
         </tr>
-
-
         <tr>
-
-          <td>
-            Aug 16
-          </td>
-
-          <td>
-            New York
-          </td>
-
-          <td>
-            <span class="badge sell">
-              SELL
-            </span>
-          </td>
-
-          <td>
-            2398.00
-          </td>
-
-          <td>
-            2403.00
-          </td>
-
-          <td>
-            2388.00
-          </td>
-
-          <td>
-            2378.00
-          </td>
-
-          <td class="red">
-            -150 pips
-          </td>
-
+          <td>Aug 16</td><td>New York</td><td><span class="badge sell">SELL</span></td>
+          <td>2398.00</td><td>2403.00</td><td>2388.00</td><td>2378.00</td>
+          <td class="red">-150 pips</td>
         </tr>
-
       </tbody>
-
     </table>
-
   </div>
-
 </section>
 
-
-
-<!-- CALCULATORS -->
-
-<section
-  class="section"
-  id="calculators"
->
-
+<section class="section" id="calculators">
   <div class="section-head">
-
-    <div class="eyebrow">
-      CALCULATORS
-    </div>
-
-    <h2>
-      Professional trading tools.
-    </h2>
-
-    <p>
-      Everything you need to plan risk,
-      calculate position size and prepare your trade.
-    </p>
-
+    <div class="eyebrow">CALCULATORS</div>
+    <h2>Professional trading tools.</h2>
+    <p>Everything you need to plan risk, calculate position size and prepare your trade.</p>
   </div>
-
 
   <div class="calc-grid">
-
-
     <div class="card calc-card">
-
-      <h3>
-        Risk Calculator
-      </h3>
-
-      <label>
-        Account Balance ($)
-
-        <input
-          id="riskBalance"
-          type="number"
-          value="10000"
-        >
-
-      </label>
-
-
-      <label>
-        Risk (%)
-
-        <input
-          id="riskPercent"
-          type="number"
-          value="1"
-          step=".1"
-        >
-
-      </label>
-
-
-      <div class="output">
-
-        <span>
-          Risk Amount
-        </span>
-
-        <strong id="riskOut">
-          $100.00
-        </strong>
-
-      </div>
-
+      <h3>Risk Calculator</h3>
+      <label>Account Balance ($)<input id="riskBalance" type="number" value="10000"></label>
+      <label>Risk (%)<input id="riskPercent" type="number" value="1" step=".1"></label>
+      <div class="output"><span>Risk Amount</span><strong id="riskOut">$100.00</strong></div>
     </div>
 
-
-
     <div class="card calc-card">
-
-      <h3>
-        Risk / Reward
-      </h3>
-
-      <label>
-        Risk ($)
-
-        <input
-          id="rrRisk"
-          type="number"
-          value="100"
-        >
-
-      </label>
-
-
-      <label>
-        Reward ($)
-
-        <input
-          id="rrReward"
-          type="number"
-          value="200"
-        >
-
-      </label>
-
-
-      <div class="output">
-
-        <span>
-          R:R
-        </span>
-
-        <strong id="rrOut">
-          1 : 2.00
-        </strong>
-
-      </div>
-
+      <h3>Risk / Reward</h3>
+      <label>Risk ($)<input id="rrRisk" type="number" value="100"></label>
+      <label>Reward ($)<input id="rrReward" type="number" value="200"></label>
+      <div class="output"><span>R:R</span><strong id="rrOut">1 : 2.00</strong></div>
     </div>
 
-
-
     <div class="card calc-card">
-
-      <h3>
-        Pips Calculator
-      </h3>
-
-      <label>
-        Entry
-
-        <input
-          id="entry"
-          type="number"
-          value="2400"
-          step=".01"
-        >
-
-      </label>
-
-
-      <label>
-        Exit
-
-        <input
-          id="exit"
-          type="number"
-          value="2410"
-          step=".01"
-        >
-
-      </label>
-
-
-      <div class="output">
-
-        <span>
-          Gold Pips
-        </span>
-
-        <strong id="pipsOut">
-          100 pips
-        </strong>
-
-      </div>
-
+      <h3>Pips Calculator</h3>
+      <label>Entry<input id="entry" type="number" value="2400" step=".01"></label>
+      <label>Exit<input id="exit" type="number" value="2410" step=".01"></label>
+      <div class="output"><span>Gold Pips</span><strong id="pipsOut">100 pips</strong></div>
     </div>
 
-
-
     <div class="card calc-card">
-
-      <h3>
-        Position Size
-      </h3>
-
-      <label>
-        Risk Amount ($)
-
-        <input
-          id="posRisk"
-          type="number"
-          value="100"
-        >
-
-      </label>
-
-
-      <label>
-        Stop Loss (pips)
-
-        <input
-          id="posSL"
-          type="number"
-          value="140"
-        >
-
-      </label>
-
-
-      <div class="output">
-
-        <span>
-          Lot Size
-        </span>
-
-        <strong id="posOut">
-          0.07 lot
-        </strong>
-
-      </div>
-
+      <h3>Position Size</h3>
+      <label>Risk Amount ($)<input id="posRisk" type="number" value="100"></label>
+      <label>Stop Loss (pips)<input id="posSL" type="number" value="140"></label>
+      <div class="output"><span>Lot Size</span><strong id="posOut">0.07 lot</strong></div>
     </div>
-
-
   </div>
-
 </section>
 
-
-
-<!-- JOURNAL -->
-
-<section
-  class="section"
-  id="journal"
->
-
+<section class="section" id="journal">
   <div class="section-head">
-
-    <div class="eyebrow">
-      JOURNAL
-    </div>
-
-    <h2>
-      Trading journal.
-    </h2>
-
+    <div class="eyebrow">PRIVATE JOURNAL</div>
+    <h2>Your trading journal.</h2>
+    <p>This journal is private to your logged-in account. Other Goldzilla users cannot see your entries.</p>
   </div>
 
+  <div class="journal-panel">
+    <div class="card journal-form">
+      <h3 id="journalFormTitle">Add Trade</h3>
 
-  <div class="journal-grid">
+      <label class="journal-field">
+        <span>Date</span>
+        <input id="journalDate" type="date">
+      </label>
 
+      <label class="journal-field">
+        <span>Session</span>
+        <select id="journalSession">
+          <option value="Pre-London">Pre-London</option>
+          <option value="London">London</option>
+          <option value="New York">New York</option>
+        </select>
+      </label>
 
-    <div class="card trade-card">
+      <label class="journal-field">
+        <span>Result</span>
+        <select id="journalResult">
+          <option value="">Pending</option>
+          <option value="WIN">WIN</option>
+          <option value="LOSS">LOSS</option>
+        </select>
+      </label>
 
-      <div class="top">
+      <label class="journal-field">
+        <span>Risk / Reward</span>
+        <input id="journalRR" type="number" step="0.01" placeholder="Example: 2">
+      </label>
 
-        <strong>
-          London • BUY
-        </strong>
+      <label class="journal-field">
+        <span>Pips</span>
+        <input id="journalPips" type="number" step="0.01" placeholder="Example: 200 or -100">
+      </label>
 
-        <span class="badge buy">
-          WIN
-        </span>
+      <label class="journal-field">
+        <span>Notes</span>
+        <textarea id="journalNotes" placeholder="Write your trade notes..."></textarea>
+      </label>
 
+      <label class="journal-field">
+        <span>Screenshot URL (optional)</span>
+        <input id="journalScreenshot" type="url" placeholder="https://...">
+      </label>
+
+      <div class="journal-form-actions">
+        <button id="journalSaveBtn" class="journal-save" type="button">Save Trade</button>
+        <button id="journalCancelBtn" class="journal-cancel" type="button">Cancel Edit</button>
       </div>
 
-      <small>
-        Aug 13 • Grade A+
-      </small>
-
-      <div class="r green">
-        +2.00R
-      </div>
-
+      <div id="journalStatus" class="journal-status"></div>
     </div>
 
-
-
-    <div class="card trade-card">
-
-      <div class="top">
-
-        <strong>
-          New York • SELL
-        </strong>
-
-        <span class="badge buy">
-          WIN
-        </span>
-
+    <div>
+      <div id="journalList" class="journal-list">
+        <div class="card journal-empty">Loading your journal...</div>
       </div>
-
-      <small>
-        Aug 12 • Grade A
-      </small>
-
-      <div class="r green">
-        +2.00R
-      </div>
-
     </div>
-
-
-
-    <div class="card trade-card">
-
-      <div class="top">
-
-        <strong>
-          London • BUY
-        </strong>
-
-        <span class="badge sell">
-          LOSS
-        </span>
-
-      </div>
-
-      <small>
-        Aug 11 • Grade B
-      </small>
-
-      <div class="r red">
-        -1.00R
-      </div>
-
-    </div>
-
-
   </div>
-
 </section>
-
 
 </main>
 
+<footer><div class="wrap">© 2026 Goldzilla Trading Hub.</div></footer>
 
-
-<footer>
-
-  <div class="wrap">
-    © 2026 Goldzilla Trading Hub.
-  </div>
-
-</footer>
-
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="main.js"></script>
 
+<script>
+const PLATFORM_SUPABASE_URL = "https://byytggaamrkumrzckkjo.supabase.co";
+const PLATFORM_SUPABASE_KEY = "sb_publishable_W8n5btVgWBtlnNe24GXiGw_YPb1ERgd";
+
+const journalClient = window.supabase.createClient(
+  PLATFORM_SUPABASE_URL,
+  PLATFORM_SUPABASE_KEY
+);
+
+let currentJournalUser = null;
+let editingJournalId = null;
+
+const platformAuthOverlay = document.querySelector("#platformAuthOverlay");
+const platformUserEmail = document.querySelector("#platformUserEmail");
+const journalList = document.querySelector("#journalList");
+const journalStatus = document.querySelector("#journalStatus");
+const journalDate = document.querySelector("#journalDate");
+const journalSession = document.querySelector("#journalSession");
+const journalResult = document.querySelector("#journalResult");
+const journalRR = document.querySelector("#journalRR");
+const journalPips = document.querySelector("#journalPips");
+const journalNotes = document.querySelector("#journalNotes");
+const journalScreenshot = document.querySelector("#journalScreenshot");
+const journalSaveBtn = document.querySelector("#journalSaveBtn");
+const journalCancelBtn = document.querySelector("#journalCancelBtn");
+const journalFormTitle = document.querySelector("#journalFormTitle");
+
+function journalMessage(message,type=""){
+  journalStatus.textContent = message;
+  journalStatus.className = "journal-status" + (type ? " " + type : "");
+}
+
+function escapeHtml(value){
+  return String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+function resetJournalForm(){
+  editingJournalId = null;
+  journalFormTitle.textContent = "Add Trade";
+  journalSaveBtn.textContent = "Save Trade";
+  journalCancelBtn.classList.remove("show");
+  journalDate.value = new Date().toISOString().slice(0,10);
+  journalSession.value = "London";
+  journalResult.value = "";
+  journalRR.value = "";
+  journalPips.value = "";
+  journalNotes.value = "";
+  journalScreenshot.value = "";
+}
+
+function formatJournalDate(value){
+  if(!value) return "No date";
+  const d = new Date(value + "T00:00:00");
+  if(Number.isNaN(d.getTime())) return value;
+  return d.toLocaleDateString("en-US",{year:"numeric",month:"short",day:"numeric"});
+}
+
+async function requirePlatformLogin(){
+  const { data, error } = await journalClient.auth.getSession();
+
+  if(error){
+    console.error("Platform auth error:", error);
+  }
+
+  const session = data?.session;
+
+  if(!session?.user){
+    window.location.replace("index.html");
+    return false;
+  }
+
+  currentJournalUser = session.user;
+
+  if(platformUserEmail){
+    platformUserEmail.textContent = currentJournalUser.email || "";
+  }
+
+  platformAuthOverlay.classList.add("hidden");
+  document.body.classList.remove("platform-auth-loading");
+
+  return true;
+}
+
+async function loadPrivateJournal(){
+  if(!currentJournalUser) return;
+
+  journalList.innerHTML = '<div class="card journal-empty">Loading your journal...</div>';
+
+  const { data, error } = await journalClient
+    .from("user_journal")
+    .select("id,created_at,user_id,trade_date,session,result,rr,pips,notes,screenshot_url")
+    .order("trade_date",{ascending:false,nullsFirst:false})
+    .order("created_at",{ascending:false});
+
+  if(error){
+    console.error("Journal load error:", error);
+    journalList.innerHTML = '<div class="card journal-empty">Unable to load your journal.</div>';
+    journalMessage(error.message,"error");
+    return;
+  }
+
+  if(!data || data.length === 0){
+    journalList.innerHTML = '<div class="card journal-empty">No trades yet. Add your first journal entry.</div>';
+    return;
+  }
+
+  journalList.innerHTML = data.map(row => {
+    const status = row.result || "PENDING";
+    const statusClass = status === "WIN" ? "win" : status === "LOSS" ? "loss" : "pending";
+    const pips = row.pips === null || row.pips === "" ? "—" : Number(row.pips) > 0 ? "+" + row.pips : row.pips;
+    const rr = row.rr === null || row.rr === "" ? "—" : row.rr;
+    const screenshotLink = row.screenshot_url
+      ? `<a class="journal-link" href="${escapeHtml(row.screenshot_url)}" target="_blank" rel="noopener noreferrer">Open screenshot →</a>`
+      : "";
+    const notes = row.notes
+      ? `<div class="journal-notes">${escapeHtml(row.notes)}</div>`
+      : "";
+
+    return `
+      <div class="card journal-entry">
+        <div class="journal-entry-top">
+          <div>
+            <div class="journal-entry-title">${escapeHtml(row.session || "Trade")}</div>
+            <div class="journal-entry-meta">${escapeHtml(formatJournalDate(row.trade_date))}</div>
+          </div>
+          <span class="journal-result ${statusClass}">${escapeHtml(status)}</span>
+        </div>
+
+        <div class="journal-entry-stats">
+          <div class="journal-stat">Pips<strong>${escapeHtml(pips)}</strong></div>
+          <div class="journal-stat">R:R<strong>${escapeHtml(rr)}</strong></div>
+        </div>
+
+        ${notes}
+        ${screenshotLink}
+
+        <div class="journal-entry-actions">
+          <button class="journal-edit" type="button" data-id="${row.id}">Edit</button>
+          <button class="journal-delete" type="button" data-id="${row.id}">Delete</button>
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  journalList.querySelectorAll(".journal-edit").forEach(button => {
+    button.addEventListener("click",() => {
+      const id = Number(button.dataset.id);
+      const row = data.find(item => Number(item.id) === id);
+      if(row) startJournalEdit(row);
+    });
+  });
+
+  journalList.querySelectorAll(".journal-delete").forEach(button => {
+    button.addEventListener("click",() => deleteJournalEntry(Number(button.dataset.id)));
+  });
+}
+
+function startJournalEdit(row){
+  editingJournalId = row.id;
+  journalFormTitle.textContent = "Edit Trade";
+  journalSaveBtn.textContent = "Update Trade";
+  journalCancelBtn.classList.add("show");
+  journalDate.value = row.trade_date || "";
+  journalSession.value = row.session || "London";
+  journalResult.value = row.result || "";
+  journalRR.value = row.rr ?? "";
+  journalPips.value = row.pips ?? "";
+  journalNotes.value = row.notes || "";
+  journalScreenshot.value = row.screenshot_url || "";
+  journalMessage("");
+
+  document.querySelector("#journal")?.scrollIntoView({
+    behavior:"smooth",
+    block:"start"
+  });
+}
+
+async function saveJournalEntry(){
+  if(!currentJournalUser){
+    journalMessage("Please sign in again.","error");
+    return;
+  }
+
+  if(!journalDate.value){
+    journalMessage("Please select a trade date.","error");
+    return;
+  }
+
+  const payload = {
+    user_id: currentJournalUser.id,
+    trade_date: journalDate.value,
+    session: journalSession.value,
+    result: journalResult.value || null,
+    rr: journalRR.value === "" ? null : Number(journalRR.value),
+    pips: journalPips.value === "" ? null : Number(journalPips.value),
+    notes: journalNotes.value.trim() || null,
+    screenshot_url: journalScreenshot.value.trim() || null
+  };
+
+  journalSaveBtn.disabled = true;
+  journalMessage(editingJournalId ? "Updating trade..." : "Saving trade...");
+
+  let response;
+
+  if(editingJournalId){
+    response = await journalClient
+      .from("user_journal")
+      .update(payload)
+      .eq("id",editingJournalId);
+  }else{
+    response = await journalClient
+      .from("user_journal")
+      .insert(payload);
+  }
+
+  journalSaveBtn.disabled = false;
+
+  if(response.error){
+    console.error("Journal save error:", response.error);
+    journalMessage(response.error.message,"error");
+    return;
+  }
+
+  journalMessage(
+    editingJournalId ? "Trade updated successfully." : "Trade saved successfully.",
+    "success"
+  );
+
+  resetJournalForm();
+  await loadPrivateJournal();
+}
+
+async function deleteJournalEntry(id){
+  const ok = window.confirm("Delete this journal entry?");
+  if(!ok) return;
+
+  const { error } = await journalClient
+    .from("user_journal")
+    .delete()
+    .eq("id",id);
+
+  if(error){
+    console.error("Journal delete error:", error);
+    journalMessage(error.message,"error");
+    return;
+  }
+
+  journalMessage("Trade deleted.","success");
+
+  if(editingJournalId === id){
+    resetJournalForm();
+  }
+
+  await loadPrivateJournal();
+}
+
+journalSaveBtn?.addEventListener("click",saveJournalEntry);
+
+journalCancelBtn?.addEventListener("click",() => {
+  resetJournalForm();
+  journalMessage("");
+});
+
+document.querySelector("#platformLogoutBtn")?.addEventListener("click",async () => {
+  await journalClient.auth.signOut();
+  window.location.replace("index.html");
+});
+
+journalClient.auth.onAuthStateChange((event) => {
+  if(event === "SIGNED_OUT"){
+    window.location.replace("index.html");
+  }
+});
+
+(async function startPrivatePlatform(){
+  const loggedIn = await requirePlatformLogin();
+  if(!loggedIn) return;
+  resetJournalForm();
+  await loadPrivateJournal();
+})();
+</script>
 
 </body>
 </html>
