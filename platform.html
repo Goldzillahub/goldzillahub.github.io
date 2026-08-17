@@ -147,6 +147,207 @@
       .dashboard-copy{font-size:15px;}
       .platform-user-email{display:none;}
     }
+
+    /* ADMIN DAILY LEVELS PANEL */
+    .admin-section{
+      display:none;
+    }
+
+    .admin-section.show{
+      display:block;
+    }
+
+    .admin-grid{
+      display:grid;
+      grid-template-columns:minmax(300px,420px) 1fr;
+      gap:18px;
+      align-items:start;
+    }
+
+    .admin-card{
+      padding:20px;
+    }
+
+    .admin-card h3{
+      margin:0 0 16px;
+      font-family:'Space Grotesk',sans-serif;
+    }
+
+    .admin-field{
+      display:block;
+      margin-bottom:12px;
+    }
+
+    .admin-field span{
+      display:block;
+      margin-bottom:6px;
+      color:#aeb6c4;
+      font-size:12px;
+      font-weight:700;
+    }
+
+    .admin-field input,
+    .admin-field select,
+    .admin-field textarea{
+      width:100%;
+      box-sizing:border-box;
+      padding:12px 13px;
+      border-radius:10px;
+      border:1px solid #293040;
+      background:#090c13;
+      color:#fff;
+      font:inherit;
+      outline:none;
+    }
+
+    .admin-field textarea{
+      min-height:80px;
+      resize:vertical;
+    }
+
+    .admin-field input:focus,
+    .admin-field select:focus,
+    .admin-field textarea:focus{
+      border-color:#8b5cf6;
+      box-shadow:0 0 0 3px rgba(139,92,246,.10);
+    }
+
+    .admin-row2{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+
+    .admin-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+
+    .admin-save{
+      border:0;
+      border-radius:10px;
+      padding:12px 16px;
+      color:#fff;
+      background:linear-gradient(135deg,#9d6cff,#7247ff);
+      font:inherit;
+      font-weight:800;
+      cursor:pointer;
+    }
+
+    .admin-cancel{
+      display:none;
+      border:1px solid #293040;
+      border-radius:10px;
+      padding:12px 16px;
+      color:#fff;
+      background:#111622;
+      font:inherit;
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    .admin-cancel.show{
+      display:inline-block;
+    }
+
+    .admin-status{
+      min-height:20px;
+      margin-top:12px;
+      font-size:12px;
+      color:#9da6b5;
+    }
+
+    .admin-status.error{color:#ff7189;}
+    .admin-status.success{color:#35df96;}
+
+    .admin-level-list{
+      display:grid;
+      gap:12px;
+    }
+
+    .admin-level-item{
+      padding:16px;
+    }
+
+    .admin-level-top{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:10px;
+    }
+
+    .admin-level-title{
+      font-family:'Space Grotesk',sans-serif;
+      font-size:17px;
+      font-weight:700;
+    }
+
+    .admin-level-meta{
+      margin-top:4px;
+      color:#8f98a8;
+      font-size:12px;
+    }
+
+    .admin-level-details{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px 18px;
+      color:#8f98a8;
+      font-size:12px;
+    }
+
+    .admin-level-details strong{
+      display:block;
+      color:#fff;
+      margin-top:2px;
+      font-size:14px;
+    }
+
+    .admin-level-note{
+      margin-top:10px;
+      color:#b0b8c6;
+      font-size:12px;
+      line-height:1.5;
+    }
+
+    .admin-level-actions{
+      display:flex;
+      gap:8px;
+      margin-top:12px;
+    }
+
+    .admin-edit,
+    .admin-delete{
+      border:1px solid #293040;
+      border-radius:8px;
+      padding:8px 10px;
+      background:#0d1119;
+      color:#fff;
+      font:inherit;
+      font-size:11px;
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    .admin-delete{
+      color:#ff7189;
+    }
+
+    @media(max-width:900px){
+      .admin-grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media(max-width:620px){
+      .admin-row2{
+        grid-template-columns:1fr;
+      }
+    }
+
   </style>
 </head>
 
@@ -169,6 +370,7 @@
     <nav class="navlinks">
       <a href="#results">Results</a>
       <a href="#levels">Levels</a>
+      <a id="adminNavLink" href="#adminLevels" style="display:none">Admin</a>
       <a href="#calculators">Calculators</a>
       <a href="#journal">Journal</a>
     </nav>
@@ -265,6 +467,120 @@
   </div>
 
   <div id="dailyLevelsStatus" class="journal-status"></div>
+</section>
+
+
+<section class="section admin-section" id="adminLevels">
+  <div class="section-head">
+    <div class="eyebrow">ADMIN PANEL</div>
+    <h2>Manage Daily Levels.</h2>
+    <p>
+      Only the Goldzilla admin account can add, edit or delete shared Daily Levels and Results.
+    </p>
+  </div>
+
+  <div class="admin-grid">
+
+    <div class="card admin-card">
+      <h3 id="adminFormTitle">Add Daily Level</h3>
+
+      <div class="admin-row2">
+        <label class="admin-field">
+          <span>Date</span>
+          <input id="adminTradeDate" type="date">
+        </label>
+
+        <label class="admin-field">
+          <span>Session</span>
+          <select id="adminSession">
+            <option value="Pre-London">Pre-London</option>
+            <option value="London">London</option>
+            <option value="New York">New York</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="admin-row2">
+        <label class="admin-field">
+          <span>Type</span>
+          <select id="adminType">
+            <option value="BUY">BUY</option>
+            <option value="SELL">SELL</option>
+          </select>
+        </label>
+
+        <label class="admin-field">
+          <span>Status</span>
+          <select id="adminResultStatus">
+            <option value="">Pending</option>
+            <option value="WIN">WIN</option>
+            <option value="LOSS">LOSS</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="admin-row2">
+        <label class="admin-field">
+          <span>Zone From</span>
+          <input id="adminZoneFrom" type="number" step="0.01" placeholder="4470">
+        </label>
+
+        <label class="admin-field">
+          <span>Zone To</span>
+          <input id="adminZoneTo" type="number" step="0.01" placeholder="4475">
+        </label>
+      </div>
+
+      <div class="admin-row2">
+        <label class="admin-field">
+          <span>SL</span>
+          <input id="adminSL" type="number" step="0.01" placeholder="4460">
+        </label>
+
+        <label class="admin-field">
+          <span>Result Pips</span>
+          <input id="adminResultPips" type="number" step="0.01" placeholder="100 or -50">
+        </label>
+      </div>
+
+      <div class="admin-row2">
+        <label class="admin-field">
+          <span>TP1</span>
+          <input id="adminTP1" type="number" step="0.01" placeholder="4485">
+        </label>
+
+        <label class="admin-field">
+          <span>TP2</span>
+          <input id="adminTP2" type="number" step="0.01" placeholder="4495">
+        </label>
+      </div>
+
+      <label class="admin-field">
+        <span>Result Note</span>
+        <textarea id="adminResultNote" placeholder="Example: +100 pips from first touch"></textarea>
+      </label>
+
+      <div class="admin-actions">
+        <button id="adminSaveBtn" class="admin-save" type="button">
+          Save Level
+        </button>
+
+        <button id="adminCancelBtn" class="admin-cancel" type="button">
+          Cancel Edit
+        </button>
+      </div>
+
+      <div id="adminStatus" class="admin-status"></div>
+    </div>
+
+
+    <div>
+      <div id="adminLevelList" class="admin-level-list">
+        <div class="card journal-empty">Admin levels will appear here.</div>
+      </div>
+    </div>
+
+  </div>
 </section>
 
 <section class="section" id="calculators">
@@ -900,10 +1216,461 @@ async function loadCommonDailyLevels(){
 }
 
 
+
+/* =========================================================
+   ADMIN DAILY LEVELS
+   ========================================================= */
+
+const ADMIN_EMAIL = "mahmad082005@gmail.com";
+
+let editingDailyZoneId = null;
+let adminRowsCache = [];
+
+const adminSection = document.querySelector("#adminLevels");
+const adminNavLink = document.querySelector("#adminNavLink");
+const adminFormTitle = document.querySelector("#adminFormTitle");
+const adminTradeDate = document.querySelector("#adminTradeDate");
+const adminSession = document.querySelector("#adminSession");
+const adminType = document.querySelector("#adminType");
+const adminResultStatus = document.querySelector("#adminResultStatus");
+const adminZoneFrom = document.querySelector("#adminZoneFrom");
+const adminZoneTo = document.querySelector("#adminZoneTo");
+const adminSL = document.querySelector("#adminSL");
+const adminTP1 = document.querySelector("#adminTP1");
+const adminTP2 = document.querySelector("#adminTP2");
+const adminResultPips = document.querySelector("#adminResultPips");
+const adminResultNote = document.querySelector("#adminResultNote");
+const adminSaveBtn = document.querySelector("#adminSaveBtn");
+const adminCancelBtn = document.querySelector("#adminCancelBtn");
+const adminStatus = document.querySelector("#adminStatus");
+const adminLevelList = document.querySelector("#adminLevelList");
+
+
+function isGoldzillaAdmin(){
+  return (
+    currentJournalUser?.email || ""
+  ).toLowerCase() === ADMIN_EMAIL.toLowerCase();
+}
+
+
+function adminMessage(message,type=""){
+  if(!adminStatus) return;
+
+  adminStatus.textContent = message;
+  adminStatus.className =
+    "admin-status" +
+    (type ? " " + type : "");
+}
+
+
+function resetAdminForm(){
+  editingDailyZoneId = null;
+
+  if(adminFormTitle){
+    adminFormTitle.textContent = "Add Daily Level";
+  }
+
+  if(adminSaveBtn){
+    adminSaveBtn.textContent = "Save Level";
+  }
+
+  adminCancelBtn?.classList.remove("show");
+
+  if(adminTradeDate){
+    adminTradeDate.value = localDateISO();
+  }
+
+  if(adminSession){
+    adminSession.value = "London";
+  }
+
+  if(adminType){
+    adminType.value = "BUY";
+  }
+
+  if(adminResultStatus){
+    adminResultStatus.value = "";
+  }
+
+  if(adminZoneFrom) adminZoneFrom.value = "";
+  if(adminZoneTo) adminZoneTo.value = "";
+  if(adminSL) adminSL.value = "";
+  if(adminTP1) adminTP1.value = "";
+  if(adminTP2) adminTP2.value = "";
+  if(adminResultPips) adminResultPips.value = "";
+  if(adminResultNote) adminResultNote.value = "";
+}
+
+
+function numberOrNull(input){
+  if(!input || input.value === ""){
+    return null;
+  }
+
+  const n = Number(input.value);
+
+  return Number.isNaN(n)
+    ? null
+    : n;
+}
+
+
+async function loadAdminLevels(){
+  if(!isGoldzillaAdmin() || !adminLevelList){
+    return;
+  }
+
+  adminLevelList.innerHTML =
+    '<div class="card journal-empty">Loading levels...</div>';
+
+  const { data, error } = await journalClient
+    .from("Daily_Zones")
+    .select('id,created_at,type,zone_from,zone_to,result_pips,"Results_Status",result_note,trade_date,session,sl,tp1,tp2')
+    .order("trade_date",{ascending:false,nullsFirst:false})
+    .order("created_at",{ascending:false});
+
+  if(error){
+    console.error("Admin levels load error:", error);
+
+    adminLevelList.innerHTML =
+      '<div class="card journal-empty">Unable to load admin levels.</div>';
+
+    adminMessage(error.message,"error");
+    return;
+  }
+
+  adminRowsCache = data || [];
+
+  if(adminRowsCache.length === 0){
+    adminLevelList.innerHTML =
+      '<div class="card journal-empty">No Daily Levels yet.</div>';
+    return;
+  }
+
+  adminLevelList.innerHTML = adminRowsCache.map(row => {
+
+    const type = String(row.type || "").toUpperCase();
+    const status = String(row.Results_Status || "PENDING").toUpperCase();
+
+    const resultText =
+      row.result_pips === null || row.result_pips === ""
+        ? status
+        : `${Number(row.result_pips) > 0 ? "+" : ""}${row.result_pips} pips`;
+
+    return `
+      <div class="card admin-level-item">
+
+        <div class="admin-level-top">
+          <div>
+            <div class="admin-level-title">
+              ${escapeHtml(type || "LEVEL")}
+              ${escapeHtml(formatLevelRange(row.zone_from,row.zone_to))}
+            </div>
+
+            <div class="admin-level-meta">
+              ${escapeHtml(formatJournalDate(row.trade_date || String(row.created_at || "").slice(0,10)))}
+              •
+              ${escapeHtml(row.session || "—")}
+            </div>
+          </div>
+
+          <span class="journal-result ${
+            status === "WIN"
+              ? "win"
+              : status === "LOSS"
+                ? "loss"
+                : "pending"
+          }">
+            ${escapeHtml(resultText)}
+          </span>
+        </div>
+
+        <div class="admin-level-details">
+          <div>SL<strong>${escapeHtml(formatLevelNumber(row.sl))}</strong></div>
+          <div>TP1<strong>${escapeHtml(formatLevelNumber(row.tp1))}</strong></div>
+          <div>TP2<strong>${escapeHtml(formatLevelNumber(row.tp2))}</strong></div>
+        </div>
+
+        ${
+          row.result_note
+            ? `<div class="admin-level-note">${escapeHtml(row.result_note)}</div>`
+            : ""
+        }
+
+        <div class="admin-level-actions">
+          <button class="admin-edit" type="button" data-id="${row.id}">
+            Edit
+          </button>
+
+          <button class="admin-delete" type="button" data-id="${row.id}">
+            Delete
+          </button>
+        </div>
+
+      </div>
+    `;
+
+  }).join("");
+
+
+  adminLevelList
+    .querySelectorAll(".admin-edit")
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          const id = Number(button.dataset.id);
+
+          const row = adminRowsCache.find(
+            item => Number(item.id) === id
+          );
+
+          if(row){
+            startAdminEdit(row);
+          }
+
+        }
+      );
+
+    });
+
+
+  adminLevelList
+    .querySelectorAll(".admin-delete")
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        () => deleteDailyZone(
+          Number(button.dataset.id)
+        )
+      );
+
+    });
+}
+
+
+function startAdminEdit(row){
+  editingDailyZoneId = row.id;
+
+  adminFormTitle.textContent = "Edit Daily Level";
+  adminSaveBtn.textContent = "Update Level";
+  adminCancelBtn.classList.add("show");
+
+  adminTradeDate.value =
+    row.trade_date || localDateISO();
+
+  adminSession.value =
+    row.session || "London";
+
+  adminType.value =
+    String(row.type || "BUY").toUpperCase();
+
+  adminResultStatus.value =
+    row.Results_Status || "";
+
+  adminZoneFrom.value =
+    row.zone_from ?? "";
+
+  adminZoneTo.value =
+    row.zone_to ?? "";
+
+  adminSL.value =
+    row.sl ?? "";
+
+  adminTP1.value =
+    row.tp1 ?? "";
+
+  adminTP2.value =
+    row.tp2 ?? "";
+
+  adminResultPips.value =
+    row.result_pips ?? "";
+
+  adminResultNote.value =
+    row.result_note || "";
+
+  adminMessage("");
+
+  adminSection?.scrollIntoView({
+    behavior:"smooth",
+    block:"start"
+  });
+}
+
+
+async function saveDailyZone(){
+
+  if(!isGoldzillaAdmin()){
+    adminMessage(
+      "Admin access required.",
+      "error"
+    );
+    return;
+  }
+
+  if(!adminTradeDate.value){
+    adminMessage(
+      "Please select a date.",
+      "error"
+    );
+    return;
+  }
+
+  if(
+    adminZoneFrom.value === "" ||
+    adminZoneTo.value === ""
+  ){
+    adminMessage(
+      "Please enter Zone From and Zone To.",
+      "error"
+    );
+    return;
+  }
+
+  const payload = {
+    trade_date: adminTradeDate.value,
+    session: adminSession.value,
+    type: adminType.value,
+    zone_from: numberOrNull(adminZoneFrom),
+    zone_to: numberOrNull(adminZoneTo),
+    sl: numberOrNull(adminSL),
+    tp1: numberOrNull(adminTP1),
+    tp2: numberOrNull(adminTP2),
+    result_pips: numberOrNull(adminResultPips),
+    Results_Status: adminResultStatus.value || null,
+    result_note: adminResultNote.value.trim() || null
+  };
+
+  adminSaveBtn.disabled = true;
+
+  adminMessage(
+    editingDailyZoneId
+      ? "Updating level..."
+      : "Saving level..."
+  );
+
+  let response;
+
+  if(editingDailyZoneId){
+
+    response = await journalClient
+      .from("Daily_Zones")
+      .update(payload)
+      .eq("id",editingDailyZoneId);
+
+  }else{
+
+    response = await journalClient
+      .from("Daily_Zones")
+      .insert(payload);
+
+  }
+
+  adminSaveBtn.disabled = false;
+
+  if(response.error){
+    console.error("Admin save error:", response.error);
+    adminMessage(response.error.message,"error");
+    return;
+  }
+
+  adminMessage(
+    editingDailyZoneId
+      ? "Level updated successfully."
+      : "Level added successfully.",
+    "success"
+  );
+
+  resetAdminForm();
+
+  await Promise.all([
+    loadAdminLevels(),
+    loadCommonDailyLevels()
+  ]);
+}
+
+
+async function deleteDailyZone(id){
+
+  if(!isGoldzillaAdmin()){
+    return;
+  }
+
+  const ok = window.confirm(
+    "Delete this Daily Level?"
+  );
+
+  if(!ok){
+    return;
+  }
+
+  const { error } = await journalClient
+    .from("Daily_Zones")
+    .delete()
+    .eq("id",id);
+
+  if(error){
+    console.error("Admin delete error:", error);
+    adminMessage(error.message,"error");
+    return;
+  }
+
+  adminMessage(
+    "Level deleted.",
+    "success"
+  );
+
+  if(editingDailyZoneId === id){
+    resetAdminForm();
+  }
+
+  await Promise.all([
+    loadAdminLevels(),
+    loadCommonDailyLevels()
+  ]);
+}
+
+
+adminSaveBtn?.addEventListener(
+  "click",
+  saveDailyZone
+);
+
+
+adminCancelBtn?.addEventListener(
+  "click",
+  () => {
+    resetAdminForm();
+    adminMessage("");
+  }
+);
+
+
+function activateAdminPanel(){
+  if(!isGoldzillaAdmin()){
+    return;
+  }
+
+  adminSection?.classList.add("show");
+
+  if(adminNavLink){
+    adminNavLink.style.display = "";
+  }
+
+  resetAdminForm();
+  loadAdminLevels();
+}
+
+
 (async function startPrivatePlatform(){
   const loggedIn = await requirePlatformLogin();
   if(!loggedIn) return;
+
   resetJournalForm();
+  activateAdminPanel();
 
   await Promise.all([
     loadPrivateJournal(),
