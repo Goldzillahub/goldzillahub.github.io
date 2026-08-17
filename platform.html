@@ -348,6 +348,44 @@
       }
     }
 
+
+    /* 24H AUTOMATIC LEVEL ARCHIVE */
+    .history-wrap{
+      margin-top:22px;
+    }
+
+    .history-head{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:14px;
+    }
+
+    .history-head h3{
+      margin:0;
+      font-family:'Space Grotesk',sans-serif;
+      font-size:22px;
+    }
+
+    .history-head p{
+      margin:5px 0 0;
+      color:#8f98a8;
+      font-size:12px;
+    }
+
+    .history-count{
+      color:#8f98a8;
+      font-size:12px;
+      white-space:nowrap;
+    }
+
+    .history-note{
+      color:#8f98a8;
+      font-size:11px;
+      margin-top:10px;
+    }
+
   </style>
 </head>
 
@@ -432,6 +470,45 @@
     <div class="card metric">
       <span class="muted">Win Rate</span>
       <strong id="groupWinRate" class="purple">0.00%</strong>
+    </div>
+  </div>
+
+  <div class="history-wrap">
+    <div class="history-head">
+      <div>
+        <h3>Complete Level Results</h3>
+        <p>Levels automatically move here 24 hours after publication.</p>
+      </div>
+
+      <div id="historyCount" class="history-count">
+        0 archived levels
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Date & Time</th>
+            <th>Session</th>
+            <th>Type</th>
+            <th>Zone</th>
+            <th>Status</th>
+            <th>Result</th>
+            <th>Note</th>
+          </tr>
+        </thead>
+
+        <tbody id="resultsHistoryBody">
+          <tr>
+            <td colspan="7" class="muted">Loading result history...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="history-note">
+      Daily Levels remain active for exactly 24 hours from their database creation time.
     </div>
   </div>
 </section>
@@ -990,6 +1067,8 @@ const groupTotalTrades = document.querySelector("#groupTotalTrades");
 const groupWins = document.querySelector("#groupWins");
 const groupLosses = document.querySelector("#groupLosses");
 const groupWinRate = document.querySelector("#groupWinRate");
+const resultsHistoryBody = document.querySelector("#resultsHistoryBody");
+const historyCount = document.querySelector("#historyCount");
 
 
 function localDateISO(){
@@ -1098,7 +1177,29 @@ async function loadCommonDailyLevels(){
 
   const rows = data || [];
 
-  /* GROUP PERFORMANCE = ALL COMPLETED LEVELS */
+  /*
+    24-HOUR RULE
+    Active = created less than 24 hours ago
+    Archived = created 24 hours ago or earlier
+
+    No database row is deleted or physically moved.
+    The website automatically changes where the same row is displayed.
+  */
+  const nowMs = Date.now();
+  const DAY_MS = 24 * 60 * 60 * 1000;
+
+  const activeRows = rows.filter(row => {
+    const createdMs = new Date(row.created_at).getTime();
+    return Number.isFinite(createdMs) && (nowMs - createdMs) < DAY_MS;
+  });
+
+  const archivedRows = rows.filter(row => {
+    const createdMs = new Date(row.created_at).getTime();
+    return Number.isFinite(createdMs) && (nowMs - createdMs) >= DAY_MS;
+  });
+
+
+  /* GROUP PERFORMANCE = ALL COMPLETED LEVELS, ACTIVE + ARCHIVED */
   const completed = rows.filter(row =>
     row.result_pips !== null &&
     row.result_pips !== ""
@@ -1125,37 +1226,113 @@ async function loadCommonDailyLevels(){
   if(groupWinRate) groupWinRate.textContent = winRate + "%";
 
 
-  /* DAILY LEVELS = TODAY'S ROWS */
-  const today = localDateISO();
+  /* PERMANENT RESULTS HISTORY = 24H+ OLD LEVELS */
+  if(resultsHistoryBody){
 
-  let todayRows = rows.filter(row =>
-    row.trade_date === today
-  );
+    if(archivedRows.length === 0){
 
-  /*
-    If no row has today's trade_date yet, show the latest dated batch.
-    This prevents an empty page if you forgot to set trade_date manually.
-  */
-  if(todayRows.length === 0 && rows.length > 0){
-    const latestDate = rows.find(row => row.trade_date)?.trade_date;
+      resultsHistoryBody.innerHTML = `
+        <tr>
+          <td colspan="7" class="muted">No archived levels yet.</td>
+        </tr>
+      `;
 
-    if(latestDate){
-      todayRows = rows.filter(row =>
-        row.trade_date === latestDate
-      );
+    }else{
+
+      resultsHistoryBody.innerHTML = archivedRows.map(row => {
+
+        const type = String(row.type || "").toUpperCase();
+
+        const badgeClass =
+          type === "SELL"
+            ? "sell"
+            : "buy";
+
+        const result = getDailyResult(row);
+
+        const status =
+          String(row.Results_Status || "PENDING").toUpperCase();
+
+        const statusClass =
+          status === "WIN"
+            ? "green"
+            : status === "LOSS"
+              ? "red"
+              : "muted";
+
+        const createdDate =
+          new Date(row.created_at);
+
+        const createdText =
+          Number.isNaN(createdDate.getTime())
+            ? "—"
+            : createdDate.toLocaleString(
+                "en-US",
+                {
+                  year:"numeric",
+                  month:"short",
+                  day:"numeric",
+                  hour:"2-digit",
+                  minute:"2-digit"
+                }
+              );
+
+        return `
+          <tr>
+            <td>${escapeHtml(createdText)}</td>
+
+            <td>${escapeHtml(row.session || "—")}</td>
+
+            <td>
+              <span class="badge ${badgeClass}">
+                ${escapeHtml(type || "—")}
+              </span>
+            </td>
+
+            <td>
+              ${escapeHtml(formatLevelRange(row.zone_from,row.zone_to))}
+            </td>
+
+            <td class="${statusClass}">
+              ${escapeHtml(status)}
+            </td>
+
+            <td class="${result.className}">
+              ${escapeHtml(result.text)}
+            </td>
+
+            <td>
+              ${escapeHtml(row.result_note || "—")}
+            </td>
+          </tr>
+        `;
+
+      }).join("");
+
     }
   }
+
+  if(historyCount){
+    historyCount.textContent =
+      `${archivedRows.length} archived ${archivedRows.length === 1 ? "level" : "levels"}`;
+  }
+
+
+  /* DAILY LEVELS = ONLY LEVELS YOUNGER THAN 24 HOURS */
+  const todayRows = activeRows;
 
 
   if(todayRows.length === 0){
     dailyLevelsBody.innerHTML = `
       <tr>
-        <td colspan="8" class="muted">No Daily Levels available yet.</td>
+        <td colspan="8" class="muted">No active Daily Levels right now.</td>
       </tr>
     `;
 
     if(dailyLevelsStatus){
-      dailyLevelsStatus.textContent = "";
+      dailyLevelsStatus.textContent =
+        "New levels remain here for 24 hours, then move automatically to Results History.";
+      dailyLevelsStatus.className = "journal-status";
     }
 
     return;
@@ -1210,7 +1387,7 @@ async function loadCommonDailyLevels(){
 
   if(dailyLevelsStatus){
     dailyLevelsStatus.textContent =
-      "Live data • refreshes automatically every 60 seconds";
+      "Live data • 24-hour active window • refreshes automatically every 60 seconds";
     dailyLevelsStatus.className = "journal-status";
   }
 }
