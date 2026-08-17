@@ -208,12 +208,29 @@
   <div class="section-head">
     <div class="eyebrow">RESULTS</div>
     <h2>Group performance.</h2>
+    <p>Live Goldzilla performance based on completed Daily Levels.</p>
   </div>
+
   <div class="metrics">
-    <div class="card metric"><span class="muted">Total Trades</span><strong>128</strong></div>
-    <div class="card metric"><span class="muted">Wins</span><strong class="green">88</strong></div>
-    <div class="card metric"><span class="muted">Losses</span><strong class="red">40</strong></div>
-    <div class="card metric"><span class="muted">Win Rate</span><strong class="purple">68.75%</strong></div>
+    <div class="card metric">
+      <span class="muted">Total Trades</span>
+      <strong id="groupTotalTrades">0</strong>
+    </div>
+
+    <div class="card metric">
+      <span class="muted">Wins</span>
+      <strong id="groupWins" class="green">0</strong>
+    </div>
+
+    <div class="card metric">
+      <span class="muted">Losses</span>
+      <strong id="groupLosses" class="red">0</strong>
+    </div>
+
+    <div class="card metric">
+      <span class="muted">Win Rate</span>
+      <strong id="groupWinRate" class="purple">0.00%</strong>
+    </div>
   </div>
 </section>
 
@@ -221,34 +238,33 @@
   <div class="section-head">
     <div class="eyebrow">DAILY LEVELS</div>
     <h2>Today's Gold Levels.</h2>
+    <p>Levels are updated from the Goldzilla Supabase database and are the same for every member.</p>
   </div>
+
   <div class="table-wrap">
     <table>
       <thead>
         <tr>
-          <th>Date</th><th>Session</th><th>Type</th><th>Level</th>
-          <th>SL</th><th>TP1</th><th>TP2</th><th>Result</th>
+          <th>Date</th>
+          <th>Session</th>
+          <th>Type</th>
+          <th>Level</th>
+          <th>SL</th>
+          <th>TP1</th>
+          <th>TP2</th>
+          <th>Result</th>
         </tr>
       </thead>
-      <tbody>
+
+      <tbody id="dailyLevelsBody">
         <tr>
-          <td>Aug 16</td><td>London</td><td><span class="badge buy">BUY</span></td>
-          <td>2375.00</td><td>2370.00</td><td>2385.00</td><td>2395.00</td>
-          <td class="green">+200 pips</td>
-        </tr>
-        <tr>
-          <td>Aug 16</td><td>London</td><td><span class="badge buy">BUY</span></td>
-          <td>2365.00</td><td>2360.00</td><td>2375.00</td><td>2385.00</td>
-          <td class="muted">Pending</td>
-        </tr>
-        <tr>
-          <td>Aug 16</td><td>New York</td><td><span class="badge sell">SELL</span></td>
-          <td>2398.00</td><td>2403.00</td><td>2388.00</td><td>2378.00</td>
-          <td class="red">-150 pips</td>
+          <td colspan="8" class="muted">Loading Daily Levels...</td>
         </tr>
       </tbody>
     </table>
   </div>
+
+  <div id="dailyLevelsStatus" class="journal-status"></div>
 </section>
 
 <section class="section" id="calculators">
@@ -639,17 +655,265 @@ document.querySelector("#platformLogoutBtn")?.addEventListener("click",async () 
   window.location.replace("index.html");
 });
 
+
 journalClient.auth.onAuthStateChange((event) => {
   if(event === "SIGNED_OUT"){
     window.location.replace("index.html");
   }
 });
 
+
+/* =========================================================
+   COMMON GOLDZILLA DAILY LEVELS + GROUP RESULTS
+   ========================================================= */
+
+const dailyLevelsBody = document.querySelector("#dailyLevelsBody");
+const dailyLevelsStatus = document.querySelector("#dailyLevelsStatus");
+
+const groupTotalTrades = document.querySelector("#groupTotalTrades");
+const groupWins = document.querySelector("#groupWins");
+const groupLosses = document.querySelector("#groupLosses");
+const groupWinRate = document.querySelector("#groupWinRate");
+
+
+function localDateISO(){
+  const now = new Date();
+  const offset = now.getTimezoneOffset();
+  const local = new Date(now.getTime() - offset * 60000);
+  return local.toISOString().slice(0,10);
+}
+
+
+function formatLevelNumber(value){
+  if(value === null || value === undefined || value === ""){
+    return "—";
+  }
+
+  const n = Number(value);
+
+  if(Number.isNaN(n)){
+    return escapeHtml(value);
+  }
+
+  return n.toLocaleString(
+    "en-US",
+    {
+      minimumFractionDigits:0,
+      maximumFractionDigits:2
+    }
+  );
+}
+
+
+function formatLevelRange(from,to){
+  if(
+    from !== null &&
+    from !== undefined &&
+    from !== "" &&
+    to !== null &&
+    to !== undefined &&
+    to !== ""
+  ){
+    return `${formatLevelNumber(from)} - ${formatLevelNumber(to)}`;
+  }
+
+  return formatLevelNumber(from ?? to);
+}
+
+
+function getDailyResult(row){
+  if(row.result_pips !== null && row.result_pips !== ""){
+    const pips = Number(row.result_pips);
+
+    if(!Number.isNaN(pips)){
+      if(pips > 0) return {text:`+${pips} pips`,className:"green"};
+      if(pips < 0) return {text:`${pips} pips`,className:"red"};
+      return {text:"0 pips",className:"muted"};
+    }
+  }
+
+  if(row.Results_Status){
+    const status = String(row.Results_Status).toUpperCase();
+
+    if(status === "WIN") return {text:"WIN",className:"green"};
+    if(status === "LOSS") return {text:"LOSS",className:"red"};
+
+    return {text:status,className:"muted"};
+  }
+
+  return {text:"Pending",className:"muted"};
+}
+
+
+async function loadCommonDailyLevels(){
+
+  if(!dailyLevelsBody){
+    return;
+  }
+
+  dailyLevelsBody.innerHTML = `
+    <tr>
+      <td colspan="8" class="muted">Loading Daily Levels...</td>
+    </tr>
+  `;
+
+  const { data, error } = await journalClient
+    .from("Daily_Zones")
+    .select('id,created_at,type,zone_from,zone_to,result_pips,"Results_Status",result_note,trade_date,session,sl,tp1,tp2')
+    .order("trade_date",{ascending:false,nullsFirst:false})
+    .order("created_at",{ascending:false});
+
+  if(error){
+    console.error("Daily Levels error:", error);
+
+    dailyLevelsBody.innerHTML = `
+      <tr>
+        <td colspan="8" class="red">Unable to load Daily Levels.</td>
+      </tr>
+    `;
+
+    if(dailyLevelsStatus){
+      dailyLevelsStatus.textContent = error.message;
+      dailyLevelsStatus.className = "journal-status error";
+    }
+
+    return;
+  }
+
+  const rows = data || [];
+
+  /* GROUP PERFORMANCE = ALL COMPLETED LEVELS */
+  const completed = rows.filter(row =>
+    row.result_pips !== null &&
+    row.result_pips !== ""
+  );
+
+  const wins = completed.filter(row =>
+    Number(row.result_pips) > 0
+  ).length;
+
+  const losses = completed.filter(row =>
+    Number(row.result_pips) < 0
+  ).length;
+
+  const totalTrades = completed.length;
+
+  const winRate =
+    totalTrades > 0
+      ? (wins / totalTrades * 100).toFixed(2)
+      : "0.00";
+
+  if(groupTotalTrades) groupTotalTrades.textContent = totalTrades;
+  if(groupWins) groupWins.textContent = wins;
+  if(groupLosses) groupLosses.textContent = losses;
+  if(groupWinRate) groupWinRate.textContent = winRate + "%";
+
+
+  /* DAILY LEVELS = TODAY'S ROWS */
+  const today = localDateISO();
+
+  let todayRows = rows.filter(row =>
+    row.trade_date === today
+  );
+
+  /*
+    If no row has today's trade_date yet, show the latest dated batch.
+    This prevents an empty page if you forgot to set trade_date manually.
+  */
+  if(todayRows.length === 0 && rows.length > 0){
+    const latestDate = rows.find(row => row.trade_date)?.trade_date;
+
+    if(latestDate){
+      todayRows = rows.filter(row =>
+        row.trade_date === latestDate
+      );
+    }
+  }
+
+
+  if(todayRows.length === 0){
+    dailyLevelsBody.innerHTML = `
+      <tr>
+        <td colspan="8" class="muted">No Daily Levels available yet.</td>
+      </tr>
+    `;
+
+    if(dailyLevelsStatus){
+      dailyLevelsStatus.textContent = "";
+    }
+
+    return;
+  }
+
+
+  dailyLevelsBody.innerHTML = todayRows.map(row => {
+
+    const type = String(row.type || "").toUpperCase();
+
+    const badgeClass =
+      type === "SELL"
+        ? "sell"
+        : "buy";
+
+    const result = getDailyResult(row);
+
+    const displayDate =
+      formatJournalDate(
+        row.trade_date ||
+        String(row.created_at || "").slice(0,10)
+      );
+
+    return `
+      <tr>
+        <td>${escapeHtml(displayDate)}</td>
+
+        <td>${escapeHtml(row.session || "—")}</td>
+
+        <td>
+          <span class="badge ${badgeClass}">
+            ${escapeHtml(type || "—")}
+          </span>
+        </td>
+
+        <td>
+          ${escapeHtml(formatLevelRange(row.zone_from,row.zone_to))}
+        </td>
+
+        <td>${escapeHtml(formatLevelNumber(row.sl))}</td>
+        <td>${escapeHtml(formatLevelNumber(row.tp1))}</td>
+        <td>${escapeHtml(formatLevelNumber(row.tp2))}</td>
+
+        <td class="${result.className}">
+          ${escapeHtml(result.text)}
+        </td>
+      </tr>
+    `;
+
+  }).join("");
+
+
+  if(dailyLevelsStatus){
+    dailyLevelsStatus.textContent =
+      "Live data • refreshes automatically every 60 seconds";
+    dailyLevelsStatus.className = "journal-status";
+  }
+}
+
+
 (async function startPrivatePlatform(){
   const loggedIn = await requirePlatformLogin();
   if(!loggedIn) return;
   resetJournalForm();
-  await loadPrivateJournal();
+
+  await Promise.all([
+    loadPrivateJournal(),
+    loadCommonDailyLevels()
+  ]);
+
+  setInterval(
+    loadCommonDailyLevels,
+    60000
+  );
 })();
 </script>
 
