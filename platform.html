@@ -938,6 +938,121 @@
       }
     }
 
+
+    /* =========================================================
+       TRADER ASSISTANT
+       ========================================================= */
+    .assistant-shell{padding-top:8px;}
+    .assistant-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:14px;
+    }
+    .assistant-card{padding:18px;}
+    .assistant-card.full{grid-column:1/-1;}
+    .assistant-card h3{
+      margin:0 0 12px;
+      font-family:'Space Grotesk',sans-serif;
+      font-size:18px;
+    }
+    .assistant-card p{
+      margin:0 0 12px;
+      color:#8f98a8;
+      font-size:12px;
+      line-height:1.6;
+    }
+    .assistant-field{display:block;margin-bottom:11px;}
+    .assistant-field span{
+      display:block;margin-bottom:6px;
+      color:#aeb6c4;font-size:11px;font-weight:700;
+    }
+    .assistant-field input,
+    .assistant-field select,
+    .assistant-field textarea{
+      width:100%;box-sizing:border-box;padding:11px 12px;border-radius:9px;
+      border:1px solid #293040;background:#090c13;color:#fff;font:inherit;outline:none;
+    }
+    .assistant-field textarea{min-height:82px;resize:vertical;}
+    .assistant-field input:focus,
+    .assistant-field select:focus,
+    .assistant-field textarea:focus{
+      border-color:#8b5cf6;box-shadow:0 0 0 3px rgba(139,92,246,.10);
+    }
+    .assistant-row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+    .assistant-row3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+    .assistant-checklist{display:grid;gap:9px;}
+    .assistant-check{
+      display:flex;align-items:center;gap:9px;padding:10px 11px;border:1px solid #252c39;
+      border-radius:9px;background:#0b0f17;color:#cfd6e2;font-size:12px;
+    }
+    .assistant-check input{accent-color:#8b5cf6;}
+    .assistant-progress{
+      height:9px;border-radius:999px;background:#171d28;overflow:hidden;margin-top:12px;
+    }
+    .assistant-progress > div{
+      height:100%;width:0;background:linear-gradient(90deg,#8b5cf6,#a77cff);transition:.25s;
+    }
+    .assistant-score{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      margin-top:10px;padding:12px;border:1px solid #252c39;border-radius:10px;background:#0b0f17;
+    }
+    .assistant-score strong{
+      font-family:'Space Grotesk',sans-serif;font-size:24px;
+    }
+    .assistant-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px;}
+    .assistant-btn{
+      border:0;border-radius:9px;padding:10px 13px;color:#fff;
+      background:linear-gradient(135deg,#9d6cff,#7247ff);
+      font:inherit;font-size:11px;font-weight:800;cursor:pointer;
+    }
+    .assistant-btn.secondary{background:#111622;border:1px solid #293040;}
+    .assistant-btn.danger{background:#281018;border:1px solid #6b2435;color:#ff8aa0;}
+    .assistant-status{min-height:18px;margin-top:10px;color:#8f98a8;font-size:11px;}
+    .assistant-status.success{color:#35df96;}
+    .assistant-status.error{color:#ff7189;}
+    .assistant-session-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+    .assistant-session{
+      padding:13px;border:1px solid #252c39;border-radius:10px;background:#0b0f17;
+    }
+    .assistant-session span{display:block;color:#7f8998;font-size:10px;margin-bottom:5px;}
+    .assistant-session strong{font-family:'Space Grotesk',sans-serif;font-size:16px;}
+    .assistant-session.open strong{color:#35df96;}
+    .assistant-session.closed strong{color:#8f98a8;}
+    .assistant-countdown{
+      font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;color:#fff;
+      margin:6px 0 8px;
+    }
+    .assistant-risk-banner{
+      padding:14px;border-radius:11px;border:1px solid #293040;background:#0b0f17;
+      display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+    }
+    .assistant-risk-banner.safe{border-color:rgba(53,223,150,.28);}
+    .assistant-risk-banner.stop{border-color:rgba(255,102,127,.35);background:rgba(255,102,127,.05);}
+    .assistant-risk-banner strong{font-family:'Space Grotesk',sans-serif;}
+    .assistant-mini-list{display:grid;gap:8px;margin-top:10px;}
+    .assistant-mini-item{
+      padding:10px 11px;border:1px solid #252c39;border-radius:9px;background:#0b0f17;
+      color:#cfd6e2;font-size:11px;
+    }
+    .assistant-weekly{
+      display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:12px;
+    }
+    .assistant-weekly .box{
+      padding:12px;border:1px solid #252c39;border-radius:9px;background:#0b0f17;
+    }
+    .assistant-weekly .box span{display:block;color:#7f8998;font-size:9px;text-transform:uppercase;}
+    .assistant-weekly .box strong{display:block;margin-top:5px;font-family:'Space Grotesk',sans-serif;}
+    @media(max-width:900px){
+      .assistant-grid{grid-template-columns:1fr;}
+      .assistant-card.full{grid-column:auto;}
+      .assistant-row3{grid-template-columns:1fr;}
+      .assistant-session-grid{grid-template-columns:1fr;}
+      .assistant-weekly{grid-template-columns:repeat(2,minmax(0,1fr));}
+    }
+    @media(max-width:620px){
+      .assistant-row2{grid-template-columns:1fr;}
+    }
+
   </style>
 </head>
 
@@ -963,6 +1078,7 @@
       <a id="adminNavLink" href="#adminLevels" style="display:none">Admin</a>
       <a href="#calculators">Calculators</a>
       <a href="#journal">Journal</a>
+      <a href="#traderAssistant">Trader Assistant</a>
     </nav>
 
     <div class="actions">
@@ -993,6 +1109,7 @@
       <a id="adminMobileLink" href="#adminLevels" style="display:none">Admin</a>
       <a href="#calculators">Calculators</a>
       <a href="#journal">Journal</a>
+      <a href="#traderAssistant">Trader Assistant</a>
       <a href="index.html">Home</a>
       <a href="#calculators">Trading Tools</a>
     </div>
@@ -1016,6 +1133,7 @@
     <a href="#levels">Daily Levels</a>
     <a href="#calculators">Calculators</a>
     <a href="#journal">Journal</a>
+    <a href="#traderAssistant">Trader Assistant</a>
   </div>
 </section>
 
@@ -1525,6 +1643,246 @@
   </div>
 </section>
 
+
+<section class="section assistant-shell" id="traderAssistant">
+  <div class="section-head">
+    <div class="eyebrow">TRADER ASSISTANT</div>
+    <h2>Your discipline & risk command center.</h2>
+    <p>Private tools for planning, risk control, discipline, mistakes and weekly review.</p>
+  </div>
+
+  <div id="assistantRiskBanner" class="assistant-risk-banner safe">
+    <div>
+      <div class="eyebrow">TODAY STATUS</div>
+      <strong id="assistantTradePermission">TRADING ALLOWED</strong>
+      <div id="assistantRiskText" class="muted" style="font-size:11px;margin-top:4px;">Set your daily limits below.</div>
+    </div>
+    <button id="assistantManualStopBtn" class="assistant-btn danger" type="button">Enable No-Trade Mode</button>
+  </div>
+
+  <div class="assistant-grid" style="margin-top:14px;">
+
+    <div class="card assistant-card">
+      <h3>Trading Checklist</h3>
+      <p>Complete your rules before taking a trade.</p>
+
+      <div class="assistant-checklist">
+        <label class="assistant-check"><input class="assistant-check-input" data-key="htf" type="checkbox"> HTF trend aligned</label>
+        <label class="assistant-check"><input class="assistant-check-input" data-key="zone" type="checkbox"> Valid zone / level</label>
+        <label class="assistant-check"><input class="assistant-check-input" data-key="confirm" type="checkbox"> Entry confirmation received</label>
+        <label class="assistant-check"><input class="assistant-check-input" data-key="rr" type="checkbox"> Minimum R:R respected</label>
+        <label class="assistant-check"><input class="assistant-check-input" data-key="news" type="checkbox"> No major news risk nearby</label>
+      </div>
+
+      <div class="assistant-progress"><div id="assistantChecklistBar"></div></div>
+      <div class="assistant-score">
+        <span class="muted">Checklist Score</span>
+        <strong id="assistantChecklistScore">0/5</strong>
+      </div>
+    </div>
+
+    <div class="card assistant-card">
+      <h3>Daily Risk Guard</h3>
+      <p>Control how much you can lose or trade in one day.</p>
+
+      <div class="assistant-row2">
+        <label class="assistant-field">
+          <span>Max Daily Loss ($)</span>
+          <input id="assistantMaxDailyLoss" type="number" step="0.01" placeholder="100">
+        </label>
+
+        <label class="assistant-field">
+          <span>Max Trades / Day</span>
+          <input id="assistantMaxTrades" type="number" step="1" placeholder="2">
+        </label>
+      </div>
+
+      <div class="assistant-row2">
+        <label class="assistant-field">
+          <span>Daily Profit Target ($)</span>
+          <input id="assistantDailyTarget" type="number" step="0.01" placeholder="200">
+        </label>
+
+        <label class="assistant-field">
+          <span>Current P/L Today ($)</span>
+          <input id="assistantTodayPL" type="number" step="0.01" placeholder="0">
+        </label>
+      </div>
+
+      <label class="assistant-field">
+        <span>Trades Taken Today</span>
+        <input id="assistantTradesToday" type="number" step="1" placeholder="0">
+      </label>
+    </div>
+
+    <div class="card assistant-card full">
+      <h3>Trade Plan</h3>
+      <p>Write the plan before the market tempts you to improvise.</p>
+
+      <div class="assistant-row3">
+        <label class="assistant-field">
+          <span>Bias</span>
+          <select id="assistantBias">
+            <option value="">Select bias</option>
+            <option value="Bullish">Bullish</option>
+            <option value="Bearish">Bearish</option>
+            <option value="Neutral">Neutral</option>
+          </select>
+        </label>
+
+        <label class="assistant-field">
+          <span>Buy Zone</span>
+          <input id="assistantBuyZone" type="text" placeholder="Example: 4380-4370">
+        </label>
+
+        <label class="assistant-field">
+          <span>Sell Zone</span>
+          <input id="assistantSellZone" type="text" placeholder="Example: 4410-4420">
+        </label>
+      </div>
+
+      <div class="assistant-row2">
+        <label class="assistant-field">
+          <span>Invalidation</span>
+          <input id="assistantInvalidation" type="text" placeholder="What invalidates the idea?">
+        </label>
+
+        <label class="assistant-field">
+          <span>Main Target</span>
+          <input id="assistantTarget" type="text" placeholder="Example: 150+ pips">
+        </label>
+      </div>
+
+      <label class="assistant-field">
+        <span>Plan Notes</span>
+        <textarea id="assistantPlanNotes" placeholder="What must happen before entry?"></textarea>
+      </label>
+    </div>
+
+    <div class="card assistant-card">
+      <h3>Personal Rules</h3>
+      <p>Your non-negotiable rules.</p>
+
+      <label class="assistant-field">
+        <span>Rules (one per line)</span>
+        <textarea id="assistantRules" placeholder="Max 2 trades&#10;No revenge trade&#10;Minimum RR 1:2"></textarea>
+      </label>
+
+      <div id="assistantRulesPreview" class="assistant-mini-list"></div>
+    </div>
+
+    <div class="card assistant-card">
+      <h3>Mistake Tracker</h3>
+      <p>Track repeated execution mistakes.</p>
+
+      <label class="assistant-field">
+        <span>Most Recent Mistake</span>
+        <select id="assistantMistake">
+          <option value="">None</option>
+          <option value="FOMO">FOMO</option>
+          <option value="Early Entry">Early Entry</option>
+          <option value="Overtrading">Overtrading</option>
+          <option value="Revenge Trade">Revenge Trade</option>
+          <option value="Moved SL">Moved SL</option>
+          <option value="Missed Setup">Missed Setup</option>
+          <option value="Ignored News">Ignored News</option>
+          <option value="Other">Other</option>
+        </select>
+      </label>
+
+      <label class="assistant-field">
+        <span>Mistake Note</span>
+        <textarea id="assistantMistakeNote" placeholder="What happened and what will you do differently?"></textarea>
+      </label>
+    </div>
+
+    <div class="card assistant-card">
+      <h3>Discipline Score</h3>
+      <p>Rate execution quality, not profit.</p>
+
+      <label class="assistant-field">
+        <span>Score (0-10)</span>
+        <input id="assistantDiscipline" type="range" min="0" max="10" step="1" value="5">
+      </label>
+
+      <div class="assistant-score">
+        <span class="muted">Today</span>
+        <strong id="assistantDisciplineValue">5/10</strong>
+      </div>
+    </div>
+
+    <div class="card assistant-card">
+      <h3>Session Clock</h3>
+      <p>Live session status based on your device time.</p>
+
+      <div class="assistant-session-grid">
+        <div id="assistantAsiaSession" class="assistant-session"><span>Asia</span><strong>—</strong></div>
+        <div id="assistantLondonSession" class="assistant-session"><span>London</span><strong>—</strong></div>
+        <div id="assistantNySession" class="assistant-session"><span>New York</span><strong>—</strong></div>
+      </div>
+    </div>
+
+    <div class="card assistant-card">
+      <h3>Gold Event Countdown</h3>
+      <p>Set the next important event and get a live countdown.</p>
+
+      <label class="assistant-field">
+        <span>Event Name</span>
+        <input id="assistantEventName" type="text" placeholder="CPI / NFP / FOMC / Powell">
+      </label>
+
+      <label class="assistant-field">
+        <span>Event Date & Time</span>
+        <input id="assistantEventTime" type="datetime-local">
+      </label>
+
+      <div id="assistantCountdown" class="assistant-countdown">—</div>
+      <div id="assistantEventRisk" class="muted" style="font-size:11px;">No event set.</div>
+    </div>
+
+    <div class="card assistant-card">
+      <h3>Pre / Post Trade Screenshots</h3>
+      <p>Save chart links before and after execution.</p>
+
+      <label class="assistant-field">
+        <span>Pre-Trade Screenshot URL</span>
+        <input id="assistantPreShot" type="url" placeholder="https://...">
+      </label>
+
+      <label class="assistant-field">
+        <span>Post-Trade Screenshot URL</span>
+        <input id="assistantPostShot" type="url" placeholder="https://...">
+      </label>
+    </div>
+
+    <div class="card assistant-card full">
+      <h3>Weekly Review</h3>
+      <p>Auto summary from your private Journal for the last 7 days.</p>
+
+      <div class="assistant-weekly">
+        <div class="box"><span>Trades</span><strong id="assistantWeekTrades">0</strong></div>
+        <div class="box"><span>Wins</span><strong id="assistantWeekWins">0</strong></div>
+        <div class="box"><span>Losses</span><strong id="assistantWeekLosses">0</strong></div>
+        <div class="box"><span>Net Pips</span><strong id="assistantWeekPips">0</strong></div>
+        <div class="box"><span>Win Rate</span><strong id="assistantWeekRate">0%</strong></div>
+      </div>
+
+      <label class="assistant-field" style="margin-top:14px;">
+        <span>Weekly Review Notes</span>
+        <textarea id="assistantWeeklyNotes" placeholder="What worked? What will you improve next week?"></textarea>
+      </label>
+    </div>
+
+  </div>
+
+  <div class="assistant-actions">
+    <button id="assistantSaveBtn" class="assistant-btn" type="button">Save Trader Assistant</button>
+    <button id="assistantResetTodayBtn" class="assistant-btn secondary" type="button">Reset Today</button>
+  </div>
+
+  <div id="assistantStatus" class="assistant-status"></div>
+</section>
+
 </main>
 
 <footer><div class="wrap">© 2026 Goldzilla Trading Hub.</div></footer>
@@ -1834,6 +2192,10 @@ async function loadPrivateJournal(){
   updateJournalStats(journalRowsCache);
   renderJournalLatest();
   renderJournalHistory();
+
+  if(typeof updateWeeklyReview === "function"){
+    updateWeeklyReview();
+  }
 }
 
 
@@ -2674,6 +3036,382 @@ async function loadCommonDailyLevels(){
 
 
 
+
+/* =========================================================
+   TRADER ASSISTANT
+   ========================================================= */
+let assistantState = {};
+let assistantManualStop = false;
+
+const assistantStatus = document.querySelector("#assistantStatus");
+const assistantSaveBtn = document.querySelector("#assistantSaveBtn");
+const assistantResetTodayBtn = document.querySelector("#assistantResetTodayBtn");
+const assistantManualStopBtn = document.querySelector("#assistantManualStopBtn");
+const assistantRiskBanner = document.querySelector("#assistantRiskBanner");
+const assistantTradePermission = document.querySelector("#assistantTradePermission");
+const assistantRiskText = document.querySelector("#assistantRiskText");
+
+const assistantMaxDailyLoss = document.querySelector("#assistantMaxDailyLoss");
+const assistantMaxTrades = document.querySelector("#assistantMaxTrades");
+const assistantDailyTarget = document.querySelector("#assistantDailyTarget");
+const assistantTodayPL = document.querySelector("#assistantTodayPL");
+const assistantTradesToday = document.querySelector("#assistantTradesToday");
+
+const assistantBias = document.querySelector("#assistantBias");
+const assistantBuyZone = document.querySelector("#assistantBuyZone");
+const assistantSellZone = document.querySelector("#assistantSellZone");
+const assistantInvalidation = document.querySelector("#assistantInvalidation");
+const assistantTarget = document.querySelector("#assistantTarget");
+const assistantPlanNotes = document.querySelector("#assistantPlanNotes");
+
+const assistantRules = document.querySelector("#assistantRules");
+const assistantRulesPreview = document.querySelector("#assistantRulesPreview");
+const assistantMistake = document.querySelector("#assistantMistake");
+const assistantMistakeNote = document.querySelector("#assistantMistakeNote");
+const assistantDiscipline = document.querySelector("#assistantDiscipline");
+const assistantDisciplineValue = document.querySelector("#assistantDisciplineValue");
+
+const assistantEventName = document.querySelector("#assistantEventName");
+const assistantEventTime = document.querySelector("#assistantEventTime");
+const assistantCountdown = document.querySelector("#assistantCountdown");
+const assistantEventRisk = document.querySelector("#assistantEventRisk");
+const assistantPreShot = document.querySelector("#assistantPreShot");
+const assistantPostShot = document.querySelector("#assistantPostShot");
+const assistantWeeklyNotes = document.querySelector("#assistantWeeklyNotes");
+
+function assistantMessage(message,type=""){
+  if(!assistantStatus) return;
+  assistantStatus.textContent = message;
+  assistantStatus.className = "assistant-status" + (type ? " " + type : "");
+}
+
+function getAssistantPayload(){
+  const checklist = {};
+  document.querySelectorAll(".assistant-check-input").forEach(input => {
+    checklist[input.dataset.key] = input.checked;
+  });
+
+  return {
+    checklist,
+    maxDailyLoss: assistantMaxDailyLoss?.value || "",
+    maxTrades: assistantMaxTrades?.value || "",
+    dailyTarget: assistantDailyTarget?.value || "",
+    todayPL: assistantTodayPL?.value || "",
+    tradesToday: assistantTradesToday?.value || "",
+    bias: assistantBias?.value || "",
+    buyZone: assistantBuyZone?.value || "",
+    sellZone: assistantSellZone?.value || "",
+    invalidation: assistantInvalidation?.value || "",
+    target: assistantTarget?.value || "",
+    planNotes: assistantPlanNotes?.value || "",
+    rules: assistantRules?.value || "",
+    mistake: assistantMistake?.value || "",
+    mistakeNote: assistantMistakeNote?.value || "",
+    discipline: assistantDiscipline?.value || "5",
+    eventName: assistantEventName?.value || "",
+    eventTime: assistantEventTime?.value || "",
+    preShot: assistantPreShot?.value || "",
+    postShot: assistantPostShot?.value || "",
+    weeklyNotes: assistantWeeklyNotes?.value || "",
+    manualStop: assistantManualStop,
+    savedAt: new Date().toISOString()
+  };
+}
+
+function applyAssistantPayload(data={}){
+  assistantState = data || {};
+
+  document.querySelectorAll(".assistant-check-input").forEach(input => {
+    input.checked = Boolean(data?.checklist?.[input.dataset.key]);
+  });
+
+  if(assistantMaxDailyLoss) assistantMaxDailyLoss.value = data.maxDailyLoss ?? "";
+  if(assistantMaxTrades) assistantMaxTrades.value = data.maxTrades ?? "";
+  if(assistantDailyTarget) assistantDailyTarget.value = data.dailyTarget ?? "";
+  if(assistantTodayPL) assistantTodayPL.value = data.todayPL ?? "";
+  if(assistantTradesToday) assistantTradesToday.value = data.tradesToday ?? "";
+  if(assistantBias) assistantBias.value = data.bias ?? "";
+  if(assistantBuyZone) assistantBuyZone.value = data.buyZone ?? "";
+  if(assistantSellZone) assistantSellZone.value = data.sellZone ?? "";
+  if(assistantInvalidation) assistantInvalidation.value = data.invalidation ?? "";
+  if(assistantTarget) assistantTarget.value = data.target ?? "";
+  if(assistantPlanNotes) assistantPlanNotes.value = data.planNotes ?? "";
+  if(assistantRules) assistantRules.value = data.rules ?? "";
+  if(assistantMistake) assistantMistake.value = data.mistake ?? "";
+  if(assistantMistakeNote) assistantMistakeNote.value = data.mistakeNote ?? "";
+  if(assistantDiscipline) assistantDiscipline.value = data.discipline ?? "5";
+  if(assistantEventName) assistantEventName.value = data.eventName ?? "";
+  if(assistantEventTime) assistantEventTime.value = data.eventTime ?? "";
+  if(assistantPreShot) assistantPreShot.value = data.preShot ?? "";
+  if(assistantPostShot) assistantPostShot.value = data.postShot ?? "";
+  if(assistantWeeklyNotes) assistantWeeklyNotes.value = data.weeklyNotes ?? "";
+
+  assistantManualStop = Boolean(data.manualStop);
+
+  updateAssistantUI();
+}
+
+async function loadTraderAssistant(){
+  if(!currentJournalUser) return;
+
+  const { data, error } = await journalClient
+    .from("trader_assistant")
+    .select("data")
+    .eq("user_id",currentJournalUser.id)
+    .maybeSingle();
+
+  if(error){
+    console.error("Trader Assistant load error:", error);
+    assistantMessage("Trader Assistant table is not ready yet. Run the SQL setup once.","error");
+    applyAssistantPayload({});
+    return;
+  }
+
+  applyAssistantPayload(data?.data || {});
+  assistantMessage("Private Trader Assistant loaded.","success");
+}
+
+async function saveTraderAssistant(){
+  if(!currentJournalUser) return;
+
+  const payload = getAssistantPayload();
+
+  assistantSaveBtn.disabled = true;
+  assistantMessage("Saving...");
+
+  const { error } = await journalClient
+    .from("trader_assistant")
+    .upsert(
+      {
+        user_id: currentJournalUser.id,
+        data: payload,
+        updated_at: new Date().toISOString()
+      },
+      { onConflict:"user_id" }
+    );
+
+  assistantSaveBtn.disabled = false;
+
+  if(error){
+    console.error("Trader Assistant save error:", error);
+    assistantMessage(error.message,"error");
+    return;
+  }
+
+  assistantState = payload;
+  assistantMessage("Trader Assistant saved privately.","success");
+}
+
+function updateChecklist(){
+  const inputs = [...document.querySelectorAll(".assistant-check-input")];
+  const checked = inputs.filter(i => i.checked).length;
+  const total = inputs.length || 5;
+
+  const score = document.querySelector("#assistantChecklistScore");
+  const bar = document.querySelector("#assistantChecklistBar");
+
+  if(score) score.textContent = `${checked}/${total}`;
+  if(bar) bar.style.width = `${(checked/total)*100}%`;
+}
+
+function updateRulesPreview(){
+  if(!assistantRulesPreview || !assistantRules) return;
+  const rules = assistantRules.value
+    .split("\n")
+    .map(v => v.trim())
+    .filter(Boolean)
+    .slice(0,8);
+
+  assistantRulesPreview.innerHTML = rules.length
+    ? rules.map(rule => `<div class="assistant-mini-item">• ${escapeHtml(rule)}</div>`).join("")
+    : '<div class="assistant-mini-item muted">No rules saved yet.</div>';
+}
+
+function updateRiskGuard(){
+  const maxLoss = Number(assistantMaxDailyLoss?.value || 0);
+  const maxTrades = Number(assistantMaxTrades?.value || 0);
+  const target = Number(assistantDailyTarget?.value || 0);
+  const pl = Number(assistantTodayPL?.value || 0);
+  const trades = Number(assistantTradesToday?.value || 0);
+
+  let stop = assistantManualStop;
+  let reasons = [];
+
+  if(maxLoss > 0 && pl <= -Math.abs(maxLoss)){
+    stop = true;
+    reasons.push("daily loss limit reached");
+  }
+
+  if(maxTrades > 0 && trades >= maxTrades){
+    stop = true;
+    reasons.push("max trades reached");
+  }
+
+  if(target > 0 && pl >= target){
+    reasons.push("daily profit target reached");
+  }
+
+  assistantRiskBanner?.classList.toggle("stop",stop);
+  assistantRiskBanner?.classList.toggle("safe",!stop);
+
+  if(assistantTradePermission){
+    assistantTradePermission.textContent = stop
+      ? "STOP TRADING TODAY"
+      : "TRADING ALLOWED";
+  }
+
+  if(assistantRiskText){
+    assistantRiskText.textContent = reasons.length
+      ? reasons.join(" • ")
+      : "Risk limits are clear.";
+  }
+
+  if(assistantManualStopBtn){
+    assistantManualStopBtn.textContent = assistantManualStop
+      ? "Disable No-Trade Mode"
+      : "Enable No-Trade Mode";
+  }
+}
+
+function updateDiscipline(){
+  if(assistantDisciplineValue && assistantDiscipline){
+    assistantDisciplineValue.textContent = `${assistantDiscipline.value}/10`;
+  }
+}
+
+function setSessionCard(el,open){
+  if(!el) return;
+  el.classList.toggle("open",open);
+  el.classList.toggle("closed",!open);
+  const strong = el.querySelector("strong");
+  if(strong) strong.textContent = open ? "OPEN" : "CLOSED";
+}
+
+function updateSessionClock(){
+  const now = new Date();
+  const utc = now.getUTCHours() + now.getUTCMinutes()/60;
+
+  // Approximate UTC windows; simple operational guide, not exchange calendar.
+  const asiaOpen = utc >= 0 && utc < 9;
+  const londonOpen = utc >= 7 && utc < 16;
+  const nyOpen = utc >= 12 && utc < 21;
+
+  setSessionCard(document.querySelector("#assistantAsiaSession"),asiaOpen);
+  setSessionCard(document.querySelector("#assistantLondonSession"),londonOpen);
+  setSessionCard(document.querySelector("#assistantNySession"),nyOpen);
+}
+
+function updateEventCountdown(){
+  if(!assistantEventTime?.value){
+    if(assistantCountdown) assistantCountdown.textContent = "—";
+    if(assistantEventRisk) assistantEventRisk.textContent = "No event set.";
+    return;
+  }
+
+  const eventMs = new Date(assistantEventTime.value).getTime();
+  const diff = eventMs - Date.now();
+
+  if(!Number.isFinite(eventMs)){
+    assistantCountdown.textContent = "—";
+    assistantEventRisk.textContent = "Invalid event time.";
+    return;
+  }
+
+  if(diff <= 0){
+    assistantCountdown.textContent = "EVENT TIME";
+    assistantEventRisk.textContent = `${assistantEventName?.value || "Event"} is due / has started.`;
+    return;
+  }
+
+  const totalSeconds = Math.floor(diff/1000);
+  const days = Math.floor(totalSeconds/86400);
+  const hours = Math.floor((totalSeconds%86400)/3600);
+  const minutes = Math.floor((totalSeconds%3600)/60);
+  const seconds = totalSeconds%60;
+
+  assistantCountdown.textContent =
+    `${days ? days+"d " : ""}${String(hours).padStart(2,"0")}:${String(minutes).padStart(2,"0")}:${String(seconds).padStart(2,"0")}`;
+
+  assistantEventRisk.textContent =
+    diff <= 60*60*1000
+      ? "⚠ High-impact window: avoid impulsive entries."
+      : `${assistantEventName?.value || "Event"} countdown`;
+}
+
+function updateWeeklyReview(){
+  const now = new Date();
+  const cutoff = now.getTime() - 7*24*60*60*1000;
+
+  const rows = (journalRowsCache || []).filter(row => {
+    const d = new Date((row.trade_date || "") + "T00:00:00").getTime();
+    return Number.isFinite(d) && d >= cutoff;
+  });
+
+  const wins = rows.filter(r => String(r.result||"").toUpperCase()==="WIN").length;
+  const losses = rows.filter(r => String(r.result||"").toUpperCase()==="LOSS").length;
+  const completed = wins + losses;
+  const pips = rows.reduce((sum,r)=>sum+(Number(r.pips)||0),0);
+  const rate = completed ? (wins/completed*100).toFixed(1) : "0.0";
+
+  document.querySelector("#assistantWeekTrades").textContent = rows.length;
+  document.querySelector("#assistantWeekWins").textContent = wins;
+  document.querySelector("#assistantWeekLosses").textContent = losses;
+  document.querySelector("#assistantWeekPips").textContent = formatSigned(pips);
+  document.querySelector("#assistantWeekRate").textContent = rate + "%";
+}
+
+function updateAssistantUI(){
+  updateChecklist();
+  updateRulesPreview();
+  updateRiskGuard();
+  updateDiscipline();
+  updateSessionClock();
+  updateEventCountdown();
+  updateWeeklyReview();
+}
+
+document.querySelectorAll(".assistant-check-input").forEach(input => {
+  input.addEventListener("change",updateChecklist);
+});
+
+[
+  assistantMaxDailyLoss,
+  assistantMaxTrades,
+  assistantDailyTarget,
+  assistantTodayPL,
+  assistantTradesToday
+].forEach(el => el?.addEventListener("input",updateRiskGuard));
+
+assistantRules?.addEventListener("input",updateRulesPreview);
+assistantDiscipline?.addEventListener("input",updateDiscipline);
+assistantEventName?.addEventListener("input",updateEventCountdown);
+assistantEventTime?.addEventListener("input",updateEventCountdown);
+
+assistantManualStopBtn?.addEventListener("click",() => {
+  assistantManualStop = !assistantManualStop;
+  updateRiskGuard();
+});
+
+assistantSaveBtn?.addEventListener("click",saveTraderAssistant);
+
+assistantResetTodayBtn?.addEventListener("click",() => {
+  document.querySelectorAll(".assistant-check-input").forEach(i => i.checked = false);
+  if(assistantTodayPL) assistantTodayPL.value = "";
+  if(assistantTradesToday) assistantTradesToday.value = "";
+  if(assistantMistake) assistantMistake.value = "";
+  if(assistantMistakeNote) assistantMistakeNote.value = "";
+  if(assistantDiscipline) assistantDiscipline.value = "5";
+  assistantManualStop = false;
+  updateAssistantUI();
+  assistantMessage("Today fields reset. Click Save to keep the reset.","success");
+});
+
+setInterval(() => {
+  updateSessionClock();
+  updateEventCountdown();
+},1000);
+
+
 /* =========================================================
    ADMIN DAILY LEVELS
    ========================================================= */
@@ -3135,8 +3873,11 @@ function activateAdminPanel(){
 
   await Promise.all([
     loadPrivateJournal(),
-    loadCommonDailyLevels()
+    loadCommonDailyLevels(),
+    loadTraderAssistant()
   ]);
+
+  updateWeeklyReview();
 
   setInterval(
     loadCommonDailyLevels,
