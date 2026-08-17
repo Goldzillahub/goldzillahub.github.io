@@ -429,6 +429,181 @@
       font-size:11px;
     }
 
+
+    /* PREMIUM PROFILE + MOBILE MENU */
+    .profile-wrap{
+      position:relative;
+      display:flex;
+      align-items:center;
+    }
+
+    .profile-btn{
+      width:42px;
+      height:42px;
+      border-radius:50%;
+      border:1px solid rgba(167,124,255,.35);
+      background:linear-gradient(135deg,#9d6cff,#7247ff);
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      font-family:'Space Grotesk',sans-serif;
+      font-size:15px;
+      font-weight:800;
+      box-shadow:0 8px 24px rgba(124,92,255,.18);
+    }
+
+    .profile-menu{
+      position:absolute;
+      top:52px;
+      right:0;
+      width:235px;
+      padding:10px;
+      border:1px solid #293040;
+      border-radius:14px;
+      background:#0d1119;
+      box-shadow:0 20px 50px rgba(0,0,0,.45);
+      display:none;
+      z-index:9999;
+    }
+
+    .profile-menu.show{
+      display:block;
+    }
+
+    .profile-email{
+      padding:10px 11px;
+      color:#aeb6c4;
+      font-size:11px;
+      line-height:1.5;
+      overflow-wrap:anywhere;
+      border-bottom:1px solid #202633;
+      margin-bottom:8px;
+    }
+
+    .profile-menu button{
+      width:100%;
+      border:0;
+      background:transparent;
+      color:#ff7189;
+      padding:10px 11px;
+      border-radius:9px;
+      text-align:left;
+      cursor:pointer;
+      font:inherit;
+      font-size:12px;
+      font-weight:800;
+    }
+
+    .profile-menu button:hover{
+      background:#151a25;
+    }
+
+    .mobile-menu-btn{
+      display:none;
+      width:42px;
+      height:42px;
+      border:1px solid #293040;
+      border-radius:10px;
+      background:#0e121b;
+      color:#fff;
+      cursor:pointer;
+      align-items:center;
+      justify-content:center;
+      flex-direction:column;
+      gap:4px;
+    }
+
+    .mobile-menu-btn span{
+      width:18px;
+      height:2px;
+      border-radius:2px;
+      background:#fff;
+      display:block;
+    }
+
+    .mobile-menu{
+      display:none;
+      position:absolute;
+      top:74px;
+      left:16px;
+      right:16px;
+      padding:10px;
+      border:1px solid #293040;
+      border-radius:14px;
+      background:#0d1119;
+      box-shadow:0 20px 50px rgba(0,0,0,.45);
+      z-index:9998;
+    }
+
+    .mobile-menu.show{
+      display:grid;
+      gap:4px;
+    }
+
+    .mobile-menu a{
+      display:block;
+      padding:12px 13px;
+      border-radius:9px;
+      color:#dce2ed;
+      text-decoration:none;
+      font-size:13px;
+      font-weight:700;
+    }
+
+    .mobile-menu a:hover{
+      background:#151a25;
+      color:#fff;
+    }
+
+    @media(max-width:900px){
+      .site-header .nav{
+        position:relative;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:10px;
+      }
+
+      .site-header .navlinks{
+        display:none !important;
+      }
+
+      .site-header .actions > .btn{
+        display:none !important;
+      }
+
+      .site-header .actions{
+        display:flex;
+        align-items:center;
+        gap:8px;
+        margin-left:auto;
+      }
+
+      .mobile-menu-btn{
+        display:flex;
+      }
+
+      .profile-wrap{
+        display:flex;
+      }
+
+      .logo strong{
+        font-size:14px;
+      }
+
+      .logo span{
+        font-size:8px;
+      }
+    }
+
+    @media(min-width:901px){
+      .mobile-menu{
+        display:none !important;
+      }
+    }
+
   </style>
 </head>
 
@@ -459,10 +634,33 @@
     <div class="actions">
       <a class="btn btn-ghost" href="index.html">Home</a>
       <a class="btn btn-primary" href="#calculators">Trading Tools</a>
-      <div class="platform-user">
-        <span id="platformUserEmail" class="platform-user-email"></span>
-        <button id="platformLogoutBtn" class="platform-logout" type="button">Logout</button>
+
+      <button id="mobileMenuBtn" class="mobile-menu-btn" type="button" aria-label="Open menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <div class="profile-wrap">
+        <button id="profileBtn" class="profile-btn" type="button" aria-label="Open profile">
+          U
+        </button>
+
+        <div id="profileMenu" class="profile-menu">
+          <div id="platformUserEmail" class="profile-email"></div>
+          <button id="platformLogoutBtn" type="button">Logout</button>
+        </div>
       </div>
+    </div>
+
+    <div id="mobileMenu" class="mobile-menu">
+      <a href="#results">Results</a>
+      <a href="#levels">Levels</a>
+      <a id="adminMobileLink" href="#adminLevels" style="display:none">Admin</a>
+      <a href="#calculators">Calculators</a>
+      <a href="#journal">Journal</a>
+      <a href="index.html">Home</a>
+      <a href="#calculators">Trading Tools</a>
     </div>
   </div>
 </header>
@@ -836,6 +1034,11 @@ const JOURNAL_PAGE_SIZE = 5;
 
 const platformAuthOverlay = document.querySelector("#platformAuthOverlay");
 const platformUserEmail = document.querySelector("#platformUserEmail");
+const profileBtn = document.querySelector("#profileBtn");
+const profileMenu = document.querySelector("#profileMenu");
+const mobileMenuBtn = document.querySelector("#mobileMenuBtn");
+const mobileMenu = document.querySelector("#mobileMenu");
+const adminMobileLink = document.querySelector("#adminMobileLink");
 const journalList = document.querySelector("#journalList");
 const journalStatus = document.querySelector("#journalStatus");
 const journalDate = document.querySelector("#journalDate");
@@ -903,6 +1106,11 @@ async function requirePlatformLogin(){
 
   if(platformUserEmail){
     platformUserEmail.textContent = currentJournalUser.email || "";
+  }
+
+  if(profileBtn){
+    const email = currentJournalUser.email || "U";
+    profileBtn.textContent = email.charAt(0).toUpperCase();
   }
 
   platformAuthOverlay.classList.add("hidden");
@@ -1283,6 +1491,51 @@ journalSaveBtn?.addEventListener("click",saveJournalEntry);
 journalCancelBtn?.addEventListener("click",() => {
   resetJournalForm();
   journalMessage("");
+});
+
+
+profileBtn?.addEventListener("click",(event) => {
+  event.stopPropagation();
+  profileMenu?.classList.toggle("show");
+  mobileMenu?.classList.remove("show");
+});
+
+mobileMenuBtn?.addEventListener("click",(event) => {
+  event.stopPropagation();
+  mobileMenu?.classList.toggle("show");
+  profileMenu?.classList.remove("show");
+});
+
+mobileMenu?.querySelectorAll("a").forEach(link => {
+  link.addEventListener("click",() => {
+    mobileMenu.classList.remove("show");
+  });
+});
+
+document.addEventListener("click",(event) => {
+  if(
+    profileMenu &&
+    profileBtn &&
+    !profileMenu.contains(event.target) &&
+    !profileBtn.contains(event.target)
+  ){
+    profileMenu.classList.remove("show");
+  }
+
+  if(
+    mobileMenu &&
+    mobileMenuBtn &&
+    !mobileMenu.contains(event.target) &&
+    !mobileMenuBtn.contains(event.target)
+  ){
+    mobileMenu.classList.remove("show");
+  }
+});
+
+window.addEventListener("resize",() => {
+  if(window.innerWidth > 900){
+    mobileMenu?.classList.remove("show");
+  }
 });
 
 document.querySelector("#platformLogoutBtn")?.addEventListener("click",async () => {
@@ -2077,6 +2330,10 @@ function activateAdminPanel(){
 
   if(adminNavLink){
     adminNavLink.style.display = "";
+  }
+
+  if(adminMobileLink){
+    adminMobileLink.style.display = "";
   }
 
   resetAdminForm();
