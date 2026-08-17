@@ -634,6 +634,310 @@
       }
     }
 
+
+    /* =========================================================
+       GOLDZILLA BACKTEST JOURNAL - UPGRADED DASHBOARD
+       ========================================================= */
+    .journal-shell{
+      padding-top:8px;
+    }
+
+    .journal-topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-bottom:16px;
+    }
+
+    .journal-tabs{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .journal-tab-btn{
+      border:1px solid #293040;
+      background:#0d1119;
+      color:#dce2ed;
+      border-radius:9px;
+      padding:10px 13px;
+      font:inherit;
+      font-size:11px;
+      font-weight:800;
+      cursor:pointer;
+    }
+
+    .journal-tab-btn.active{
+      color:#fff;
+      border-color:#8b5cf6;
+      background:linear-gradient(135deg,#9d6cff,#7247ff);
+      box-shadow:0 8px 22px rgba(124,92,255,.18);
+    }
+
+    .journal-private-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      color:#8f98a8;
+      font-size:11px;
+    }
+
+    .journal-private-badge::before{
+      content:"";
+      width:7px;
+      height:7px;
+      border-radius:50%;
+      background:#35df96;
+      box-shadow:0 0 12px rgba(53,223,150,.7);
+    }
+
+    .journal-stats-grid{
+      display:grid;
+      grid-template-columns:repeat(6,minmax(0,1fr));
+      gap:10px;
+      margin-bottom:16px;
+    }
+
+    .journal-stat-card{
+      padding:15px 16px;
+      min-height:78px;
+    }
+
+    .journal-stat-label{
+      color:#7f8998;
+      font-size:10px;
+      text-transform:uppercase;
+      letter-spacing:.9px;
+      margin-bottom:8px;
+    }
+
+    .journal-stat-value{
+      font-family:'Space Grotesk',sans-serif;
+      font-size:22px;
+      font-weight:700;
+      color:#fff;
+      line-height:1;
+    }
+
+    .journal-stat-value.green{color:#35df96;}
+    .journal-stat-value.red{color:#ff667f;}
+    .journal-stat-value.purple{color:#a77cff;}
+
+    .journal-command-card{
+      padding:22px;
+      margin-bottom:16px;
+      background:
+        radial-gradient(circle at 85% 20%,rgba(139,92,246,.10),transparent 28%),
+        linear-gradient(180deg,#111521,#0b0e16);
+    }
+
+    .journal-command-card h3{
+      margin:4px 0 8px;
+      font-family:'Space Grotesk',sans-serif;
+      font-size:26px;
+    }
+
+    .journal-command-card p{
+      margin:0;
+      color:#8f98a8;
+      font-size:12px;
+      line-height:1.7;
+    }
+
+    .journal-view{
+      display:none;
+    }
+
+    .journal-view.active{
+      display:block;
+    }
+
+    .journal-dashboard-grid{
+      display:grid;
+      grid-template-columns:minmax(300px,390px) 1fr;
+      gap:16px;
+      align-items:start;
+    }
+
+    .journal-table-card{
+      padding:0;
+      overflow:hidden;
+    }
+
+    .journal-table-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:16px 18px;
+      border-bottom:1px solid #202633;
+    }
+
+    .journal-table-head h3{
+      margin:0;
+      font-family:'Space Grotesk',sans-serif;
+      font-size:17px;
+    }
+
+    .journal-history-filters{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .journal-history-filters select,
+    .journal-history-filters input{
+      border:1px solid #293040;
+      background:#090c13;
+      color:#fff;
+      border-radius:8px;
+      padding:9px 10px;
+      font:inherit;
+      font-size:11px;
+      outline:none;
+    }
+
+    .journal-history-wrap{
+      overflow-x:auto;
+    }
+
+    .journal-history-table{
+      width:100%;
+      min-width:830px;
+      border-collapse:collapse;
+    }
+
+    .journal-history-table th,
+    .journal-history-table td{
+      padding:13px 14px;
+      border-bottom:1px solid #202633;
+      text-align:left;
+      font-size:11px;
+      vertical-align:middle;
+    }
+
+    .journal-history-table th{
+      color:#778293;
+      font-size:9px;
+      text-transform:uppercase;
+      letter-spacing:.7px;
+      font-weight:800;
+      background:#0c1018;
+    }
+
+    .journal-history-table td{
+      color:#dce2ed;
+    }
+
+    .journal-history-table tr:last-child td{
+      border-bottom:0;
+    }
+
+    .journal-shot{
+      width:72px;
+      height:46px;
+      border-radius:7px;
+      object-fit:cover;
+      border:1px solid #293040;
+      display:block;
+      background:#090c13;
+    }
+
+    .journal-shot-link{
+      display:inline-block;
+      text-decoration:none;
+    }
+
+    .journal-mini-actions{
+      display:flex;
+      gap:6px;
+    }
+
+    .journal-mini-btn{
+      border:1px solid #293040;
+      border-radius:7px;
+      padding:7px 9px;
+      background:#0d1119;
+      color:#fff;
+      font:inherit;
+      font-size:9px;
+      font-weight:800;
+      cursor:pointer;
+    }
+
+    .journal-mini-btn.delete{
+      color:#ff7189;
+    }
+
+    .journal-status-pill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:52px;
+      padding:5px 8px;
+      border-radius:999px;
+      font-size:9px;
+      font-weight:800;
+    }
+
+    .journal-status-pill.win{
+      color:#35df96;
+      background:rgba(53,223,150,.08);
+      border:1px solid rgba(53,223,150,.25);
+    }
+
+    .journal-status-pill.loss{
+      color:#ff667f;
+      background:rgba(255,102,127,.08);
+      border:1px solid rgba(255,102,127,.25);
+    }
+
+    .journal-status-pill.pending{
+      color:#aeb6c4;
+      background:rgba(174,182,196,.06);
+      border:1px solid rgba(174,182,196,.18);
+    }
+
+    .journal-latest-empty{
+      padding:30px;
+      text-align:center;
+      color:#818a99;
+      font-size:12px;
+    }
+
+    @media(max-width:1100px){
+      .journal-stats-grid{
+        grid-template-columns:repeat(3,minmax(0,1fr));
+      }
+    }
+
+    @media(max-width:900px){
+      .journal-dashboard-grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media(max-width:640px){
+      .journal-stats-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+
+      .journal-command-card h3{
+        font-size:21px;
+      }
+
+      .journal-history-filters{
+        width:100%;
+      }
+
+      .journal-history-filters select,
+      .journal-history-filters input{
+        flex:1 1 140px;
+      }
+    }
+
   </style>
 </head>
 
@@ -969,26 +1273,163 @@
   </div>
 </section>
 
-<section class="section" id="journal">
+<section class="section journal-shell" id="journal">
   <div class="section-head">
     <div class="eyebrow">PRIVATE JOURNAL</div>
-    <h2>Your trading journal.</h2>
-    <p>This journal is private to your logged-in account. Other Goldzilla users cannot see your entries.</p>
+    <h2>Goldzilla Backtest Journal.</h2>
+    <p>Your private trade command center. Every member sees only their own journal data.</p>
   </div>
 
-  <div class="journal-panel">
-    <div class="card journal-form">
-      <h3 id="journalFormTitle">Add Trade</h3>
+  <div class="journal-topbar">
+    <div class="journal-tabs">
+      <button class="journal-tab-btn active" type="button" data-journal-view="dashboard">Dashboard</button>
+      <button class="journal-tab-btn" type="button" data-journal-view="add">Add Trade</button>
+      <button class="journal-tab-btn" type="button" data-journal-view="history">History</button>
+    </div>
+
+    <div class="journal-private-badge">Private account journal</div>
+  </div>
+
+  <div class="journal-stats-grid">
+    <div class="card journal-stat-card">
+      <div class="journal-stat-label">Total Trades</div>
+      <div id="journalStatTotal" class="journal-stat-value">0</div>
+    </div>
+
+    <div class="card journal-stat-card">
+      <div class="journal-stat-label">Wins</div>
+      <div id="journalStatWins" class="journal-stat-value green">0</div>
+    </div>
+
+    <div class="card journal-stat-card">
+      <div class="journal-stat-label">Losses</div>
+      <div id="journalStatLosses" class="journal-stat-value red">0</div>
+    </div>
+
+    <div class="card journal-stat-card">
+      <div class="journal-stat-label">Win Rate</div>
+      <div id="journalStatWinRate" class="journal-stat-value purple">0.00%</div>
+    </div>
+
+    <div class="card journal-stat-card">
+      <div class="journal-stat-label">Net R</div>
+      <div id="journalStatNetR" class="journal-stat-value">0R</div>
+    </div>
+
+    <div class="card journal-stat-card">
+      <div class="journal-stat-label">Net Pips</div>
+      <div id="journalStatNetPips" class="journal-stat-value">0</div>
+    </div>
+  </div>
+
+  <div id="journalDashboardView" class="journal-view active">
+    <div class="card journal-command-card">
+      <div class="eyebrow">PRIVATE BACKTEST COMMAND CENTER</div>
+      <h3>Your trades and screenshots in one place.</h3>
+      <p>
+        Save your trade, review performance, open screenshots and manage your private history from any logged-in device.
+      </p>
+    </div>
+
+    <div class="journal-dashboard-grid">
+      <div class="card journal-form">
+        <h3 id="journalFormTitle">Add Trade</h3>
+
+        <label class="journal-field">
+          <span>Date</span>
+          <input id="journalDate" type="date">
+        </label>
+
+        <label class="journal-field">
+          <span>Session</span>
+          <select id="journalSession">
+            <option value="Pre-London">Pre-London</option>
+            <option value="Asia">Asia</option>
+            <option value="London">London</option>
+            <option value="New York">New York</option>
+          </select>
+        </label>
+
+        <label class="journal-field">
+          <span>Result</span>
+          <select id="journalResult">
+            <option value="">Pending</option>
+            <option value="WIN">WIN</option>
+            <option value="LOSS">LOSS</option>
+          </select>
+        </label>
+
+        <label class="journal-field">
+          <span>Risk / Reward</span>
+          <input id="journalRR" type="number" step="0.01" placeholder="Example: 2">
+        </label>
+
+        <label class="journal-field">
+          <span>Pips</span>
+          <input id="journalPips" type="number" step="0.01" placeholder="Example: 200 or -100">
+        </label>
+
+        <label class="journal-field">
+          <span>Screenshot URL (optional)</span>
+          <input id="journalScreenshot" type="url" placeholder="https://...">
+        </label>
+
+        <label class="journal-field">
+          <span>Notes</span>
+          <textarea id="journalNotes" placeholder="Setup notes, mistake, observation..."></textarea>
+        </label>
+
+        <div class="journal-form-actions">
+          <button id="journalSaveBtn" class="journal-save" type="button">Save Trade</button>
+          <button id="journalCancelBtn" class="journal-cancel" type="button">Cancel Edit</button>
+        </div>
+
+        <div id="journalStatus" class="journal-status"></div>
+      </div>
+
+      <div class="card journal-table-card">
+        <div class="journal-table-head">
+          <h3>Latest Trades</h3>
+          <button id="journalGoHistory" class="journal-mini-btn" type="button">View History</button>
+        </div>
+
+        <div class="journal-history-wrap">
+          <table class="journal-history-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Date</th>
+                <th>Session</th>
+                <th>Result</th>
+                <th>R</th>
+                <th>Pips</th>
+                <th>Screenshot</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="journalLatestBody">
+              <tr><td colspan="8" class="journal-latest-empty">Loading your trades...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="journalAddView" class="journal-view">
+    <div class="card journal-form" style="max-width:520px;margin:0 auto;">
+      <h3>Add / Edit Trade</h3>
 
       <label class="journal-field">
         <span>Date</span>
-        <input id="journalDate" type="date">
+        <input id="journalDateMirror" type="date">
       </label>
 
       <label class="journal-field">
         <span>Session</span>
-        <select id="journalSession">
+        <select id="journalSessionMirror">
           <option value="Pre-London">Pre-London</option>
+          <option value="Asia">Asia</option>
           <option value="London">London</option>
           <option value="New York">New York</option>
         </select>
@@ -996,7 +1437,7 @@
 
       <label class="journal-field">
         <span>Result</span>
-        <select id="journalResult">
+        <select id="journalResultMirror">
           <option value="">Pending</option>
           <option value="WIN">WIN</option>
           <option value="LOSS">LOSS</option>
@@ -1005,35 +1446,78 @@
 
       <label class="journal-field">
         <span>Risk / Reward</span>
-        <input id="journalRR" type="number" step="0.01" placeholder="Example: 2">
+        <input id="journalRRMirror" type="number" step="0.01" placeholder="Example: 2">
       </label>
 
       <label class="journal-field">
         <span>Pips</span>
-        <input id="journalPips" type="number" step="0.01" placeholder="Example: 200 or -100">
-      </label>
-
-      <label class="journal-field">
-        <span>Notes</span>
-        <textarea id="journalNotes" placeholder="Write your trade notes..."></textarea>
+        <input id="journalPipsMirror" type="number" step="0.01" placeholder="Example: 200 or -100">
       </label>
 
       <label class="journal-field">
         <span>Screenshot URL (optional)</span>
-        <input id="journalScreenshot" type="url" placeholder="https://...">
+        <input id="journalScreenshotMirror" type="url" placeholder="https://...">
+      </label>
+
+      <label class="journal-field">
+        <span>Notes</span>
+        <textarea id="journalNotesMirror" placeholder="Setup notes, mistake, observation..."></textarea>
       </label>
 
       <div class="journal-form-actions">
-        <button id="journalSaveBtn" class="journal-save" type="button">Save Trade</button>
-        <button id="journalCancelBtn" class="journal-cancel" type="button">Cancel Edit</button>
+        <button id="journalSaveMirrorBtn" class="journal-save" type="button">Save Trade</button>
+        <button id="journalCancelMirrorBtn" class="journal-cancel" type="button">Cancel Edit</button>
       </div>
 
-      <div id="journalStatus" class="journal-status"></div>
+      <div id="journalMirrorStatus" class="journal-status"></div>
     </div>
+  </div>
 
-    <div>
-      <div id="journalList" class="journal-list">
-        <div class="card journal-empty">Loading your journal...</div>
+  <div id="journalHistoryView" class="journal-view">
+    <div class="card journal-table-card">
+      <div class="journal-table-head">
+        <h3>Trade History</h3>
+
+        <div class="journal-history-filters">
+          <select id="journalHistorySession">
+            <option value="">All Sessions</option>
+            <option value="Pre-London">Pre-London</option>
+            <option value="Asia">Asia</option>
+            <option value="London">London</option>
+            <option value="New York">New York</option>
+          </select>
+
+          <select id="journalHistoryResult">
+            <option value="">All Results</option>
+            <option value="WIN">WIN</option>
+            <option value="LOSS">LOSS</option>
+            <option value="PENDING">Pending</option>
+          </select>
+
+          <input id="journalHistoryDate" type="date">
+        </div>
+      </div>
+
+      <div class="journal-history-wrap">
+        <table class="journal-history-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Date</th>
+              <th>Session</th>
+              <th>Result</th>
+              <th>R</th>
+              <th>Pips</th>
+              <th>Screenshot</th>
+              <th>Notes</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tbody id="journalHistoryBody">
+            <tr><td colspan="9" class="journal-latest-empty">Loading history...</td></tr>
+          </tbody>
+        </table>
       </div>
 
       <div id="journalPagination" class="journal-pagination"></div>
@@ -1062,6 +1546,9 @@ let editingJournalId = null;
 let currentJournalPage = 1;
 const JOURNAL_PAGE_SIZE = 5;
 
+let journalRowsCache = [];
+let currentJournalView = "dashboard";
+
 const platformAuthOverlay = document.querySelector("#platformAuthOverlay");
 const platformUserEmail = document.querySelector("#platformUserEmail");
 const profileBtn = document.querySelector("#profileBtn");
@@ -1069,7 +1556,7 @@ const profileMenu = document.querySelector("#profileMenu");
 const mobileMenuBtn = document.querySelector("#mobileMenuBtn");
 const mobileMenu = document.querySelector("#mobileMenu");
 const adminMobileLink = document.querySelector("#adminMobileLink");
-const journalList = document.querySelector("#journalList");
+
 const journalStatus = document.querySelector("#journalStatus");
 const journalDate = document.querySelector("#journalDate");
 const journalSession = document.querySelector("#journalSession");
@@ -1083,10 +1570,44 @@ const journalCancelBtn = document.querySelector("#journalCancelBtn");
 const journalFormTitle = document.querySelector("#journalFormTitle");
 const journalPagination = document.querySelector("#journalPagination");
 
+const journalLatestBody = document.querySelector("#journalLatestBody");
+const journalHistoryBody = document.querySelector("#journalHistoryBody");
+
+const journalStatTotal = document.querySelector("#journalStatTotal");
+const journalStatWins = document.querySelector("#journalStatWins");
+const journalStatLosses = document.querySelector("#journalStatLosses");
+const journalStatWinRate = document.querySelector("#journalStatWinRate");
+const journalStatNetR = document.querySelector("#journalStatNetR");
+const journalStatNetPips = document.querySelector("#journalStatNetPips");
+
+const journalHistorySession = document.querySelector("#journalHistorySession");
+const journalHistoryResult = document.querySelector("#journalHistoryResult");
+const journalHistoryDate = document.querySelector("#journalHistoryDate");
+
+const journalDateMirror = document.querySelector("#journalDateMirror");
+const journalSessionMirror = document.querySelector("#journalSessionMirror");
+const journalResultMirror = document.querySelector("#journalResultMirror");
+const journalRRMirror = document.querySelector("#journalRRMirror");
+const journalPipsMirror = document.querySelector("#journalPipsMirror");
+const journalNotesMirror = document.querySelector("#journalNotesMirror");
+const journalScreenshotMirror = document.querySelector("#journalScreenshotMirror");
+const journalSaveMirrorBtn = document.querySelector("#journalSaveMirrorBtn");
+const journalCancelMirrorBtn = document.querySelector("#journalCancelMirrorBtn");
+const journalMirrorStatus = document.querySelector("#journalMirrorStatus");
+
+
 function journalMessage(message,type=""){
-  journalStatus.textContent = message;
-  journalStatus.className = "journal-status" + (type ? " " + type : "");
+  if(journalStatus){
+    journalStatus.textContent = message;
+    journalStatus.className = "journal-status" + (type ? " " + type : "");
+  }
+
+  if(journalMirrorStatus){
+    journalMirrorStatus.textContent = message;
+    journalMirrorStatus.className = "journal-status" + (type ? " " + type : "");
+  }
 }
+
 
 function escapeHtml(value){
   return String(value ?? "")
@@ -1097,26 +1618,159 @@ function escapeHtml(value){
     .replaceAll("'","&#039;");
 }
 
+
+function localJournalDate(){
+  const now = new Date();
+  const offset = now.getTimezoneOffset();
+  return new Date(now.getTime() - offset * 60000)
+    .toISOString()
+    .slice(0,10);
+}
+
+
+function syncJournalForms(source="main"){
+  if(source === "main"){
+    if(journalDateMirror) journalDateMirror.value = journalDate.value;
+    if(journalSessionMirror) journalSessionMirror.value = journalSession.value;
+    if(journalResultMirror) journalResultMirror.value = journalResult.value;
+    if(journalRRMirror) journalRRMirror.value = journalRR.value;
+    if(journalPipsMirror) journalPipsMirror.value = journalPips.value;
+    if(journalNotesMirror) journalNotesMirror.value = journalNotes.value;
+    if(journalScreenshotMirror) journalScreenshotMirror.value = journalScreenshot.value;
+  }else{
+    journalDate.value = journalDateMirror.value;
+    journalSession.value = journalSessionMirror.value;
+    journalResult.value = journalResultMirror.value;
+    journalRR.value = journalRRMirror.value;
+    journalPips.value = journalPipsMirror.value;
+    journalNotes.value = journalNotesMirror.value;
+    journalScreenshot.value = journalScreenshotMirror.value;
+  }
+}
+
+
 function resetJournalForm(){
   editingJournalId = null;
-  journalFormTitle.textContent = "Add Trade";
-  journalSaveBtn.textContent = "Save Trade";
-  journalCancelBtn.classList.remove("show");
-  journalDate.value = new Date().toISOString().slice(0,10);
+
+  if(journalFormTitle){
+    journalFormTitle.textContent = "Add Trade";
+  }
+
+  if(journalSaveBtn){
+    journalSaveBtn.textContent = "Save Trade";
+  }
+
+  if(journalSaveMirrorBtn){
+    journalSaveMirrorBtn.textContent = "Save Trade";
+  }
+
+  journalCancelBtn?.classList.remove("show");
+  journalCancelMirrorBtn?.classList.remove("show");
+
+  const today = localJournalDate();
+
+  journalDate.value = today;
   journalSession.value = "London";
   journalResult.value = "";
   journalRR.value = "";
   journalPips.value = "";
   journalNotes.value = "";
   journalScreenshot.value = "";
+
+  syncJournalForms("main");
 }
+
 
 function formatJournalDate(value){
   if(!value) return "No date";
   const d = new Date(value + "T00:00:00");
   if(Number.isNaN(d.getTime())) return value;
-  return d.toLocaleDateString("en-US",{year:"numeric",month:"short",day:"numeric"});
+  return d.toLocaleDateString(
+    "en-US",
+    {year:"numeric",month:"short",day:"numeric"}
+  );
 }
+
+
+function formatSigned(value,suffix=""){
+  if(value === null || value === undefined || value === ""){
+    return "—";
+  }
+
+  const n = Number(value);
+
+  if(Number.isNaN(n)){
+    return escapeHtml(value);
+  }
+
+  if(n > 0) return `+${n}${suffix}`;
+  return `${n}${suffix}`;
+}
+
+
+function getJournalStatus(row){
+  const status = String(row.result || "PENDING").toUpperCase();
+
+  return {
+    text:status,
+    className:
+      status === "WIN"
+        ? "win"
+        : status === "LOSS"
+          ? "loss"
+          : "pending"
+  };
+}
+
+
+function screenshotCell(row){
+  if(!row.screenshot_url){
+    return '<span class="muted">—</span>';
+  }
+
+  const url = escapeHtml(row.screenshot_url);
+
+  return `
+    <a class="journal-shot-link" href="${url}" target="_blank" rel="noopener noreferrer">
+      <img
+        class="journal-shot"
+        src="${url}"
+        alt="Trade screenshot"
+        onerror="this.style.display='none';this.parentElement.textContent='Open';"
+      >
+    </a>
+  `;
+}
+
+
+function updateJournalStats(rows){
+  const wins = rows.filter(row => String(row.result || "").toUpperCase() === "WIN").length;
+  const losses = rows.filter(row => String(row.result || "").toUpperCase() === "LOSS").length;
+  const completed = wins + losses;
+
+  const winRate =
+    completed > 0
+      ? (wins / completed * 100).toFixed(1)
+      : "0.0";
+
+  const netR = rows.reduce(
+    (sum,row) => sum + (Number(row.rr) || 0),
+    0
+  );
+
+  const netPips = rows.reduce(
+    (sum,row) => sum + (Number(row.pips) || 0),
+    0
+  );
+
+  journalStatTotal.textContent = rows.length;
+  journalStatWins.textContent = wins;
+  journalStatLosses.textContent = losses;
+  journalStatWinRate.textContent = winRate + "%";
+  journalStatNetR.textContent = formatSigned(netR,"R");
+  journalStatNetPips.textContent = formatSigned(netPips);
+}
+
 
 async function requirePlatformLogin(){
   const { data, error } = await journalClient.auth.getSession();
@@ -1149,14 +1803,18 @@ async function requirePlatformLogin(){
   return true;
 }
 
+
 async function loadPrivateJournal(){
   if(!currentJournalUser) return;
 
-  journalList.innerHTML =
-    '<div class="card journal-empty">Loading your journal...</div>';
+  if(journalLatestBody){
+    journalLatestBody.innerHTML =
+      '<tr><td colspan="8" class="journal-latest-empty">Loading your trades...</td></tr>';
+  }
 
-  if(journalPagination){
-    journalPagination.innerHTML = "";
+  if(journalHistoryBody){
+    journalHistoryBody.innerHTML =
+      '<tr><td colspan="9" class="journal-latest-empty">Loading history...</td></tr>';
   }
 
   const { data, error } = await journalClient
@@ -1167,19 +1825,76 @@ async function loadPrivateJournal(){
 
   if(error){
     console.error("Journal load error:", error);
-    journalList.innerHTML =
-      '<div class="card journal-empty">Unable to load your journal.</div>';
     journalMessage(error.message,"error");
     return;
   }
 
-  const rows = data || [];
+  journalRowsCache = data || [];
+
+  updateJournalStats(journalRowsCache);
+  renderJournalLatest();
+  renderJournalHistory();
+}
+
+
+function renderJournalLatest(){
+  if(!journalLatestBody) return;
+
+  const rows = journalRowsCache.slice(0,8);
 
   if(rows.length === 0){
-    journalList.innerHTML =
-      '<div class="card journal-empty">No trades yet. Add your first journal entry.</div>';
+    journalLatestBody.innerHTML =
+      '<tr><td colspan="8" class="journal-latest-empty">No trades yet. Add your first trade.</td></tr>';
     return;
   }
+
+  journalLatestBody.innerHTML = rows.map((row,index) => {
+    const status = getJournalStatus(row);
+
+    return `
+      <tr>
+        <td>${index + 1}</td>
+        <td>${escapeHtml(formatJournalDate(row.trade_date))}</td>
+        <td>${escapeHtml(row.session || "—")}</td>
+        <td><span class="journal-status-pill ${status.className}">${escapeHtml(status.text)}</span></td>
+        <td>${escapeHtml(formatSigned(row.rr,"R"))}</td>
+        <td>${escapeHtml(formatSigned(row.pips))}</td>
+        <td>${screenshotCell(row)}</td>
+        <td>
+          <div class="journal-mini-actions">
+            <button class="journal-mini-btn journal-row-edit" type="button" data-id="${row.id}">Edit</button>
+            <button class="journal-mini-btn delete journal-row-delete" type="button" data-id="${row.id}">Delete</button>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join("");
+
+  bindJournalRowActions(journalLatestBody);
+}
+
+
+function getFilteredJournalRows(){
+  const session = journalHistorySession?.value || "";
+  const result = journalHistoryResult?.value || "";
+  const date = journalHistoryDate?.value || "";
+
+  return journalRowsCache.filter(row => {
+    const rowStatus = String(row.result || "PENDING").toUpperCase();
+
+    if(session && row.session !== session) return false;
+    if(result && rowStatus !== result) return false;
+    if(date && row.trade_date !== date) return false;
+
+    return true;
+  });
+}
+
+
+function renderJournalHistory(){
+  if(!journalHistoryBody || !journalPagination) return;
+
+  const rows = getFilteredJournalRows();
 
   const totalPages =
     Math.max(
@@ -1204,112 +1919,35 @@ async function loadPrivateJournal(){
       startIndex + JOURNAL_PAGE_SIZE
     );
 
-  journalList.innerHTML = pageRows.map(row => {
-    const status = row.result || "PENDING";
+  if(pageRows.length === 0){
+    journalHistoryBody.innerHTML =
+      '<tr><td colspan="9" class="journal-latest-empty">No matching trades found.</td></tr>';
+  }else{
+    journalHistoryBody.innerHTML = pageRows.map((row,index) => {
+      const status = getJournalStatus(row);
 
-    const statusClass =
-      status === "WIN"
-        ? "win"
-        : status === "LOSS"
-          ? "loss"
-          : "pending";
-
-    const pips =
-      row.pips === null || row.pips === ""
-        ? "—"
-        : Number(row.pips) > 0
-          ? "+" + row.pips
-          : row.pips;
-
-    const rr =
-      row.rr === null || row.rr === ""
-        ? "—"
-        : row.rr;
-
-    const screenshotLink =
-      row.screenshot_url
-        ? `<a class="journal-link" href="${escapeHtml(row.screenshot_url)}" target="_blank" rel="noopener noreferrer">Open screenshot →</a>`
-        : "";
-
-    const notes =
-      row.notes
-        ? `<div class="journal-notes">${escapeHtml(row.notes)}</div>`
-        : "";
-
-    return `
-      <div class="card journal-entry">
-        <div class="journal-entry-top">
-          <div>
-            <div class="journal-entry-title">
-              ${escapeHtml(row.session || "Trade")}
+      return `
+        <tr>
+          <td>${startIndex + index + 1}</td>
+          <td>${escapeHtml(formatJournalDate(row.trade_date))}</td>
+          <td>${escapeHtml(row.session || "—")}</td>
+          <td><span class="journal-status-pill ${status.className}">${escapeHtml(status.text)}</span></td>
+          <td>${escapeHtml(formatSigned(row.rr,"R"))}</td>
+          <td>${escapeHtml(formatSigned(row.pips))}</td>
+          <td>${screenshotCell(row)}</td>
+          <td>${escapeHtml(row.notes || "—")}</td>
+          <td>
+            <div class="journal-mini-actions">
+              <button class="journal-mini-btn journal-row-edit" type="button" data-id="${row.id}">Edit</button>
+              <button class="journal-mini-btn delete journal-row-delete" type="button" data-id="${row.id}">Delete</button>
             </div>
+          </td>
+        </tr>
+      `;
+    }).join("");
 
-            <div class="journal-entry-meta">
-              ${escapeHtml(formatJournalDate(row.trade_date))}
-            </div>
-          </div>
-
-          <span class="journal-result ${statusClass}">
-            ${escapeHtml(status)}
-          </span>
-        </div>
-
-        <div class="journal-entry-stats">
-          <div class="journal-stat">
-            Pips
-            <strong>${escapeHtml(pips)}</strong>
-          </div>
-
-          <div class="journal-stat">
-            R:R
-            <strong>${escapeHtml(rr)}</strong>
-          </div>
-        </div>
-
-        ${notes}
-        ${screenshotLink}
-
-        <div class="journal-entry-actions">
-          <button
-            class="journal-edit"
-            type="button"
-            data-id="${row.id}"
-          >
-            Edit
-          </button>
-
-          <button
-            class="journal-delete"
-            type="button"
-            data-id="${row.id}"
-          >
-            Delete
-          </button>
-        </div>
-      </div>
-    `;
-  }).join("");
-
-  journalList
-    .querySelectorAll(".journal-edit")
-    .forEach(button => {
-      button.addEventListener("click",() => {
-        const id = Number(button.dataset.id);
-        const row = rows.find(item => Number(item.id) === id);
-        if(row) startJournalEdit(row);
-      });
-    });
-
-  journalList
-    .querySelectorAll(".journal-delete")
-    .forEach(button => {
-      button.addEventListener(
-        "click",
-        () => deleteJournalEntry(
-          Number(button.dataset.id)
-        )
-      );
-    });
+    bindJournalRowActions(journalHistoryBody);
+  }
 
   renderJournalPagination(
     totalPages,
@@ -1320,22 +1958,43 @@ async function loadPrivateJournal(){
 }
 
 
+function bindJournalRowActions(container){
+  container
+    .querySelectorAll(".journal-row-edit")
+    .forEach(button => {
+      button.addEventListener("click",() => {
+        const id = Number(button.dataset.id);
+        const row = journalRowsCache.find(item => Number(item.id) === id);
+
+        if(row){
+          startJournalEdit(row);
+        }
+      });
+    });
+
+  container
+    .querySelectorAll(".journal-row-delete")
+    .forEach(button => {
+      button.addEventListener(
+        "click",
+        () => deleteJournalEntry(
+          Number(button.dataset.id)
+        )
+      );
+    });
+}
+
+
 function renderJournalPagination(
   totalPages,
   totalRows,
   startIndex,
   visibleCount
 ){
-  if(!journalPagination){
-    return;
-  }
+  if(!journalPagination) return;
 
-  if(totalPages <= 1){
-    journalPagination.innerHTML = `
-      <div class="journal-page-info">
-        Showing ${totalRows} ${totalRows === 1 ? "trade" : "trades"}
-      </div>
-    `;
+  if(totalRows === 0){
+    journalPagination.innerHTML = "";
     return;
   }
 
@@ -1384,43 +2043,72 @@ function renderJournalPagination(
     .querySelectorAll("[data-page]")
     .forEach(button => {
       button.addEventListener("click",() => {
-        currentJournalPage =
-          Number(button.dataset.page);
-
-        loadPrivateJournal();
+        currentJournalPage = Number(button.dataset.page);
+        renderJournalHistory();
       });
     });
 
-  document
-    .querySelector("#journalPrevPage")
-    ?.addEventListener(
-      "click",
-      () => {
-        if(currentJournalPage > 1){
-          currentJournalPage--;
-          loadPrivateJournal();
-        }
-      }
-    );
+  document.querySelector("#journalPrevPage")?.addEventListener("click",() => {
+    if(currentJournalPage > 1){
+      currentJournalPage--;
+      renderJournalHistory();
+    }
+  });
+
+  document.querySelector("#journalNextPage")?.addEventListener("click",() => {
+    if(currentJournalPage < totalPages){
+      currentJournalPage++;
+      renderJournalHistory();
+    }
+  });
+}
+
+
+function switchJournalView(view){
+  currentJournalView = view;
 
   document
-    .querySelector("#journalNextPage")
-    ?.addEventListener(
-      "click",
-      () => {
-        if(currentJournalPage < totalPages){
-          currentJournalPage++;
-          loadPrivateJournal();
-        }
-      }
-    );
+    .querySelectorAll(".journal-tab-btn")
+    .forEach(button => {
+      button.classList.toggle(
+        "active",
+        button.dataset.journalView === view
+      );
+    });
+
+  document
+    .querySelectorAll(".journal-view")
+    .forEach(panel => panel.classList.remove("active"));
+
+  if(view === "dashboard"){
+    document.querySelector("#journalDashboardView")?.classList.add("active");
+  }
+
+  if(view === "add"){
+    syncJournalForms("main");
+    document.querySelector("#journalAddView")?.classList.add("active");
+  }
+
+  if(view === "history"){
+    currentJournalPage = 1;
+    renderJournalHistory();
+    document.querySelector("#journalHistoryView")?.classList.add("active");
+  }
 }
+
 
 function startJournalEdit(row){
   editingJournalId = row.id;
-  journalFormTitle.textContent = "Edit Trade";
+
+  if(journalFormTitle){
+    journalFormTitle.textContent = "Edit Trade";
+  }
+
   journalSaveBtn.textContent = "Update Trade";
+  journalSaveMirrorBtn.textContent = "Update Trade";
   journalCancelBtn.classList.add("show");
+  journalCancelMirrorBtn.classList.add("show");
+
   journalDate.value = row.trade_date || "";
   journalSession.value = row.session || "London";
   journalResult.value = row.result || "";
@@ -1428,7 +2116,11 @@ function startJournalEdit(row){
   journalPips.value = row.pips ?? "";
   journalNotes.value = row.notes || "";
   journalScreenshot.value = row.screenshot_url || "";
+
+  syncJournalForms("main");
   journalMessage("");
+
+  switchJournalView("add");
 
   document.querySelector("#journal")?.scrollIntoView({
     behavior:"smooth",
@@ -1436,7 +2128,14 @@ function startJournalEdit(row){
   });
 }
 
-async function saveJournalEntry(){
+
+async function saveJournalEntry(source="main"){
+  if(source === "mirror"){
+    syncJournalForms("mirror");
+  }else{
+    syncJournalForms("main");
+  }
+
   if(!currentJournalUser){
     journalMessage("Please sign in again.","error");
     return;
@@ -1459,7 +2158,13 @@ async function saveJournalEntry(){
   };
 
   journalSaveBtn.disabled = true;
-  journalMessage(editingJournalId ? "Updating trade..." : "Saving trade...");
+  journalSaveMirrorBtn.disabled = true;
+
+  journalMessage(
+    editingJournalId
+      ? "Updating trade..."
+      : "Saving trade..."
+  );
 
   let response;
 
@@ -1475,6 +2180,7 @@ async function saveJournalEntry(){
   }
 
   journalSaveBtn.disabled = false;
+  journalSaveMirrorBtn.disabled = false;
 
   if(response.error){
     console.error("Journal save error:", response.error);
@@ -1483,14 +2189,19 @@ async function saveJournalEntry(){
   }
 
   journalMessage(
-    editingJournalId ? "Trade updated successfully." : "Trade saved successfully.",
+    editingJournalId
+      ? "Trade updated successfully."
+      : "Trade saved successfully.",
     "success"
   );
 
   resetJournalForm();
   currentJournalPage = 1;
+
   await loadPrivateJournal();
+  switchJournalView("dashboard");
 }
+
 
 async function deleteJournalEntry(id){
   const ok = window.confirm("Delete this journal entry?");
@@ -1516,11 +2227,56 @@ async function deleteJournalEntry(id){
   await loadPrivateJournal();
 }
 
-journalSaveBtn?.addEventListener("click",saveJournalEntry);
+
+journalSaveBtn?.addEventListener(
+  "click",
+  () => saveJournalEntry("main")
+);
+
+journalSaveMirrorBtn?.addEventListener(
+  "click",
+  () => saveJournalEntry("mirror")
+);
 
 journalCancelBtn?.addEventListener("click",() => {
   resetJournalForm();
   journalMessage("");
+});
+
+journalCancelMirrorBtn?.addEventListener("click",() => {
+  resetJournalForm();
+  journalMessage("");
+  switchJournalView("dashboard");
+});
+
+document
+  .querySelectorAll(".journal-tab-btn")
+  .forEach(button => {
+    button.addEventListener("click",() => {
+      switchJournalView(
+        button.dataset.journalView
+      );
+    });
+  });
+
+document.querySelector("#journalGoHistory")?.addEventListener(
+  "click",
+  () => switchJournalView("history")
+);
+
+journalHistorySession?.addEventListener("change",() => {
+  currentJournalPage = 1;
+  renderJournalHistory();
+});
+
+journalHistoryResult?.addEventListener("change",() => {
+  currentJournalPage = 1;
+  renderJournalHistory();
+});
+
+journalHistoryDate?.addEventListener("change",() => {
+  currentJournalPage = 1;
+  renderJournalHistory();
 });
 
 
@@ -1572,7 +2328,6 @@ document.querySelector("#platformLogoutBtn")?.addEventListener("click",async () 
   await journalClient.auth.signOut();
   window.location.replace("index.html");
 });
-
 
 journalClient.auth.onAuthStateChange((event) => {
   if(event === "SIGNED_OUT"){
