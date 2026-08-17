@@ -245,7 +245,7 @@
     }
     .auth-brand strong{display:block;font-family:'Space Grotesk',sans-serif;font-size:18px;}
     .auth-brand span{display:block;color:#7f8796;font-size:10px;letter-spacing:1.8px;}
-    .auth-card h1{margin:0 0 8px;font-family:'Space Grotesk',sans-serif;font-size:32px;letter-spacing:-1px;}
+    .auth-card h1{margin:0 0 8px;font-family:'Space Grotesk',sans-serif;font-size:32px;letter-spacing:-1px;color:#ffffff;}
     .auth-card > p{margin:0 0 22px;color:#9ea6b5;line-height:1.6;font-size:14px;}
     .auth-field{display:block;margin-bottom:13px;}
     .auth-field span{display:block;margin-bottom:7px;color:#b8c0cf;font-size:12px;font-weight:600;}
@@ -282,6 +282,86 @@
     @media(max-width:700px){
       .auth-row{grid-template-columns:1fr;}
       .user-email{display:none;}
+    }
+
+
+    /* HOME PROFILE MENU - SAME AS DASHBOARD */
+    .home-profile-wrap{
+      position:relative;
+      display:none;
+      align-items:center;
+    }
+
+    .home-profile-wrap.show{
+      display:flex;
+    }
+
+    .home-profile-btn{
+      width:42px;
+      height:42px;
+      border-radius:50%;
+      border:1px solid rgba(167,124,255,.35);
+      background:linear-gradient(135deg,#9d6cff,#7247ff);
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      font-family:'Space Grotesk',sans-serif;
+      font-size:15px;
+      font-weight:800;
+      box-shadow:0 8px 24px rgba(124,92,255,.18);
+    }
+
+    .home-profile-menu{
+      position:absolute;
+      top:52px;
+      right:0;
+      width:235px;
+      padding:10px;
+      border:1px solid #293040;
+      border-radius:14px;
+      background:#0d1119;
+      box-shadow:0 20px 50px rgba(0,0,0,.45);
+      display:none;
+      z-index:9999;
+    }
+
+    .home-profile-menu.show{
+      display:block;
+    }
+
+    .home-profile-email{
+      padding:10px 11px;
+      color:#aeb6c4;
+      font-size:11px;
+      line-height:1.5;
+      overflow-wrap:anywhere;
+      border-bottom:1px solid #202633;
+      margin-bottom:8px;
+    }
+
+    .home-profile-menu button{
+      width:100%;
+      border:0;
+      background:transparent;
+      color:#ff7189;
+      padding:10px 11px;
+      border-radius:9px;
+      text-align:left;
+      cursor:pointer;
+      font:inherit;
+      font-size:12px;
+      font-weight:800;
+    }
+
+    .home-profile-menu button:hover{
+      background:#151a25;
+    }
+
+    /* hide old email/logout block */
+    .user-auth-box{
+      display:none !important;
     }
 
   </style>
@@ -376,9 +456,15 @@
         Join Community
       </a>
 
-      <div id="userAuthBox" class="user-auth-box">
-        <span id="userEmail" class="user-email"></span>
-        <button id="logoutBtn" class="logout-btn" type="button">Logout</button>
+      <div id="homeProfileWrap" class="home-profile-wrap">
+        <button id="homeProfileBtn" class="home-profile-btn" type="button" aria-label="Open profile">
+          U
+        </button>
+
+        <div id="homeProfileMenu" class="home-profile-menu">
+          <div id="userEmail" class="home-profile-email"></div>
+          <button id="logoutBtn" type="button">Logout</button>
+        </div>
       </div>
 
     </div>
@@ -826,8 +912,10 @@ const authGate = document.querySelector("#authGate");
 const authMessage = document.querySelector("#authMessage");
 const authEmail = document.querySelector("#authEmail");
 const authPassword = document.querySelector("#authPassword");
-const userAuthBox = document.querySelector("#userAuthBox");
 const userEmail = document.querySelector("#userEmail");
+const homeProfileWrap = document.querySelector("#homeProfileWrap");
+const homeProfileBtn = document.querySelector("#homeProfileBtn");
+const homeProfileMenu = document.querySelector("#homeProfileMenu");
 
 function setAuthMessage(message,type=""){
   authMessage.textContent = message;
@@ -837,15 +925,29 @@ function setAuthMessage(message,type=""){
 function showLoggedInState(user){
   authGate.classList.add("hidden");
   document.body.classList.remove("auth-loading");
-  userAuthBox?.classList.add("show");
-  if(userEmail) userEmail.textContent = user?.email || "Signed in";
+
+  homeProfileWrap?.classList.add("show");
+
+  if(userEmail){
+    userEmail.textContent = user?.email || "Signed in";
+  }
+
+  if(homeProfileBtn){
+    const email = user?.email || "U";
+    homeProfileBtn.textContent = email.charAt(0).toUpperCase();
+  }
 }
 
 function showLoggedOutState(){
   authGate.classList.remove("hidden");
   document.body.classList.remove("auth-loading");
-  userAuthBox?.classList.remove("show");
-  if(userEmail) userEmail.textContent = "";
+
+  homeProfileWrap?.classList.remove("show");
+  homeProfileMenu?.classList.remove("show");
+
+  if(userEmail){
+    userEmail.textContent = "";
+  }
 }
 
 async function checkAuth(){
@@ -940,6 +1042,23 @@ document.querySelector("#googleLoginBtn")?.addEventListener("click", async () =>
 
   if(error){
     setAuthMessage(error.message,"error");
+  }
+});
+
+
+homeProfileBtn?.addEventListener("click",(event) => {
+  event.stopPropagation();
+  homeProfileMenu?.classList.toggle("show");
+});
+
+document.addEventListener("click",(event) => {
+  if(
+    homeProfileMenu &&
+    homeProfileBtn &&
+    !homeProfileMenu.contains(event.target) &&
+    !homeProfileBtn.contains(event.target)
+  ){
+    homeProfileMenu.classList.remove("show");
   }
 });
 
